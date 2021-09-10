@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.810.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BibleStudyTool.Infrastructure", "BibleStudyTool.Infrastructure\BibleStudyTool.Infrastructure.csproj", "{7D43DD3E-6679-4BFE-8DB8-7641B3C3E4E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibleStudyTool.Infrastructure", "BibleStudyTool.Infrastructure\BibleStudyTool.Infrastructure.csproj", "{7D43DD3E-6679-4BFE-8DB8-7641B3C3E4E2}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "BibleStudyTool.Core", "BibleStudyTool.Core\BibleStudyTool.Core.csproj", "{9A415420-5CAC-405D-8E29-8E769A7653AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BibleStudyTool.Core", "BibleStudyTool.Core\BibleStudyTool.Core.csproj", "{9A415420-5CAC-405D-8E29-8E769A7653AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -11,6 +11,7 @@ namespace BibleStudyTool.Core.Entities.BibleAggregate
         public string Name { get; private set; }
 
         public IList<BibleBookAbbreviation> BibleBookAbbreviations { get; set; }
+        public IList<BibleVerse> BibleBookVerses { get; set; }
 
         public BibleBook(int versionId, BibleVersion bibleVersion, string name)
         {
