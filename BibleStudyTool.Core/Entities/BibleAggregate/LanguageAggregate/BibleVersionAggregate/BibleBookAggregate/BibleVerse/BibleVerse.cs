@@ -13,7 +13,7 @@ namespace BibleStudyTool.Core.Entities.BibleAggregate
         public int VerseNumber { get; private set; }
         public string Text { get; private set; }
 
-        public IList<VerseNote> VerseNotes { get; set; }
+        public IList<BibleVerseNote> BibleVerseNotes { get; set; }
 
         public BibleVerse(int bibleBookId, BibleBook bibleBook, int chapterNumber, int verseNumber, string text)
         {

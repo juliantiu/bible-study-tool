@@ -30,7 +30,7 @@ namespace BibleStudyTool.Infrastructure.Data
         public DbSet<TagGroupNote> TagGroupNotes { get; set; }
         public DbSet<TagGroupTag> TagGroupTags { get; set; }
         public DbSet<TagNote> TagNotes { get; set; }
-        public DbSet<VerseNote> VerseNotes { get; set; }
+        public DbSet<BibleVerseNote> VerseNotes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -3,7 +3,7 @@ using BibleStudyTool.Core.Entities.BibleAggregate;
 
 namespace BibleStudyTool.Core.Entities.JoinEntities
 {
-    public class VerseNote : BaseEntity
+    public class BibleVerseNote : BaseEntity
     {
         public int BibleVerseId { get; private set; }
         public BibleVerse BibleVerse { get; private set; }
@@ -11,7 +11,7 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
         public int NoteId { get; private set; }
         public Note Note { get; private set; }
 
-        public VerseNote(int bibleVerseId, BibleVerse bibleVerse, int noteId, Note note)
+        public BibleVerseNote(int bibleVerseId, BibleVerse bibleVerse, int noteId, Note note)
         {
             BibleVerseId = bibleVerseId;
             BibleVerse = bibleVerse;

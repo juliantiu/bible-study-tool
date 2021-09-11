@@ -19,6 +19,11 @@ namespace BibleStudyTool.Infrastructure.Data.Config
                    .IsRequired();
 
             builder.Property(note => note.Text);
+
+            builder.HasOne<Note>(note => note.NoteReference)
+                .WithMany(parentNote => parentNote.NoteReferences)
+                .HasForeignKey(note => note.NoteReferenceId)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }
