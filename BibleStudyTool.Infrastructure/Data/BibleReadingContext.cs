@@ -26,7 +26,6 @@ namespace BibleStudyTool.Infrastructure.Data
         public DbSet<TagGroup> TagGroups { get; set; }
 
         // Join Entities
-        public DbSet<NoteReference> NoteReferences { get; set; }
         public DbSet<TagGroupNote> TagGroupNotes { get; set; }
         public DbSet<TagGroupTag> TagGroupTags { get; set; }
         public DbSet<TagNote> TagNotes { get; set; }
