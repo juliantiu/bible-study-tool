@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using BibleStudyTool.Infrastructure.Data;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
 
 namespace BibleStudyTool.Public
 {
@@ -29,8 +29,8 @@ namespace BibleStudyTool.Public
         public void ConfigureServices(IServiceCollection services)
         {
             var cnxstr = File.ReadAllText("./testdbcnxstr.txt");
-            services.AddDbContext<BibleReadingContext>(options =>
-                options.UseNpgsql(cnxstr));
+            services.AddDbContext<BibleReadingDbContext>(options =>
+                options.UseNpgsql(cnxstr, db => db.MigrationsAssembly("BibleStudyTool.Infrastructure")));
             services.AddControllers();
         }
 

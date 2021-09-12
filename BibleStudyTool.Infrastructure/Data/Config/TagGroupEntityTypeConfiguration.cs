@@ -9,12 +9,14 @@ namespace BibleStudyTool.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<TagGroup> builder)
         {
-            builder.HasKey(tagGroup => tagGroup.Id);
+            builder.HasKey(tagGroup => tagGroup.TagGroupId);
 
             builder.Property(tagGroup => tagGroup.Uid)
+                   .HasColumnName("TagGroupUid")
                    .IsRequired();
 
             builder.Property(tagGroup => tagGroup.Label)
+                   .HasColumnName("TagGroupLabel")
                    .HasMaxLength(100)
                    .IsRequired();
         }

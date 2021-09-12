@@ -9,14 +9,19 @@
     <None Remove="Microsoft.EntityFrameworkCore" />
     <None Remove="Data\Config\" />
     <None Remove="Microsoft.EntityFrameworkCore.Relational" />
+    <None Remove="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="Data\Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Data\Config\" />
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.9" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BibleStudyTool.Core\BibleStudyTool.Core.csproj" />

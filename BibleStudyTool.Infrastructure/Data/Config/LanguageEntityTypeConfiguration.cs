@@ -9,9 +9,10 @@ namespace BibleStudyTool.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Language> builder)
         {
-            builder.HasKey(language => language.Id);
+            builder.HasKey(language => language.LanguageId);
 
             builder.Property(language => language.Name)
+                   .HasColumnName("LanguageName")
                    .HasMaxLength(70)
                    .IsRequired();
 

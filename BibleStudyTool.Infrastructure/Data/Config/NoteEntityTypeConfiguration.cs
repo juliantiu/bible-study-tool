@@ -9,16 +9,18 @@ namespace BibleStudyTool.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Note> builder)
         {
-            builder.HasKey(note => note.Id);
+            builder.HasKey(note => note.NoteId);
 
             builder.Property(note => note.Uid)
+                   .HasColumnName("NoteUid")
                    .IsRequired();
 
             builder.Property(note => note.Summary)
                    .HasMaxLength(240)
                    .IsRequired();
 
-            builder.Property(note => note.Text);
+            builder.Property(note => note.Text)
+                   .HasColumnName("NoteText");
 
             builder.HasOne<Note>(note => note.NoteReference)
                 .WithMany(parentNote => parentNote.NoteReferences)

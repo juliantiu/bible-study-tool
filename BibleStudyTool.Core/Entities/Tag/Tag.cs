@@ -6,12 +6,16 @@ namespace BibleStudyTool.Core.Entities
 {
     public class Tag: BaseEntity
     {
+        public int TagId { get; private set; }
+
         public int Uid { get; private set; }
 
         public string Label { get; private set; }
 
         public IList<TagGroupTag> TagGroupTags { get; set; }
         public IList<TagNote> TagNotes { get; set; }
+
+        public Tag() { }
 
         public Tag(int uid, string label)
         {

@@ -9,9 +9,10 @@ namespace BibleStudyTool.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<BibleBook> builder)
         {
-            builder.HasKey(bibleBook => bibleBook.Id);
+            builder.HasKey(bibleBook => bibleBook.BibleBookId);
 
             builder.Property(bibleBook => bibleBook.Name)
+                    .HasColumnName("BibleBookName")
                    .HasMaxLength(30);
 
             builder.HasOne<BibleVersion>(bibleBook => bibleBook.BibleVersion)

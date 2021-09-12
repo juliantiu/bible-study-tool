@@ -6,6 +6,8 @@ namespace BibleStudyTool.Core.Entities.BibleAggregate
 {
     public class BibleVerse : BaseEntity
     {
+        public int BibleVerseId { get; private set; }
+
         public int BibleBookId { get; private set; }
         public BibleBook BibleBook { get; private set; }
 
@@ -14,6 +16,8 @@ namespace BibleStudyTool.Core.Entities.BibleAggregate
         public string Text { get; private set; }
 
         public IList<BibleVerseNote> BibleVerseNotes { get; set; }
+
+        public BibleVerse() { }
 
         public BibleVerse(int bibleBookId, BibleBook bibleBook, int chapterNumber, int verseNumber, string text)
         {

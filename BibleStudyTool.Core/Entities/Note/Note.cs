@@ -6,6 +6,8 @@ namespace BibleStudyTool.Core.Entities
 {
     public class Note: BaseEntity
     {
+        public int NoteId { get; private set; }
+
         public int Uid { get; private set; }
 
         public string Summary { get; private set; }
@@ -18,6 +20,8 @@ namespace BibleStudyTool.Core.Entities
         public IList<TagGroupNote> TagGroupNotes { get; set; }
         public IList<TagNote> TagNotes { get; set; }
         public IList<BibleVerseNote> BibleVerseNotes { get; set; }
+
+        public Note() { }
 
         public Note(int uid, string summary, string text)
         {

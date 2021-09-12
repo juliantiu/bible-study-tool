@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+ * dotnet ef migrations add MyFirstMigration2 --project BibleStudyTool.Infrastructure --startup-project BibleStudyTool.Public --context BibleReadingDbContext --output-dir ./Data/Migrations
+ * dotnet ef database update --project BibleStudyTool.Infrastructure --startup-project BibleStudyTool.Public
+ * */
+
+using System;
+using System.IO;
 using System.Reflection;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.BibleAggregate;
@@ -7,9 +13,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BibleStudyTool.Infrastructure.Data
 {
-    public class BibleReadingContext: DbContext
+    public class BibleReadingDbContext: DbContext
     {
-        public BibleReadingContext(DbContextOptions<BibleReadingContext> options) : base(options)
+        public BibleReadingDbContext(DbContextOptions<BibleReadingDbContext> options) : base(options)
         {
         }
 
@@ -29,7 +35,7 @@ namespace BibleStudyTool.Infrastructure.Data
         public DbSet<TagGroupNote> TagGroupNotes { get; set; }
         public DbSet<TagGroupTag> TagGroupTags { get; set; }
         public DbSet<TagNote> TagNotes { get; set; }
-        public DbSet<BibleVerseNote> VerseNotes { get; set; }
+        public DbSet<BibleVerseNote> BibleVerseNotes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

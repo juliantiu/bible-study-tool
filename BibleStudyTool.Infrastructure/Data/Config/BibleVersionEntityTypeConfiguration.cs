@@ -9,7 +9,7 @@ namespace BibleStudyTool.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<BibleVersion> builder)
         {
-            builder.HasKey(bibleVerse => bibleVerse.Id);
+            builder.HasKey(bibleVersion => bibleVersion.BibleVersionId);
 
             builder.HasOne<Language>(bibleVersion => bibleVersion.Language)
                    .WithMany(language => language.BibleVersions)
@@ -17,13 +17,13 @@ namespace BibleStudyTool.Infrastructure.Data.Config
                    .OnDelete(DeleteBehavior.ClientSetNull);
 
             builder.Property(bibleVersion => bibleVersion.Name)
+                   .HasColumnName("BibleVersionName")
                    .HasMaxLength(150)
                    .IsRequired();
 
             builder.Property(bibleVersion => bibleVersion.Abbreviation)
+                   .HasColumnName("BibleVersionAbbreviation")
                    .HasMaxLength(20);
-
-            builder.Property(bibleVersion => bibleVersion.Text);
         }
     }
 }

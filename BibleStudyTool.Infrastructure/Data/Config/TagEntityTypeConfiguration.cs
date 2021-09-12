@@ -9,12 +9,14 @@ namespace BibleStudyTool.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<Tag> builder)
         {
-            builder.HasKey(tag => tag.Id);
+            builder.HasKey(tag => tag.TagId);
 
             builder.Property(tag => tag.Uid)
+                   .HasColumnName("TagUid")
                    .IsRequired();
 
             builder.Property(tag => tag.Label)
+                   .HasColumnName("TagLabel")
                    .HasMaxLength(100)
                    .IsRequired();
         }

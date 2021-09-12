@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BibleStudyTool.Infrastructure.Data.Config
 {
-    public class VerseNoteEntityTypeConfiguration: IEntityTypeConfiguration<BibleVerseNote>
+    public class BibleVerseNoteEntityTypeConfiguration: IEntityTypeConfiguration<BibleVerseNote>
     {
         public void Configure(EntityTypeBuilder<BibleVerseNote> builder)
         {
-            builder.HasKey(bibleVerseNote => bibleVerseNote.BibleVerse);
+            builder.HasKey(bibleVerseNote => bibleVerseNote.BibleVerseNoteId);
 
             builder.HasOne<BibleVerse>(bibleVerseNote => bibleVerseNote.BibleVerse)
                    .WithMany(bibleVerse => bibleVerse.BibleVerseNotes)

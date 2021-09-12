@@ -9,7 +9,7 @@ namespace BibleStudyTool.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<BibleVerse> builder)
         {
-            builder.HasKey(bibleVerse => bibleVerse.Id);
+            builder.HasKey(bibleVerse => bibleVerse.BibleVerseId);
 
             builder.Property(bibleVerse => bibleVerse.ChapterNumber)
                    .IsRequired();
@@ -18,6 +18,7 @@ namespace BibleStudyTool.Infrastructure.Data.Config
                    .IsRequired();
 
             builder.Property(bibleVerse => bibleVerse.Text)
+                    .HasColumnName("BibleVerseText")
                     .IsRequired();
 
             builder.HasOne<BibleBook>(bibleVerse => bibleVerse.BibleBook)

@@ -5,13 +5,15 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BibleStudyTool.Infrastructure.Data.Config
 {
-    public class BookAbbreviationEntityTypeConfiguration: IEntityTypeConfiguration<BibleBookAbbreviation>
+    public class BibleBookAbbreviationEntityTypeConfiguration: IEntityTypeConfiguration<BibleBookAbbreviation>
     {
         public void Configure(EntityTypeBuilder<BibleBookAbbreviation> builder)
         {
-            builder.HasKey(bibleBookAbbreviation => bibleBookAbbreviation.Id);
+            builder.HasKey(bibleBookAbbreviation => bibleBookAbbreviation.BibleBookAbbreviationId);
 
             builder.Property(bibleBookAbbreviation => bibleBookAbbreviation.Abbreviation)
+                   .HasMaxLength(10)
+                   .HasColumnName("BibleBookAbbreviation")
                    .IsRequired();
 
             builder.HasOne<BibleBook>(bibleBookAbbreviation => bibleBookAbbreviation.BibleBook)

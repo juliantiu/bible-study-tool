@@ -10,7 +10,7 @@ namespace BibleStudyTool.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<TagGroupNote> builder)
         {
-            builder.HasKey(tagGroupNote => tagGroupNote.Id);
+            builder.HasKey(tagGroupNote => tagGroupNote.TagGroupNoteId);
 
             builder.HasOne<TagGroup>(tagGroupNote => tagGroupNote.TagGroup)
                    .WithMany(tagGroup => tagGroup.TagGroupNotes)
