@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using BibleStudyTool.Infrastructure.Data;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using BibleStudyTool.Infrastructure.Data.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace BibleStudyTool.Public
 {
@@ -31,6 +33,11 @@ namespace BibleStudyTool.Public
             var cnxstr = File.ReadAllText("./testdbcnxstr.txt");
             services.AddDbContext<BibleReadingDbContext>(options =>
                 options.UseNpgsql(cnxstr, db => db.MigrationsAssembly("BibleStudyTool.Infrastructure")));
+
+            services.AddIdentity<BibleReader, IdentityRole>()
+                    .AddEntityFrameworkStores<BibleReadingDbContext>()
+                    .AddDefaultTokenProviders();
+
             services.AddControllers();
         }
 
@@ -45,6 +52,8 @@ namespace BibleStudyTool.Public
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

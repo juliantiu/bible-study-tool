@@ -8,7 +8,7 @@ namespace BibleStudyTool.Core.Entities
     {
         public int TagId { get; private set; }
 
-        public int Uid { get; private set; }
+        public string Uid { get; private set; }
 
         public string Label { get; private set; }
 
@@ -17,7 +17,7 @@ namespace BibleStudyTool.Core.Entities
 
         public Tag() { }
 
-        public Tag(int uid, string label)
+        public Tag(string uid, string label)
         {
             Uid = uid;
             Label = label;

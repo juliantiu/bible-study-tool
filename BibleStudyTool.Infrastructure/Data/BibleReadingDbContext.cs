@@ -1,6 +1,10 @@
 ﻿/*
- * dotnet ef migrations add MyFirstMigration2 --project BibleStudyTool.Infrastructure --startup-project BibleStudyTool.Public --context BibleReadingDbContext --output-dir ./Data/Migrations
- * dotnet ef database update --project BibleStudyTool.Infrastructure --startup-project BibleStudyTool.Public
+ * EF core migration and update commands from cli
+ *   - dotnet ef migrations add MyFirstMigration2 --project BibleStudyTool.Infrastructure --startup-project BibleStudyTool.Public --context BibleReadingDbContext --output-dir ./Data/Migrations
+ *   - dotnet ef database update --project BibleStudyTool.Infrastructure --startup-project BibleStudyTool.Public
+ *  
+ * Microsoft Identity with EF core
+ *   - https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-5.0&tabs=visual-studio
  * */
 
 using System;
@@ -9,11 +13,18 @@ using System.Reflection;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.BibleAggregate;
 using BibleStudyTool.Core.Entities.JoinEntities;
+using BibleStudyTool.Infrastructure.Data.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BibleStudyTool.Infrastructure.Data
 {
-    public class BibleReadingDbContext: DbContext
+    /*
+     * Uses the default IdentiyDbContext.
+     * See for customizations (of user primary key, indentity role type, etc.):
+     *   - https://docs.microsoft.com/en-us/aspnet/core/security/authentication/customize-identity-model?view=aspnetcore-5.0
+     * */
+    public class BibleReadingDbContext: IdentityDbContext<BibleReader>
     {
         public BibleReadingDbContext(DbContextOptions<BibleReadingDbContext> options) : base(options)
         {
@@ -40,6 +51,7 @@ namespace BibleStudyTool.Infrastructure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<BibleReader>(b => b.ToTable("BibleReaders"));
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

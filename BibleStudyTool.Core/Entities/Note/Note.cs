@@ -8,7 +8,7 @@ namespace BibleStudyTool.Core.Entities
     {
         public int NoteId { get; private set; }
 
-        public int Uid { get; private set; }
+        public string Uid { get; private set; }
 
         public string Summary { get; private set; }
         public string Text { get; private set; }
@@ -23,7 +23,7 @@ namespace BibleStudyTool.Core.Entities
 
         public Note() { }
 
-        public Note(int uid, string summary, string text)
+        public Note(string uid, string summary, string text)
         {
             Uid = uid;
             Summary = summary;
