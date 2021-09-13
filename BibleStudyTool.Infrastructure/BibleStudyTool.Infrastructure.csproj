@@ -13,6 +13,7 @@
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
     <None Remove="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
     <None Remove="Identity\" />
+    <None Remove="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -24,6 +25,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.9" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.9" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BibleStudyTool.Core\BibleStudyTool.Core.csproj" />

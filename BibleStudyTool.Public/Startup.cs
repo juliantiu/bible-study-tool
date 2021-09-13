@@ -15,6 +15,10 @@ using System.IO;
 using Microsoft.EntityFrameworkCore;
 using BibleStudyTool.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity;
+using BibleStudyTool.Core.Interfaces;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace BibleStudyTool.Public
 {
@@ -30,13 +34,57 @@ namespace BibleStudyTool.Public
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Entity Framework core configuration
             var cnxstr = File.ReadAllText("./testdbcnxstr.txt");
             services.AddDbContext<BibleReadingDbContext>(options =>
                 options.UseNpgsql(cnxstr, db => db.MigrationsAssembly("BibleStudyTool.Infrastructure")));
 
-            services.AddIdentity<BibleReader, IdentityRole>()
+            // Microsoft Identity with EF core configuration
+            services.AddIdentity<BibleReader, IdentityRole>(options =>
+                     {
+                         options.SignIn.RequireConfirmedEmail = false; // todo configure to true in production 
+                     })
                     .AddEntityFrameworkStores<BibleReadingDbContext>()
                     .AddDefaultTokenProviders();
+
+            services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
+
+            /* JWT configuration
+             * Resources:
+             *   - https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions?view=aspnetcore-5.0
+             *   - https://www.youtube.com/watch?app=desktop&v=Lh82WlOvyQk
+             * */
+            var key = Encoding.ASCII.GetBytes("P@ssw0rd");// (AuthorizationConstants.JWT_SECRET_KEY); // todo configure in environment variable
+            services.AddAuthentication(config =>
+            {
+                config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(config =>
+            {
+                config.Events = new JwtBearerEvents()
+                {
+                    OnTokenValidated = context =>
+                    {
+                        var userCntx = context.HttpContext
+                                              .RequestServices
+                                              .GetRequiredService<UserManager<BibleReader>>();
+                        var user = userCntx.GetUserAsync(context.HttpContext.User);
+                        if (user == null)
+                            context.Fail("Unauthorized.");
+                        return Task.CompletedTask;
+                    }
+                };
+                config.RequireHttpsMetadata = false; // todo should be true in productiom
+                config.SaveToken = true;
+                config.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             services.AddControllers();
         }
