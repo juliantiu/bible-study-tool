@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BibleStudyTool.Core.Interfaces;
+using BibleStudyTool.Core.NonEntityInterfaces;
 using BibleStudyTool.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -32,7 +32,7 @@ namespace BibleStudyTool.Public.BibleReaderEndpoints
                 var result = await _signInManager.PasswordSignInAsync(request.Email, request.Password, false, true);
 
                 response.Email = request.Email;
-                response.Result = result.Succeeded;
+                response.Success = result.Succeeded;
 
                 if (result.Succeeded)
                     response.Token = await _tokenClaimsService.GetTokenAsync(request.Email);
@@ -46,14 +46,14 @@ namespace BibleStudyTool.Public.BibleReaderEndpoints
         }
 
         public static async Task<AuthenticateResponse> AuthenticateHandler(AuthenticateRequest request,
-                                                                                         SignInManager<BibleReader> signInManager,
-                                                                                         ITokenClaimsService tokenClaimsService)
+                                                                           SignInManager<BibleReader> signInManager,
+                                                                           ITokenClaimsService tokenClaimsService)
         {
             var response = new AuthenticateResponse();
             var result = await signInManager.PasswordSignInAsync(request.Email, request.Password, false, true);
 
             response.Email = request.Email;
-            response.Result = result.Succeeded;
+            response.Success = result.Succeeded;
 
             if (result.Succeeded)
                 response.Token = await tokenClaimsService.GetTokenAsync(request.Email);

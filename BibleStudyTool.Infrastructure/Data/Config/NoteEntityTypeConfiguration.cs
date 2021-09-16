@@ -21,11 +21,6 @@ namespace BibleStudyTool.Infrastructure.Data.Config
 
             builder.Property(note => note.Text)
                    .HasColumnName("NoteText");
-
-            builder.HasOne<Note>(note => note.NoteReference)
-                .WithMany(parentNote => parentNote.NoteReferences)
-                .HasForeignKey(note => note.NoteReferenceId)
-                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

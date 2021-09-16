@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace BibleStudyTool.Core.Interfaces
+namespace BibleStudyTool.Core.NonEntityInterfaces
 {
     public interface ITokenClaimsService
     {

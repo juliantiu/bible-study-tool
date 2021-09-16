@@ -23,6 +23,8 @@
     <None Remove="Entities\BibleAggregate\LanguageAggregate\BibleVersion\" />
     <None Remove="Entities\BibleAggregate\LanguageAggregate\BibleVersion\BibleBookAggregate\" />
     <None Remove="Interfaces\" />
+    <None Remove="NonEntityServices\" />
+    <None Remove="Entities\JoinEntities\NoteReference\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -38,6 +40,8 @@
     <Folder Include="Entities\JoinEntities\BibleVerseNote\" />
     <Folder Include="Entities\BibleAggregate\LanguageAggregate\BibleVersionAggregate\" />
     <Folder Include="Entities\BibleAggregate\LanguageAggregate\BibleVersionAggregate\BibleBookAggregate\" />
-    <Folder Include="Interfaces\" />
+    <Folder Include="NonEntityInterfaces\" />
+    <Folder Include="NonEntityServices\" />
+    <Folder Include="Entities\JoinEntities\NoteReference\" />
   </ItemGroup>
 </Project>

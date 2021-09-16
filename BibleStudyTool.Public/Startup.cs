@@ -15,7 +15,7 @@ using System.IO;
 using Microsoft.EntityFrameworkCore;
 using BibleStudyTool.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity;
-using BibleStudyTool.Core.Interfaces;
+using BibleStudyTool.Core.NonEntityInterfaces;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -47,9 +47,11 @@ namespace BibleStudyTool.Public
                     .AddEntityFrameworkStores<BibleReadingDbContext>()
                     .AddDefaultTokenProviders();
 
+            // Scoped Services
             services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
+            services.AddScoped(typeof(IAsyncRepository<>), typeof(BibleReadingEntityRepository<>));
 
-            /* JWT configuration
+            /* Authentication & JWT
              * Resources:
              *   - https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions?view=aspnetcore-5.0
              *   - https://www.youtube.com/watch?app=desktop&v=Lh82WlOvyQk

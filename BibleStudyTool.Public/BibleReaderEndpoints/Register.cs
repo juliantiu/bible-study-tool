@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BibleStudyTool.Core.Interfaces;
+using BibleStudyTool.Core.NonEntityInterfaces;
 using BibleStudyTool.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -44,13 +44,13 @@ namespace BibleStudyTool.Public.BibleReaderEndpoints
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         var authenticationResponse = new AuthenticateResponse();
-                        authenticationResponse.Result = false;
+                        authenticationResponse.Success = false;
                         authenticationResponse.FailureMessage = "";
                         response.AuthenticateResponse = authenticationResponse;
                     }
                     else
                     {
-                        response.Result = true;
+                        response.Success = true;
                         response.AuthenticateResponse = await TryAuthenticate(request);                      
                     }
                 }

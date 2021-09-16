@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using BibleStudyTool.Core.Entities.Exceptions;
 using BibleStudyTool.Core.Entities.JoinEntities;
 
 namespace BibleStudyTool.Core.Entities
 {
-    public class Tag: BaseEntity
+    public class Tag : BaseEntity
     {
-        public int TagId { get; private set; }
+        public int TagId { get; set; }
 
-        public string Uid { get; private set; }
+        public string Uid { get; set; }
 
-        public string Label { get; private set; }
+        public string Label { get; set; }
 
         public IList<TagGroupTag> TagGroupTags { get; set; }
         public IList<TagNote> TagNotes { get; set; }
@@ -21,6 +22,19 @@ namespace BibleStudyTool.Core.Entities
         {
             Uid = uid;
             Label = label;
+        }
+
+        public Tag UpdateDetails(string label)
+        {
+            if (label is string la)
+            {
+                Label = la;
+                return this;
+            }
+            else
+            {
+                throw new TagEmptyLabelException();
+            }
         }
     }
 }
