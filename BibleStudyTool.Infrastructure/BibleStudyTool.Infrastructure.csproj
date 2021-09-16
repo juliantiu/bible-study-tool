@@ -14,11 +14,13 @@
     <None Remove="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
     <None Remove="Identity\" />
     <None Remove="System.IdentityModel.Tokens.Jwt" />
+    <None Remove="Data\Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Data\Config\" />
     <Folder Include="Identity\" />
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />

@@ -37,7 +37,7 @@ namespace BibleStudyTool.Public.BibleReaderEndpoints
                 if (result.Succeeded)
                     response.Token = await _tokenClaimsService.GetTokenAsync(request.Email);
 
-                return Ok(await AuthenticateHandler(request, _signInManager, _tokenClaimsService);
+                return Ok(await AuthenticateHandler(request, _signInManager, _tokenClaimsService));
             }
             catch (Exception)
             {

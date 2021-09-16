@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace BibleStudyTool.Infrastructure.Data.Migrations
 {
-    public partial class NewMigrationsFolder : Migration
+    public partial class MyFirstMigration3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -70,18 +70,11 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     NoteUid = table.Column<string>(type: "text", nullable: false),
                     Summary = table.Column<string>(type: "character varying(240)", maxLength: 240, nullable: false),
-                    NoteText = table.Column<string>(type: "text", nullable: true),
-                    NoteReferenceId = table.Column<int>(type: "integer", nullable: false)
+                    NoteText = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Notes", x => x.NoteId);
-                    table.ForeignKey(
-                        name: "FK_Notes_Notes_NoteReferenceId",
-                        column: x => x.NoteReferenceId,
-                        principalTable: "Notes",
-                        principalColumn: "NoteId",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -236,6 +229,31 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         column: x => x.LanguageId,
                         principalTable: "Languages",
                         principalColumn: "LanguageId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NoteReferences",
+                columns: table => new
+                {
+                    NoteReferenceId = table.Column<int>(type: "integer", nullable: false),
+                    NoteId = table.Column<int>(type: "integer", nullable: false),
+                    ReferenceId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NoteReferences", x => x.NoteReferenceId);
+                    table.ForeignKey(
+                        name: "FK_NoteReferences_Notes_NoteId",
+                        column: x => x.NoteId,
+                        principalTable: "Notes",
+                        principalColumn: "NoteId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_NoteReferences_Notes_NoteReferenceId",
+                        column: x => x.NoteReferenceId,
+                        principalTable: "Notes",
+                        principalColumn: "NoteId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -473,9 +491,9 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                 column: "LanguageId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Notes_NoteReferenceId",
-                table: "Notes",
-                column: "NoteReferenceId");
+                name: "IX_NoteReferences_NoteId",
+                table: "NoteReferences",
+                column: "NoteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TagGroupNotes_NoteId",
@@ -530,6 +548,9 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "BibleVerseNotes");
+
+            migrationBuilder.DropTable(
+                name: "NoteReferences");
 
             migrationBuilder.DropTable(
                 name: "TagGroupNotes");

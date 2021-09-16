@@ -168,6 +168,24 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.ToTable("BibleVerseNotes");
                 });
 
+            modelBuilder.Entity("BibleStudyTool.Core.Entities.JoinEntities.NoteReference", b =>
+                {
+                    b.Property<int>("NoteReferenceId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("NoteId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ReferenceId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("NoteReferenceId");
+
+                    b.HasIndex("NoteId");
+
+                    b.ToTable("NoteReferences");
+                });
+
             modelBuilder.Entity("BibleStudyTool.Core.Entities.JoinEntities.TagGroupNote", b =>
                 {
                     b.Property<int>("TagGroupNoteId")
@@ -241,9 +259,6 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("NoteReferenceId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Summary")
                         .IsRequired()
                         .HasMaxLength(240)
@@ -259,8 +274,6 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         .HasColumnName("NoteUid");
 
                     b.HasKey("NoteId");
-
-                    b.HasIndex("NoteReferenceId");
 
                     b.ToTable("Notes");
                 });
@@ -564,6 +577,25 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.Navigation("Note");
                 });
 
+            modelBuilder.Entity("BibleStudyTool.Core.Entities.JoinEntities.NoteReference", b =>
+                {
+                    b.HasOne("BibleStudyTool.Core.Entities.Note", "Note")
+                        .WithMany("Notes")
+                        .HasForeignKey("NoteId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("BibleStudyTool.Core.Entities.Note", "Reference")
+                        .WithMany("NoteReferences")
+                        .HasForeignKey("NoteReferenceId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.Navigation("Note");
+
+                    b.Navigation("Reference");
+                });
+
             modelBuilder.Entity("BibleStudyTool.Core.Entities.JoinEntities.TagGroupNote", b =>
                 {
                     b.HasOne("BibleStudyTool.Core.Entities.Note", "Note")
@@ -619,17 +651,6 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.Navigation("Note");
 
                     b.Navigation("Tag");
-                });
-
-            modelBuilder.Entity("BibleStudyTool.Core.Entities.Note", b =>
-                {
-                    b.HasOne("BibleStudyTool.Core.Entities.Note", "NoteReference")
-                        .WithMany("NoteReferences")
-                        .HasForeignKey("NoteReferenceId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("NoteReference");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -710,6 +731,8 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.Navigation("BibleVerseNotes");
 
                     b.Navigation("NoteReferences");
+
+                    b.Navigation("Notes");
 
                     b.Navigation("TagGroupNotes");
 
