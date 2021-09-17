@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BibleStudyTool.Infrastructure.Data.Config
 {
-    public class TagGroupNoteEntityTypeConfiguration: IEntityTypeConfiguration<TagGroupNote>
+    public class TagGroupNoteEntityTypeConfiguration : IEntityTypeConfiguration<TagGroupNote>
     {
         public void Configure(EntityTypeBuilder<TagGroupNote> builder)
         {

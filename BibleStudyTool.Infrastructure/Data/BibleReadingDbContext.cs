@@ -28,7 +28,7 @@ namespace BibleStudyTool.Infrastructure.Data
      * See for customizations (of user primary key, indentity role type, etc.):
      *   - https://docs.microsoft.com/en-us/aspnet/core/security/authentication/customize-identity-model?view=aspnetcore-5.0
      * */
-    public class BibleReadingDbContext: IdentityDbContext<BibleReader>
+    public class BibleReadingDbContext : IdentityDbContext<BibleReader>
     {
         public BibleReadingDbContext(DbContextOptions<BibleReadingDbContext> options) : base(options)
         {

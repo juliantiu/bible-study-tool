@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BibleStudyTool.Infrastructure.Data.Config
 {
-    public class LanguageEntityTypeConfiguration: IEntityTypeConfiguration<Language>
+    public class LanguageEntityTypeConfiguration : IEntityTypeConfiguration<Language>
     {
         public void Configure(EntityTypeBuilder<Language> builder)
         {

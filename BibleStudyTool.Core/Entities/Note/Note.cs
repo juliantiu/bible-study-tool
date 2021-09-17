@@ -4,14 +4,14 @@ using BibleStudyTool.Core.Entities.JoinEntities;
 
 namespace BibleStudyTool.Core.Entities
 {
-    public class Note: BaseEntity
+    public class Note : BaseEntity
     {
-        public int NoteId { get; private set; }
+        public string NoteId { get; set; }
 
-        public string Uid { get; private set; }
+        public string Uid { get; set; }
 
-        public string Summary { get; private set; }
-        public string Text { get; private set; }
+        public string Summary { get; set; }
+        public string Text { get; set; }
 
         public IList<TagGroupNote> TagGroupNotes { get; set; }
         public IList<TagNote> TagNotes { get; set; }
@@ -26,6 +26,16 @@ namespace BibleStudyTool.Core.Entities
             Uid = uid;
             Summary = summary;
             Text = text;
+        }
+
+        public Note UpdateDetails(string summary, string text)
+        {
+            if (summary is string su)
+                Summary = su;
+            if (text is string te)
+                Text = te;
+
+            return this;
         }
     }
 }

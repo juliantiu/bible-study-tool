@@ -3,12 +3,12 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
 {
     public class NoteReference : BaseEntity
     {
-        public int NoteReferenceId { get; private set; }
+        public string NoteReferenceId { get; private set; }
 
-        public int NoteId { get; private set; }
+        public string NoteId { get; private set; }
         public Note Note { get; private set; }
 
-        public int ReferenceId { get; private set; }
+        public string ReferenceId { get; private set; }
         public Note Reference { get; private set; }
 
         public NoteReference()

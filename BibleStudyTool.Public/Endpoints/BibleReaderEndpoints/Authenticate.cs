@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BibleStudyTool.Public.BibleReaderEndpoints
+namespace BibleStudyTool.Public.Endpoints.BibleReaderEndpoints
 {
     [ApiController]
-    public class Authenticate: ControllerBase
+    public class Authenticate : ControllerBase
     {
         private readonly SignInManager<BibleReader> _signInManager;
         private readonly ITokenClaimsService _tokenClaimsService;

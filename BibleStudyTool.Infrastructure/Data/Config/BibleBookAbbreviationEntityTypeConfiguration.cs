@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BibleStudyTool.Infrastructure.Data.Config
 {
-    public class BibleBookAbbreviationEntityTypeConfiguration: IEntityTypeConfiguration<BibleBookAbbreviation>
+    public class BibleBookAbbreviationEntityTypeConfiguration : IEntityTypeConfiguration<BibleBookAbbreviation>
     {
         public void Configure(EntityTypeBuilder<BibleBookAbbreviation> builder)
         {

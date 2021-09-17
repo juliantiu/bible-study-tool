@@ -21,6 +21,8 @@
     <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
     <None Remove="BibleReaderEndpoints\" />
     <None Remove="TagEnpoints\" />
+    <None Remove="Endpoints\" />
+    <None Remove="Endpoints\NoteEndpoints\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
@@ -32,7 +34,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.9" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="BibleReaderEndpoints\" />
-    <Folder Include="TagEnpoints\" />
+    <Folder Include="Endpoints\BibleReaderEndpoints\" />
+    <Folder Include="Endpoints\TagEndpoints\" />
+    <Folder Include="Endpoints\" />
+    <Folder Include="Endpoints\NoteEndpoints\" />
   </ItemGroup>
 </Project>

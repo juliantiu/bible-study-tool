@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace BibleStudyTool.Core.Entities.BibleAggregate
 {
-    public class BibleBook: BaseEntity, IAggregateRoot
+    public class BibleBook : BaseEntity, IAggregateRoot
     {
-        public int BibleBookId { get; private set; }
+        public string BibleBookId { get; private set; }
 
-        public int BibleVersionId { get; private set; }
+        public string BibleVersionId { get; private set; }
         public BibleVersion BibleVersion { get; private set; }
 
         public string Name { get; private set; }
@@ -17,7 +17,7 @@ namespace BibleStudyTool.Core.Entities.BibleAggregate
 
         public BibleBook() { }
 
-        public BibleBook(int versionId, BibleVersion bibleVersion, string name)
+        public BibleBook(string versionId, BibleVersion bibleVersion, string name)
         {
             BibleVersionId = versionId;
             BibleVersion = bibleVersion;

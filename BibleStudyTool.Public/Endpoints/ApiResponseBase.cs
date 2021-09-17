@@ -1,12 +1,12 @@
 ﻿using System;
-namespace BibleStudyTool.Public.TagEnpoints
+namespace BibleStudyTool.Public.Endpoints
 {
-    public class UpdateTagResponse
+    public class ApiResponseBase
     {
         public bool Success { get; set; } = false;
         public string FailureMessage { get; set; } = string.Empty;
 
-        public UpdateTagResponse()
+        public ApiResponseBase()
         {
         }
     }

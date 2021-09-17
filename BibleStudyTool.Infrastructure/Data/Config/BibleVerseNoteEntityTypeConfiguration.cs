@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BibleStudyTool.Infrastructure.Data.Config
 {
-    public class BibleVerseNoteEntityTypeConfiguration: IEntityTypeConfiguration<BibleVerseNote>
+    public class BibleVerseNoteEntityTypeConfiguration : IEntityTypeConfiguration<BibleVerseNote>
     {
         public void Configure(EntityTypeBuilder<BibleVerseNote> builder)
         {

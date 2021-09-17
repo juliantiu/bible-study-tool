@@ -7,7 +7,7 @@ namespace BibleStudyTool.Core.Entities
 {
     public class Tag : BaseEntity
     {
-        public int TagId { get; set; }
+        public string TagId { get; set; }
 
         public string Uid { get; set; }
 
@@ -27,14 +27,9 @@ namespace BibleStudyTool.Core.Entities
         public Tag UpdateDetails(string label)
         {
             if (label is string la)
-            {
                 Label = la;
-                return this;
-            }
-            else
-            {
-                throw new TagEmptyLabelException();
-            }
+
+            return this;
         }
     }
 }

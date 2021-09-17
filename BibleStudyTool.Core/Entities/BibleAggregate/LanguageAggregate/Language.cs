@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace BibleStudyTool.Core.Entities.BibleAggregate
 {
-    public class Language: BaseEntity, IAggregateRoot
+    public class Language : BaseEntity, IAggregateRoot
     {
-        public int LanguageId { get; private set; }
+        public string LanguageId { get; private set; }
 
         public string Code { get; private set; }
         public string Name { get; private set; }

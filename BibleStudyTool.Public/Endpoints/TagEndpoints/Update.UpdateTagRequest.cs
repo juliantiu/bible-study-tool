@@ -1,9 +1,9 @@
 ﻿using System;
-namespace BibleStudyTool.Public.TagEnpoints
+namespace BibleStudyTool.Public.Endpoints.TagEndpoints
 {
     public class UpdateTagRequest
     {
-        public int TagId { get; set; }
+        public string TagId { get; set; }
         public string Label { get; set; }
 
         public UpdateTagRequest()

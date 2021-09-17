@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BibleStudyTool.Public.BibleReaderEndpoints
+namespace BibleStudyTool.Public.Endpoints.BibleReaderEndpoints
 {
 	public class AuthenticateRequest
 	{

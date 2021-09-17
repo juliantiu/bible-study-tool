@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BibleStudyTool.Public.TagEnpoints
+namespace BibleStudyTool.Public.Endpoints.TagEndpoints
 {
     public class CreateTagRequest
     {

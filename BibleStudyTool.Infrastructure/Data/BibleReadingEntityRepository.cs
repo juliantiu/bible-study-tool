@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
@@ -16,7 +17,19 @@ namespace BibleStudyTool.Infrastructure.Data
             _dbContext = dbContext;
         }
 
-        public async Task<T> GetByIdAsync(int id)
+        public async Task<IList<T>> GetAllAsync()
+        {
+            try
+            {
+                return await _dbContext.Set<T>().ToListAsync();
+            }
+            catch (Exception)
+            {
+                throw; // todo throw an error factory query for the type
+            }
+        }
+
+        public async Task<T> GetByIdAsync(string id)
         {
             try
             {
@@ -84,7 +97,7 @@ namespace BibleStudyTool.Infrastructure.Data
                 Console.WriteLine($"{DateTime.UtcNow} :: UpdateAsync error :: {ex.Message}"); // todo Log this in a logging service
                 throw; // todo throw an error factory query for the type
             }
-            }
+        }
 
         public async Task UpdateAsync(T entity)
         {

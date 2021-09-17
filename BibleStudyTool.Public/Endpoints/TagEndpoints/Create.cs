@@ -8,10 +8,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BibleStudyTool.Public.TagEnpoints
+namespace BibleStudyTool.Public.Endpoints.TagEndpoints
 {
     [ApiController]
-    public class Create: ControllerBase
+    public class Create : ControllerBase
     {
         private readonly IAsyncRepository<Tag> _itemRepository;
         private readonly UserManager<BibleReader> _userManager;
@@ -23,7 +23,7 @@ namespace BibleStudyTool.Public.TagEnpoints
             _userManager = usermanager;
         }
 
-        [HttpPost("api/Tag")]
+        [HttpPost("api/tag")]
         [Authorize]
         public async Task<ActionResult<CreateTagResponse>> CreateHandler(CreateTagRequest request)
         {
@@ -36,7 +36,7 @@ namespace BibleStudyTool.Public.TagEnpoints
                     Label = request.Label,
                     Uid = userId
                 };
-                var result = await _itemRepository.CreateAsync(tag);
+                await _itemRepository.CreateAsync(tag);
                 response.Success = true;
                 return Ok(response);
             }

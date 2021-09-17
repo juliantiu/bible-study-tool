@@ -4,9 +4,9 @@ using BibleStudyTool.Core.Entities.JoinEntities;
 
 namespace BibleStudyTool.Core.Entities
 {
-    public class TagGroup: BaseEntity
+    public class TagGroup : BaseEntity
     {
-        public int TagGroupId { get; private set; }
+        public string TagGroupId { get; private set; }
 
         public string Uid { get; private set; }
 
