@@ -25,6 +25,7 @@
     <None Remove="Interfaces\" />
     <None Remove="NonEntityServices\" />
     <None Remove="Entities\JoinEntities\NoteReference\" />
+    <None Remove="NonEntityConcreteTypes\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -43,5 +44,6 @@
     <Folder Include="NonEntityInterfaces\" />
     <Folder Include="NonEntityServices\" />
     <Folder Include="Entities\JoinEntities\NoteReference\" />
+    <Folder Include="NonEntityTypes\" />
   </ItemGroup>
 </Project>

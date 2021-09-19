@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.NonEntityInterfaces;
+using BibleStudyTool.Infrastructure.Data;
 using BibleStudyTool.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

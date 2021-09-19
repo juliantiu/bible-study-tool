@@ -1,4 +1,6 @@
 ﻿using System;
+using BibleStudyTool.Core.NonEntityTypes;
+
 namespace BibleStudyTool.Core.Entities.JoinEntities
 {
     public class TagGroupNote : BaseEntity

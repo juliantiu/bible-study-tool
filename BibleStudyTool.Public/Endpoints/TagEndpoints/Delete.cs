@@ -20,6 +20,7 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
                       UserManager<BibleReader> userManager)
         {
             _itemRepository = itemRepository;
+            _userManager = userManager;
         }
 
         [HttpDelete("api/tag")]

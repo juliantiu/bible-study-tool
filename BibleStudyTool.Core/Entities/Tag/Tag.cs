@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using BibleStudyTool.Core.Entities.Exceptions;
 using BibleStudyTool.Core.Entities.JoinEntities;
+using BibleStudyTool.Core.NonEntityTypes;
 
 namespace BibleStudyTool.Core.Entities
 {

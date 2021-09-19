@@ -50,8 +50,10 @@ namespace BibleStudyTool.Public
             // Scoped Services
             services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BibleReadingEntityRepository<>));
+            services.AddScoped(typeof(IEntityGetterRepoFactory<>), typeof(IEntityGetterRepoFactory<>));
 
-            /* Authentication & JWT
+
+            /* Authentication & JWT configuration
              * Resources:
              *   - https://docs.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.authentication.jwtbearer.jwtbeareroptions?view=aspnetcore-5.0
              *   - https://www.youtube.com/watch?app=desktop&v=Lh82WlOvyQk

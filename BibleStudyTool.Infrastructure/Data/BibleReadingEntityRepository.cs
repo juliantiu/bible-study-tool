@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Linq;
 using System.Threading.Tasks;
-using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.NonEntityInterfaces;
+using BibleStudyTool.Core.NonEntityTypes;
 using Microsoft.EntityFrameworkCore;
 
 namespace BibleStudyTool.Infrastructure.Data
@@ -12,12 +12,29 @@ namespace BibleStudyTool.Infrastructure.Data
     {
         private readonly BibleReadingDbContext _dbContext;
 
+        /* QUESTION:
+         * todo
+         * How does dbContext get injected here if Startup.cs in the Public project does not depend on this class?
+         */
         public BibleReadingEntityRepository(BibleReadingDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<IList<T>> GetAllAsync()
+        public async Task<T> GetByIdAsync(string id)
+        {
+            try
+            {
+                var keyValues = new object[] { id };
+                return await _dbContext.Set<T>().FindAsync(keyValues);
+            }
+            catch (Exception)
+            {
+                throw; // todo throw an error factory query for the type
+            }
+        }
+
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             try
             {
@@ -29,14 +46,31 @@ namespace BibleStudyTool.Infrastructure.Data
             }
         }
 
-        public async Task<T> GetByIdAsync(string id)
+        public async Task<IReadOnlyList<T>> GetBySpefication(ISpecification<T> specification)
+        {
+            var entityTableQuery = _dbContext.Set<T>().AsQueryable();
+            var entityTableQueryWithSpecifications = ApplySpecifications(entityTableQuery, specification.SpecificationClauses);
+            return await entityTableQueryWithSpecifications.ToListAsync();
+        }
+
+        public async Task<IReadOnlyList<T>> GetByRawQuery(string query, string[] parameters)
         {
             try
             {
-                var keyValues = new object[] { id };
-                return await _dbContext.Set<T>().FindAsync(keyValues);
+                /* Proper usage:
+                 * 
+                 * var user = new SqlParameter("user", "johndoe");
+                 *
+                 * var blogs = context.Blogs
+                 *     .FromSqlRaw("EXECUTE dbo.GetMostPopularBlogsForUser @user", user)
+                 *     .ToList();
+                 * 
+                 * * Reference
+                 * ** https://docs.microsoft.com/en-us/ef/core/querying/raw-sql
+                 * */
+                return await _dbContext.Set<T>().FromSqlRaw(query, parameters).ToListAsync();
             }
-            catch (Exception)
+            catch
             {
                 throw; // todo throw an error factory query for the type
             }
@@ -132,11 +166,28 @@ namespace BibleStudyTool.Infrastructure.Data
                 throw; // todo throw an error factory query for the type
             }
         }
+
+        public IQueryable<T> ApplySpecifications(IQueryable<T> entityTableQuery, IList<SpecificationClause> specificationClauses)
+        {
+            foreach (var queryClause in specificationClauses)
+            {
+                if (queryClause is WhereClause<T> whereClause)
+                    entityTableQuery.Where(whereClause.Value);
+                if (queryClause is IncludeClause<T> includeClause)
+                    entityTableQuery.Include(includeClause.PropertyName);
+            }
+            return entityTableQuery;
+        }
     }
 }
 
 /* NOTES & REFERENCES
  * ******************
+ * * Repository Pattern
+ * ** https://codewithmukesh.com/blog/repository-pattern-in-aspnet-core/
+ * * Specification Pattern
+ * ** https://codewithmukesh.com/blog/specification-pattern-in-aspnet-core/
  * * Differemce b/t Set<T> and DbSet<T>
  * ** https://stackoverflow.com/questions/53469498/difference-between-dbsett-property-and-sett-function-in-ef-core
- * */
+ * 
+ */

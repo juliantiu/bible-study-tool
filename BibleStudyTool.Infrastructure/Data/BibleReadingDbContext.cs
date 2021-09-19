@@ -34,6 +34,10 @@ namespace BibleStudyTool.Infrastructure.Data
         {
         }
 
+        public BibleReadingDbContext()
+        {
+        }
+
         // BibleAggregate
         public DbSet<Language> Languages { get; set; }
         public DbSet<BibleVersion> BibleVersions { get; set; }

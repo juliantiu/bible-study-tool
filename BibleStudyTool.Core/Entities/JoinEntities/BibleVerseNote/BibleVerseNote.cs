@@ -1,5 +1,6 @@
 ﻿using System;
 using BibleStudyTool.Core.Entities.BibleAggregate;
+using BibleStudyTool.Core.NonEntityTypes;
 
 namespace BibleStudyTool.Core.Entities.JoinEntities
 {

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using BibleStudyTool.Core.NonEntityInterfaces;
+using BibleStudyTool.Core.NonEntityTypes;
 
 namespace BibleStudyTool.Core.Entities.BibleAggregate
 {

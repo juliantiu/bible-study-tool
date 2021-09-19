@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BibleStudyTool.Core.Entities
+namespace BibleStudyTool.Core.NonEntityInterfaces
 {
     public interface IAggregateRoot
     {

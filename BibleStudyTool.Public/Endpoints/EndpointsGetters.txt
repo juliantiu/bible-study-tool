@@ -1,0 +1,23 @@
+﻿NOTES
+    - Get a user's list of notes
+        Get notes where (Uid = [input])
+    - Get notes where the note id is [input]
+        - Get note
+            - include (note.NoteReferences && note.BibleVerseNotes && note.TagNotes && note.TagGroupNotes)
+            - where (note.NoteId == [input])
+    - Get all of the user notes that belong to all the verses in the current chapter
+
+TAGS
+    - Get tags where (tag.TagGroupId == [])
+
+TAGGROUPS
+
+VERSE
+    - Get verses where (chapter # = [input] && bookId = [input])
+    - Get verse where (verseId = [input])
+
+BOOK
+    - Get book where (version Id = [input])
+
+VERSION
+    - Get version where (languageId = [input])
