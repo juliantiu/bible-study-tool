@@ -1,6 +1,6 @@
 ﻿using System;
 using BibleStudyTool.Core.Entities;
-using BibleStudyTool.Core.NonEntityInterfaces;
+using BibleStudyTool.Core.Interfaces;
 
 namespace BibleStudyTool.Core.NonEntityTypes
 {
@@ -16,7 +16,7 @@ namespace BibleStudyTool.Core.NonEntityTypes
 
             switch (typeof(T))
             {
-                case Type NoteEntityGetterType when NoteEntityGetterType == typeof(NoteGetterRepository):
+                case Type noteEntityGetterType when noteEntityGetterType == typeof(NoteGetterRepository):
                     return new NoteGetterRepository();
             }
 

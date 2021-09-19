@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BibleStudyTool.Core.NonEntityInterfaces;
+using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Core.NonEntityTypes;
 using Microsoft.EntityFrameworkCore;
 

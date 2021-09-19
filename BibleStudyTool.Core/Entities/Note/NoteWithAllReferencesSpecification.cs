@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BibleStudyTool.Core.NonEntityInterfaces;
+using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Core.NonEntityTypes;
 
 namespace BibleStudyTool.Core.Entities

@@ -1,7 +1,7 @@
 ﻿using System;
 using BibleStudyTool.Core.NonEntityTypes;
 
-namespace BibleStudyTool.Core.NonEntityInterfaces
+namespace BibleStudyTool.Core.Interfaces
 {
     public interface IEntityGetterRepoFactory<T> where T : EntityGetterRepository
     {

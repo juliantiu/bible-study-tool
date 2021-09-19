@@ -6,5 +6,15 @@ namespace BibleStudyTool.Core.Entities.Exceptions
         public TagEmptyLabelException()
         {
         }
+
+        public TagEmptyLabelException(string message)
+            : base(message)
+        {
+        }
+
+        public TagEmptyLabelException(string message, Exception inner)
+            : base(message, inner)
+        {
+        }
     }
 }

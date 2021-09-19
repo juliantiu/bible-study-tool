@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BibleStudyTool.Core.NonEntityTypes;
 
-namespace BibleStudyTool.Core.NonEntityInterfaces
+namespace BibleStudyTool.Core.Interfaces
 {
     public interface ISpecification<T>
     {

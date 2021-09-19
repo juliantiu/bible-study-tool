@@ -41,8 +41,8 @@
     <Folder Include="Entities\JoinEntities\BibleVerseNote\" />
     <Folder Include="Entities\BibleAggregate\LanguageAggregate\BibleVersionAggregate\" />
     <Folder Include="Entities\BibleAggregate\LanguageAggregate\BibleVersionAggregate\BibleBookAggregate\" />
-    <Folder Include="NonEntityInterfaces\" />
-    <Folder Include="NonEntityServices\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Services\" />
     <Folder Include="Entities\JoinEntities\NoteReference\" />
     <Folder Include="NonEntityTypes\" />
   </ItemGroup>

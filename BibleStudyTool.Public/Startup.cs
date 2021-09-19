@@ -15,10 +15,11 @@ using System.IO;
 using Microsoft.EntityFrameworkCore;
 using BibleStudyTool.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity;
-using BibleStudyTool.Core.NonEntityInterfaces;
+using BibleStudyTool.Core.Interfaces;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using BibleStudyTool.Core.NonEntityTypes;
 
 namespace BibleStudyTool.Public
 {
@@ -50,8 +51,7 @@ namespace BibleStudyTool.Public
             // Scoped Services
             services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BibleReadingEntityRepository<>));
-            services.AddScoped(typeof(IEntityGetterRepoFactory<>), typeof(IEntityGetterRepoFactory<>));
-
+            services.AddScoped(typeof(IEntityGetterRepoFactory<>), typeof(EntityGetterRepoFactory<>));
 
             /* Authentication & JWT configuration
              * Resources:
