@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Interfaces;
-using BibleStudyTool.Core.NonEntityTypes;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.NoteEndpoints

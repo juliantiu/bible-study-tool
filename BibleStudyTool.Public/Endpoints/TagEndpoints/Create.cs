@@ -36,9 +36,14 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
                     Label = request.Label,
                     Uid = userId
                 };
-                await _itemRepository.CreateAsync(tag);
+                await _itemRepository.CreateAsync<TagCrudActionException>(tag);
                 response.Success = true;
                 return Ok(response);
+            }
+            catch (TagCrudActionException tcaex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                  new EntityCrudActionExceptionResponse() { Timestamp = tcaex.Timestamp, Message = tcaex.Message });
             }
             catch (Exception)
             {

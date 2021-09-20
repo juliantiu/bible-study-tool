@@ -32,14 +32,14 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
             try
             {
                 var currentUserId = _userManager.GetUserId(User);
-                var tag = await _itemRepository.GetByIdAsync(request.TagId);
+                var tag = await _itemRepository.GetByIdAsync<TagCrudActionException>(request.TagId);
                 if (tag.Uid != currentUserId)
                 {
                     response.FailureMessage = "The current user does not own the tag being updated.";
                     return response;
                 }
                 tag.UpdateDetails(request.Label);
-                await _itemRepository.UpdateAsync(tag);
+                await _itemRepository.UpdateAsync<TagCrudActionException>(tag);
                 response.Success = true;
                 return response;
             }
@@ -48,6 +48,11 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
                 response.Success = false;
                 response.FailureMessage = "The new tag label cannot be null.";
                 return response;
+            }
+            catch (TagCrudActionException tcaex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                  new EntityCrudActionExceptionResponse() { Timestamp = tcaex.Timestamp, Message = tcaex.Message });
             }
             catch (Exception)
             {

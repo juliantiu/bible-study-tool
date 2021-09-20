@@ -31,16 +31,21 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
             {
                 var response = new DeleteTagResponse();
                 var currentUserId = _userManager.GetUserId(User);
-                var tag = await _itemRepository.GetByIdAsync(id);
+                var tag = await _itemRepository.GetByIdAsync<TagCrudActionException>(id);
                 if (tag.Uid != currentUserId)
                 {
                     response.FailureMessage = "The current user does not own the tag being deleted.";
                     return response;
                 }
-                await _itemRepository.DeleteAsync(tag);
+                await _itemRepository.DeleteAsync<TagCrudActionException>(tag);
                 response.Success = true;
                 return response;
 
+            }
+            catch (TagCrudActionException tcaex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                  new EntityCrudActionExceptionResponse() { Timestamp = tcaex.Timestamp, Message = tcaex.Message });
             }
             catch (Exception)
             {

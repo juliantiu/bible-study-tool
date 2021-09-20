@@ -32,16 +32,21 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
             try
             {
                 var currentUserId = _userManager.GetUserId(User);
-                var note = await _itemRepository.GetByIdAsync(request.NoteId);
+                var note = await _itemRepository.GetByIdAsync<NoteCrudActionException>(request.NoteId);
                 if (note.Uid != currentUserId)
                 {
                     response.FailureMessage = "The current user does not own the note being updated.";
                     return response;
                 }
                 note.UpdateDetails(request.Summary, request.Text);
-                await _itemRepository.UpdateAsync(note);
+                await _itemRepository.UpdateAsync<NoteCrudActionException>(note);
                 response.Success = true;
                 return response;
+            }
+            catch (NoteCrudActionException ncaex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                  new EntityCrudActionExceptionResponse() { Timestamp = ncaex.Timestamp, Message = ncaex.Message });
             }
             catch (Exception)
             {

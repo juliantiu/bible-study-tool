@@ -30,16 +30,21 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
             {
                 var response = new DeleteNoteResponse();
                 var currentUserId = _userManager.GetUserId(User);
-                var note = await _itemRepository.GetByIdAsync(id);
+                var note = await _itemRepository.GetByIdAsync<NoteCrudActionException>(id);
                 if (note.Uid != currentUserId)
                 {
                     response.FailureMessage = "The current user does not own the note being deleted.";
                     return response;
                 }
-                await _itemRepository.DeleteAsync(note);
+                await _itemRepository.DeleteAsync<NoteCrudActionException>(note);
                 response.Success = true;
                 return response;
 
+            }
+            catch (NoteCrudActionException ncaex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                  new EntityCrudActionExceptionResponse() { Timestamp = ncaex.Timestamp, Message = ncaex.Message });
             }
             catch (Exception)
             {

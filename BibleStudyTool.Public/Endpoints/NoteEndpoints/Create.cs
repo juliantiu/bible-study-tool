@@ -36,9 +36,14 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
                     Text = request.Text,
                     Uid = _userManager.GetUserId(User)
                 };
-                await _itemRepository.CreateAsync(note);
+                await _itemRepository.CreateAsync<NoteCrudActionException>(note);
                 response.Success = true;
                 return Ok(response);
+            }
+            catch (NoteCrudActionException ncaex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                  new EntityCrudActionExceptionResponse() { Timestamp = ncaex.Timestamp, Message = ncaex.Message });
             }
             catch
             {

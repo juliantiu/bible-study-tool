@@ -11,49 +11,69 @@ namespace BibleStudyTool.Infrastructure.Data
     public class BibleReadingEntityRepository<T> : IAsyncRepository<T> where T : BaseEntity
     {
         private readonly BibleReadingDbContext _dbContext;
+        private readonly IEntityCrudActionExceptionFactory _entityCrudActionExceptionFactory;
 
         /* QUESTION:
          * todo
          * How does dbContext get injected here if Startup.cs in the Public project does not depend on this class?
          */
-        public BibleReadingEntityRepository(BibleReadingDbContext dbContext)
+        public BibleReadingEntityRepository(BibleReadingDbContext dbContext,
+                                            IEntityCrudActionExceptionFactory entityCrudActionExceptionFactory)
         {
             _dbContext = dbContext;
+            _entityCrudActionExceptionFactory = entityCrudActionExceptionFactory;
         }
 
-        public async Task<T> GetByIdAsync(string id)
+        public async Task<T> GetByIdAsync<Y>(string id)
+            where Y : EntityCrudActionException
         {
             try
             {
                 var keyValues = new object[] { id };
                 return await _dbContext.Set<T>().FindAsync(keyValues);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw; // todo throw an error factory query for the type
+                throw
+                    _entityCrudActionExceptionFactory
+                        .CreateEntityCrudActionException<Y>($"GetByIdAsync error :: {ex.Message}");
             }
         }
 
-        public async Task<IReadOnlyList<T>> GetAllAsync()
+        public async Task<IReadOnlyList<T>> GetAllAsync<Y>()
+            where Y : EntityCrudActionException
         {
             try
             {
                 return await _dbContext.Set<T>().ToListAsync();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw; // todo throw an error factory query for the type
+                throw
+                    _entityCrudActionExceptionFactory
+                        .CreateEntityCrudActionException<Y>($"GetAllAsync error :: {ex.Message}");
             }
         }
 
-        public async Task<IReadOnlyList<T>> GetBySpefication(ISpecification<T> specification)
+        public async Task<IReadOnlyList<T>> GetBySpefication<Y>(ISpecification<T> specification)
+            where Y : EntityCrudActionException
         {
-            var entityTableQuery = _dbContext.Set<T>().AsQueryable();
-            var entityTableQueryWithSpecifications = ApplySpecifications(entityTableQuery, specification.SpecificationClauses);
-            return await entityTableQueryWithSpecifications.ToListAsync();
+            try
+            {
+                var entityTableQuery = _dbContext.Set<T>().AsQueryable();
+                var entityTableQueryWithSpecifications = ApplySpecifications(entityTableQuery, specification.SpecificationClauses);
+                return await entityTableQueryWithSpecifications.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw
+                    _entityCrudActionExceptionFactory
+                        .CreateEntityCrudActionException<Y>($"GetBySpecification error :: {ex.Message}");
+            }
         }
 
-        public async Task<IReadOnlyList<T>> GetByRawQuery(string query, string[] parameters)
+        public async Task<IReadOnlyList<T>> GetByRawQuery<Y>(string query, string[] parameters)
+            where Y : EntityCrudActionException
         {
             try
             {
@@ -70,13 +90,16 @@ namespace BibleStudyTool.Infrastructure.Data
                  * */
                 return await _dbContext.Set<T>().FromSqlRaw(query, parameters).ToListAsync();
             }
-            catch
+            catch (Exception ex)
             {
-                throw; // todo throw an error factory query for the type
+                throw
+                    _entityCrudActionExceptionFactory
+                        .CreateEntityCrudActionException<Y>($"GetByRawQuery error :: {ex.Message}");
             }
         }
 
-        public async Task<T> CreateAsync(T entity)
+        public async Task<T> CreateAsync<Y>(T entity)
+            where Y : EntityCrudActionException 
         {
             try
             {
@@ -90,12 +113,14 @@ namespace BibleStudyTool.Infrastructure.Data
                                        || ex is ObjectDisposedException
                                        || ex is InvalidOperationException)
             {
-                Console.WriteLine($"{DateTime.UtcNow} :: CreateAsync error :: {ex.Message}"); // todo Log this in a logging service
-                throw; // todo throw an error factory query for the type
+                throw
+                    _entityCrudActionExceptionFactory
+                        .CreateEntityCrudActionException<Y>($"CreateAsync error :: {ex.Message}");
             }
         }
 
-        public async Task DeleteAsync(T entity)
+        public async Task DeleteAsync<Y>(T entity)
+            where Y : EntityCrudActionException
         {
             try
             {
@@ -128,12 +153,14 @@ namespace BibleStudyTool.Infrastructure.Data
                                        || ex is ObjectDisposedException
                                        || ex is InvalidOperationException)
             {
-                Console.WriteLine($"{DateTime.UtcNow} :: UpdateAsync error :: {ex.Message}"); // todo Log this in a logging service
-                throw; // todo throw an error factory query for the type
+                throw
+                    _entityCrudActionExceptionFactory
+                        .CreateEntityCrudActionException<Y>($"DeleteAsync error :: {ex.Message}");
             }
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task UpdateAsync<Y>(T entity)
+            where Y : EntityCrudActionException
         {
             try
             {
@@ -162,8 +189,9 @@ namespace BibleStudyTool.Infrastructure.Data
                                        || ex is ObjectDisposedException
                                        || ex is InvalidOperationException)
             {
-                Console.WriteLine($"{DateTime.UtcNow} :: UpdateAsync error :: {ex.Message}"); // todo Log this in a logging service
-                throw; // todo throw an error factory query for the type
+                throw
+                    _entityCrudActionExceptionFactory
+                        .CreateEntityCrudActionException<Y>($"UpdateAsync error :: {ex.Message}");
             }
         }
 
