@@ -15,7 +15,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using BibleStudyTool.Core.Entities;
-using BibleStudyTool.Core.Entities.BibleAggregate;
 using BibleStudyTool.Core.Entities.JoinEntities;
 using BibleStudyTool.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -42,7 +41,6 @@ namespace BibleStudyTool.Infrastructure.Data
         public DbSet<Language> Languages { get; set; }
         public DbSet<BibleVersion> BibleVersions { get; set; }
         public DbSet<BibleBook> BibleBooks { get; set; }
-        public DbSet<BibleBookAbbreviation> BibleBookAbbreviations { get; set; }
         public DbSet<BibleVerse> BibleVerses { get; set; }
 
         // BibleReaderAggregate
@@ -54,7 +52,6 @@ namespace BibleStudyTool.Infrastructure.Data
         public DbSet<TagGroupNote> TagGroupNotes { get; set; }
         public DbSet<TagGroupTag> TagGroupTags { get; set; }
         public DbSet<TagNote> TagNotes { get; set; }
-        public DbSet<BibleVerseNote> BibleVerseNotes { get; set; }
         public DbSet<NoteReference> NoteReferences { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

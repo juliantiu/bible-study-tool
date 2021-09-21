@@ -14,13 +14,13 @@ namespace BibleStudyTool.Infrastructure.Data.Config
             builder.Property(note => note.Uid)
                    .HasColumnName("NoteUid")
                    .IsRequired();
-
-            builder.Property(note => note.Summary)
-                   .HasMaxLength(240)
+            
+			builder.Property(note => note.Summary)
+               	   .HasMaxLength(240)
                    .IsRequired();
 
             builder.Property(note => note.Text)
-                   .HasColumnName("NoteText");
+                   .HasColumnName("NoteText");    
         }
     }
 }

@@ -5,22 +5,20 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
 {
     public class TagGroupNote : BaseEntity
     {
-        public string TagGroupNoteId { get; private set; }
+        public long TagGroupId { get; private set; }
+        public TagGroup TagGroup { get; }
 
-        public string TagGroupId { get; private set; }
-        public TagGroup TagGroup { get; private set; }
+        public long NoteId { get; private set; }
+        public Note Note { get; }
 
-        public string NoteId { get; private set; }
-        public Note Note { get; private set; }
+        public TagGroupNote()
+        {
+        }
 
-        public TagGroupNote() { }
-
-        public TagGroupNote(string tagGroupId, TagGroup tagGroup, string noteId, Note note)
+        public TagGroupNote(long tagGroupId, long noteId)
         {
             TagGroupId = tagGroupId;
-            TagGroup = tagGroup;
             NoteId = noteId;
-            Note = note;
         }
     }
 }

@@ -7,18 +7,17 @@ namespace BibleStudyTool.Core.Entities
 {
     public class Note : BaseEntity
     {
-        public string NoteId { get; set; }
+        public long NoteId { get; set; }
 
         public string Uid { get; set; }
 
         public string Summary { get; set; }
         public string Text { get; set; }
 
-        public IList<TagGroupNote> TagGroupNotes { get; set; }
-        public IList<TagNote> TagNotes { get; set; }
-        public IList<BibleVerseNote> BibleVerseNotes { get; set; }
-        public IList<NoteReference> Notes { get; set; }
-        public IList<NoteReference> NoteReferences { get; set; }
+        public IList<TagGroupNote> TagGroupNotes { get; }
+        public IList<TagNote> TagNotes { get; }
+        public IList<NoteReference> ReferencedNotes { get; }
+        public IList<NoteReference> ReferencedIn { get; }
 
         public Note() { }
 

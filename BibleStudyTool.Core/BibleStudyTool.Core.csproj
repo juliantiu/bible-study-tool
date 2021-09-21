@@ -24,26 +24,37 @@
     <None Remove="Entities\BibleAggregate\LanguageAggregate\BibleVersion\BibleBookAggregate\" />
     <None Remove="Interfaces\" />
     <None Remove="NonEntityServices\" />
-    <None Remove="Entities\JoinEntities\NoteReference\" />
     <None Remove="NonEntityConcreteTypes\" />
+    <None Remove="Entities\Language\" />
+    <None Remove="Entities\BibleBookAggregate\" />
+    <None Remove="Entities\BibleBookAggregate\BibleVerse\" />
+    <None Remove="Entities\BibleVersion\" />
+    <None Remove="Entities\JoinEntities\BibleVersionLanguage\" />
+    <None Remove="Entities\JoinEntities\BibleVerseVersionLanguage\" />
+    <None Remove="Entities\JoinEntities\BibleBookAbbreviationLanguage\" />
+    <None Remove="Entities\JoinEntities\BibleBookLanguage\" />
+    <None Remove="Entities\JoinEntities\NoteReference\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
     <Folder Include="Entities\Tag\" />
     <Folder Include="Entities\TagGroup\" />
     <Folder Include="Entities\Note\" />
-    <Folder Include="Entities\BibleAggregate\" />
-    <Folder Include="Entities\BibleAggregate\LanguageAggregate\" />
     <Folder Include="Entities\JoinEntities\" />
     <Folder Include="Entities\JoinEntities\TagGroupTag\" />
     <Folder Include="Entities\JoinEntities\TagGroupNote\" />
     <Folder Include="Entities\JoinEntities\TagNote\" />
-    <Folder Include="Entities\JoinEntities\BibleVerseNote\" />
-    <Folder Include="Entities\BibleAggregate\LanguageAggregate\BibleVersionAggregate\" />
-    <Folder Include="Entities\BibleAggregate\LanguageAggregate\BibleVersionAggregate\BibleBookAggregate\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
-    <Folder Include="Entities\JoinEntities\NoteReference\" />
     <Folder Include="NonEntityTypes\" />
+    <Folder Include="Entities\Language\" />
+    <Folder Include="Entities\BibleBookAggregate\" />
+    <Folder Include="Entities\BibleBookAggregate\BibleVerse\" />
+    <Folder Include="Entities\BibleVersion\" />
+    <Folder Include="Entities\JoinEntities\BibleVersionLanguage\" />
+    <Folder Include="Entities\JoinEntities\BibleVerseBibleVersionLanguage\" />
+    <Folder Include="Entities\JoinEntities\BibleBookAbbreviationLanguage\" />
+    <Folder Include="Entities\JoinEntities\BibleBookLanguage\" />
+    <Folder Include="Entities\JoinEntities\NoteReference\" />
   </ItemGroup>
 </Project>

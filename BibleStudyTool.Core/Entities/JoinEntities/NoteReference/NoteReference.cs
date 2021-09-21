@@ -1,26 +1,37 @@
 ﻿using System;
-using BibleStudyTool.Core.NonEntityTypes;
-
 namespace BibleStudyTool.Core.Entities.JoinEntities
 {
-    public class NoteReference : BaseEntity
+    public enum NoteReferenceType
     {
-        public string NoteReferenceId { get; private set; }
+        BibleVerse,
+        Note
+    }
 
-        public string NoteId { get; private set; }
-        public Note Note { get; private set; }
+    public class NoteReference
+    {
+        public long NoteReferenceId { get; }
 
-        public string ReferenceId { get; private set; }
-        public Note Reference { get; private set; }
+        public long OwningNoteId { get; private set; }
+        public Note OwningNote { get; }
+
+        public long ReferencedNoteId { get; private set; }
+        public Note ReferencedNote { get; }
+
+        public int BibleVerseId { get; private set; }
+        public BibleVerse BibleVerse { get; }
+
+        public NoteReferenceType NoteReferenceType { get; private set; }
 
         public NoteReference()
         {
         }
+
+        public NoteReference(long owningNoteId, long referencedNoteId, int bibleVerseId, NoteReferenceType noteReferenceType)
+        {
+            OwningNoteId = owningNoteId;
+            ReferencedNoteId = referencedNoteId;
+            BibleVerseId = bibleVerseId;
+            NoteReferenceType = noteReferenceType;
+        }
     }
 }
-
-/* Notes & References
- * ******************
- * * Self-referencing, many-to-many relationships
- * ** https://stackoverflow.com/questions/61134713/entity-framework-core-3-0-creating-a-self-referencing-many-to-many-relationshi
- * */

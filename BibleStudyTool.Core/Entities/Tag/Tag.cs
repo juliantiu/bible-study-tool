@@ -7,7 +7,7 @@ namespace BibleStudyTool.Core.Entities
 {
     public class Tag : BaseEntity
     {
-        public string TagId { get; set; }
+        public long TagId { get; set; }
 
         public string Uid { get; set; }
 
