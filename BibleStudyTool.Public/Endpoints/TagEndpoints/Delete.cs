@@ -31,7 +31,8 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
             {
                 var response = new DeleteTagResponse();
                 var currentUserId = _userManager.GetUserId(User);
-                var tag = await _itemRepository.GetByIdAsync<TagCrudActionException>(id);
+                var idKey = new object[] { id };
+                var tag = await _itemRepository.GetByIdAsync<TagCrudActionException>(idKey);
                 if (tag.Uid != currentUserId)
                 {
                     response.FailureMessage = "The current user does not own the tag being deleted.";

@@ -11,8 +11,8 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
         public string LanguageCode { get; }
         public Language Language { get; }
 
-        public string BibleVersionName { get; }
-        public string BibleVersionAbbreviation { get; }
+        public string Name { get; }
+        public string Abbreviation { get; }
 
         public BibleVersionLanguage()
         {

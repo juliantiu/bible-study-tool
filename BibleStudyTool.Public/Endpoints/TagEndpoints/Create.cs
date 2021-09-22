@@ -30,12 +30,7 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
             try
             {
                 var response = new CreateTagResponse();
-                var userId = _userManager.GetUserId(User);
-                var tag = new Tag()
-                {
-                    Label = request.Label,
-                    Uid = userId
-                };
+                var tag = new Tag(_userManager.GetUserId(User), request.Label, request.Color);
                 await _itemRepository.CreateAsync<TagCrudActionException>(tag);
                 response.Success = true;
                 return Ok(response);

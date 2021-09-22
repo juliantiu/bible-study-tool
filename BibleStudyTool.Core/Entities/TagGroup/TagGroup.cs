@@ -7,14 +7,13 @@ namespace BibleStudyTool.Core.Entities
 {
     public class TagGroup : BaseEntity
     {
-        public long TagGroupId { get; private set; }
-
-        public string Uid { get; private set; }
+        public int TagGroupId { get; private set; }
 
         public string Label { get; private set; }
+        public string Uid { get; private set; }
 
-        public IList<TagGroupNote> TagGroupNotes { get; set; }
-        public IList<TagGroupTag> TagGroupTags { get; set; }
+        public IList<TagGroupNote> TagGroupNotes { get; }
+        public IList<TagGroupTag> TagGroupTags { get; }
 
         public TagGroup() { }
 

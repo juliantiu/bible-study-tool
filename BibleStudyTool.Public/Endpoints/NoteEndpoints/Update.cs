@@ -32,7 +32,8 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
             try
             {
                 var currentUserId = _userManager.GetUserId(User);
-                var note = await _itemRepository.GetByIdAsync<NoteCrudActionException>(request.NoteId);
+                var keyId = new object[] { request.NoteId };
+                var note = await _itemRepository.GetByIdAsync<NoteCrudActionException>(keyId);
                 if (note.Uid != currentUserId)
                 {
                     response.FailureMessage = "The current user does not own the note being updated.";

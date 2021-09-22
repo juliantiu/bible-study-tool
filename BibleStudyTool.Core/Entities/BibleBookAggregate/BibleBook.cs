@@ -9,7 +9,7 @@ namespace BibleStudyTool.Core.Entities
     public class BibleBook : BaseEntity, IAggregateRoot
     {
         public int BibleBookId { get; }
-        public string BibleBookDefaultName { get; private set; }
+        public string DefaultName { get; private set; }
 
         public IList<BibleVerse> BibleVerses { get; }
         public IList<BibleBookAbbreviationLanguage> BibleBookAbbreviationLanguages { get; }
@@ -19,9 +19,9 @@ namespace BibleStudyTool.Core.Entities
         {
         }
 
-        public BibleBook(string bibleBookDefaultName)
+        public BibleBook(string defaultName)
         {
-            BibleBookDefaultName = bibleBookDefaultName;
+            DefaultName = defaultName;
         }
     }
 }

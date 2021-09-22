@@ -32,13 +32,14 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
             try
             {
                 var currentUserId = _userManager.GetUserId(User);
-                var tag = await _itemRepository.GetByIdAsync<TagCrudActionException>(request.TagId);
+                var keyId = new Object[] { request.TagId };
+                var tag = await _itemRepository.GetByIdAsync<TagCrudActionException>(keyId);
                 if (tag.Uid != currentUserId)
                 {
                     response.FailureMessage = "The current user does not own the tag being updated.";
                     return response;
                 }
-                tag.UpdateDetails(request.Label);
+                tag.UpdateDetails(request.Label, request.Color);
                 await _itemRepository.UpdateAsync<TagCrudActionException>(tag);
                 response.Success = true;
                 return response;

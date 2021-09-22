@@ -9,6 +9,7 @@ namespace BibleStudyTool.Core.Entities
     {
         public int BibleVerseId { get; }
 
+        public bool IsNewTestament { get; private set; }
         public int ChapterNumber { get; private set; }
         public int VerseNumber { get; private set; }
 
@@ -16,16 +17,18 @@ namespace BibleStudyTool.Core.Entities
         public BibleBook BibleBook { get; }
 
         public IList<BibleVerseBibleVersionLanguage> BibleVerseBibleVersionLanguages { get; }
+        public IList<NoteReference> NoteReferences { get; }
 
         public BibleVerse()
         {
         }
 
-        public BibleVerse(int chapterNumber, int verseNumber, int bibleBookId)
+        public BibleVerse(int chapterNumber, int verseNumber, int bibleBookId, bool isNewTestament)
         {
             ChapterNumber = chapterNumber;
             VerseNumber = verseNumber;
             BibleBookId = bibleBookId;
+            IsNewTestament = isNewTestament;
         }   
     }
 }

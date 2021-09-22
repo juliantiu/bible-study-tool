@@ -30,7 +30,8 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
             {
                 var response = new DeleteNoteResponse();
                 var currentUserId = _userManager.GetUserId(User);
-                var note = await _itemRepository.GetByIdAsync<NoteCrudActionException>(id);
+                var keyId = new object[] { id }; 
+                var note = await _itemRepository.GetByIdAsync<NoteCrudActionException>(keyId);
                 if (note.Uid != currentUserId)
                 {
                     response.FailureMessage = "The current user does not own the note being deleted.";

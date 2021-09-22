@@ -16,11 +16,12 @@ namespace BibleStudyTool.Infrastructure.Data.Config
                    .IsRequired();
             
 			builder.Property(note => note.Summary)
+                   .HasColumnName("NoteSummary")
                	   .HasMaxLength(240)
                    .IsRequired();
 
             builder.Property(note => note.Text)
-                   .HasColumnName("NoteText");    
+                   .HasColumnName("NoteText");
         }
     }
 }

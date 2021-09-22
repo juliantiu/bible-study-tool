@@ -9,8 +9,8 @@ namespace BibleStudyTool.Core.Entities
     {
         public int BibleVersionId { get; }
 
-        public string BibleVersionDefaultName { get; private set; }
-        public string BibleVersionDefaultAbbreviation { get; private set; }
+        public string DefaultName { get; private set; }
+        public string DefaultAbbreviation { get; private set; }
 
         public IList<BibleVersionLanguage> BibleVersionLanguages { get; }
         public IList<BibleVerseBibleVersionLanguage> BibleVerseBibleVersionLanguages { get; }
@@ -19,10 +19,10 @@ namespace BibleStudyTool.Core.Entities
         {
         }
 
-        public BibleVersion(string bibleVersionDefaultName, string bibleVersionDefaultAbbreviation)
+        public BibleVersion(string defaultName, string defaultAbbreviation)
         {
-            BibleVersionDefaultName = bibleVersionDefaultName;
-            BibleVersionDefaultAbbreviation = bibleVersionDefaultAbbreviation;
+            DefaultName = defaultName;
+            DefaultAbbreviation = defaultAbbreviation;
         }
     }
 }

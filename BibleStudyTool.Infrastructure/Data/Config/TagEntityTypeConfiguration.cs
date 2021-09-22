@@ -19,6 +19,10 @@ namespace BibleStudyTool.Infrastructure.Data.Config
                    .HasColumnName("TagLabel")
                    .HasMaxLength(100)
                    .IsRequired();
+
+            builder.Property(tag => tag.Color)
+                   .HasColumnName("TagColor")
+                   .HasMaxLength(25); // Supports: RGB(255,255,255) , CMYK(100%,100%,100%,100%) , RGBA(255,255,255,0.000) , #FFFFFF , HSLA(359,100%,100%) , HSLA(359,100%,100%,0.000) 
         }
     }
 }

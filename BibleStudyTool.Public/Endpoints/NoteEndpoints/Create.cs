@@ -30,12 +30,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
             try
             {
                 var response = new CreateNoteResponse();
-                var note = new Note()
-                {
-                    Summary = request.Summary,
-                    Text = request.Text,
-                    Uid = _userManager.GetUserId(User)
-                };
+                var note = new Note(_userManager.GetUserId(User), request.Summary, request.Text);
                 await _itemRepository.CreateAsync<NoteCrudActionException>(note);
                 response.Success = true;
                 return Ok(response);

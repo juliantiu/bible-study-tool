@@ -24,31 +24,7 @@ namespace BibleStudyTool.Infrastructure.Data
             _entityCrudActionExceptionFactory = entityCrudActionExceptionFactory;
         }
 
-        public async Task<T> GetByIdAsync<Y>(long id)
-            where Y : EntityCrudActionException
-        {
-            return await GetByIdAsyncHelper<Y>(new object[] { id });
-        }
-
-        public async Task<T> GetByIdAsync<Y>(int id)
-            where Y : EntityCrudActionException
-        {
-            return await GetByIdAsyncHelper<Y>(new object[] { id });
-        }
-
-        public async Task<T> GetByIdAsync<Y>(string id)
-            where Y : EntityCrudActionException
-        {
-            return await GetByIdAsyncHelper<Y>(new object[] { id });
-        }
-
         public async Task<T> GetByIdAsync<Y>(object[] keyValues)
-            where Y : EntityCrudActionException
-        {
-            return await GetByIdAsyncHelper<Y>(keyValues);
-        }
-
-        public async Task<T> GetByIdAsyncHelper<Y>(object[] keyValues)
             where Y : EntityCrudActionException
         {
             try

@@ -7,27 +7,30 @@ namespace BibleStudyTool.Core.Entities
 {
     public class Tag : BaseEntity
     {
-        public long TagId { get; set; }
+        public int TagId { get; set; }
 
-        public string Uid { get; set; }
+        public string Color { get; private set; }
+        public string Label { get; private set; }
+        public string Uid { get; private set; }
 
-        public string Label { get; set; }
-
-        public IList<TagGroupTag> TagGroupTags { get; set; }
-        public IList<TagNote> TagNotes { get; set; }
+        public IList<TagGroupTag> TagGroupTags { get; }
+        public IList<TagNote> TagNotes { get; }
 
         public Tag() { }
 
-        public Tag(string uid, string label)
+        public Tag(string uid, string label, string color)
         {
             Uid = uid;
             Label = label;
+            Color = color;
         }
 
-        public Tag UpdateDetails(string label)
+        public Tag UpdateDetails(string label, string color)
         {
             if (label is string la)
                 Label = la;
+            if (color is string co)
+                Color = co;
 
             return this;
         }

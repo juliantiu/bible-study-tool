@@ -9,16 +9,12 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
 
     public class NoteReference
     {
-        public long NoteReferenceId { get; }
-
-        public long OwningNoteId { get; private set; }
+        public int OwningNoteId { get; private set; }
         public Note OwningNote { get; }
 
-        public long ReferencedNoteId { get; private set; }
+        public int ReferenceId { get; private set; }
         public Note ReferencedNote { get; }
-
-        public int BibleVerseId { get; private set; }
-        public BibleVerse BibleVerse { get; }
+        public BibleVerse ReferencedBibleVerse { get; }
 
         public NoteReferenceType NoteReferenceType { get; private set; }
 
@@ -26,11 +22,10 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
         {
         }
 
-        public NoteReference(long owningNoteId, long referencedNoteId, int bibleVerseId, NoteReferenceType noteReferenceType)
+        public NoteReference(int owningNoteId, int referenceId, NoteReferenceType noteReferenceType)
         {
             OwningNoteId = owningNoteId;
-            ReferencedNoteId = referencedNoteId;
-            BibleVerseId = bibleVerseId;
+            ReferenceId = referenceId;
             NoteReferenceType = noteReferenceType;
         }
     }
