@@ -1,23 +1,22 @@
 ﻿using System;
 using BibleStudyTool.Core.Exceptions;
-using BibleStudyTool.Core.NonEntityTypes;
 
 namespace BibleStudyTool.Core.Entities
 {
-    public class TagCrudActionException : EntityCrudActionException
+    public class TagValidationException : EntityValidationException
     {
-        public TagCrudActionException()
+        public TagValidationException()
         {
             Timestamp = DateTime.UtcNow;
         }
 
-        public TagCrudActionException(string message)
+        public TagValidationException(string message)
             : base(message)
         {
             Timestamp = DateTime.UtcNow;
         }
 
-        public TagCrudActionException(string message, Exception inner)
+        public TagValidationException(string message, Exception inner)
             : base(message, inner)
         {
             Timestamp = DateTime.UtcNow;

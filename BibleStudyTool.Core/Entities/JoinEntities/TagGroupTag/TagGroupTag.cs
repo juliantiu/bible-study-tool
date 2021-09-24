@@ -1,5 +1,5 @@
 ﻿using System;
-using BibleStudyTool.Core.NonEntityTypes;
+using BibleStudyTool.Core.Interfaces;
 
 namespace BibleStudyTool.Core.Entities.JoinEntities
 {

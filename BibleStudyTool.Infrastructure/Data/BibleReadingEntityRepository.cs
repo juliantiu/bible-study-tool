@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BibleStudyTool.Core.Exceptions;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Core.NonEntityTypes;
 using Microsoft.EntityFrameworkCore;
@@ -118,6 +119,28 @@ namespace BibleStudyTool.Infrastructure.Data
             }
         }
 
+        public async Task BulkCreateAsync<Y>(T[] entities) where Y : EntityCrudActionException
+        {
+            try
+            {
+                using (var ctx = new BibleReadingDbContext())
+                {
+                    ctx.RemoveRange(entities);
+                    await ctx.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex) when (ex is DbUpdateException
+                                       || ex is DbUpdateConcurrencyException
+                                       || ex is NotSupportedException
+                                       || ex is ObjectDisposedException
+                                       || ex is InvalidOperationException)
+            {
+                throw
+                    _entityCrudActionExceptionFactory
+                        .CreateEntityCrudActionException<Y>($"BulkDeleteAsync error :: {ex.Message}");
+            }
+        }
+
         public async Task DeleteAsync<Y>(T entity)
             where Y : EntityCrudActionException
         {
@@ -158,6 +181,36 @@ namespace BibleStudyTool.Infrastructure.Data
             }
         }
 
+        public async Task BulkDeleteAsync<Y>(int[] entityIds)
+            where Y : EntityCrudActionException
+        {
+            try
+            {
+                using (var ctx = new BibleReadingDbContext())
+                {
+                    IList<T> entitiesToDelete = new List<T>();
+                    var dbTable = ctx.Set<T>();
+                    foreach (var entityId in entityIds)
+                    {
+                        entitiesToDelete.Add(await dbTable.FindAsync(new object[] { entityId }));
+                    }
+
+                    ctx.RemoveRange(entitiesToDelete);
+                    await ctx.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex) when (ex is DbUpdateException
+                                       || ex is DbUpdateConcurrencyException
+                                       || ex is NotSupportedException
+                                       || ex is ObjectDisposedException
+                                       || ex is InvalidOperationException)
+            {
+                throw
+                    _entityCrudActionExceptionFactory
+                        .CreateEntityCrudActionException<Y>($"BulkDeleteAsync error :: {ex.Message}");
+            }
+        }
+
         public async Task UpdateAsync<Y>(T entity)
             where Y : EntityCrudActionException
         {
@@ -194,6 +247,32 @@ namespace BibleStudyTool.Infrastructure.Data
             }
         }
 
+        public async Task BulkUpdateAsync<Y>(T[] entities) where Y : EntityCrudActionException
+        {
+            {
+                try
+                {
+                    using (var ctx = new BibleReadingDbContext())
+                    {
+                        ctx.UpdateRange(entities);
+                        await ctx.SaveChangesAsync();
+                    }
+                }
+                catch (Exception ex) when (ex is DbUpdateException
+                                           || ex is DbUpdateConcurrencyException
+                                           || ex is NotSupportedException
+                                           || ex is ObjectDisposedException
+                                           || ex is InvalidOperationException)
+                {
+                    throw
+                        _entityCrudActionExceptionFactory
+                            .CreateEntityCrudActionException<Y>($"BulkUpdateAsync error :: {ex.Message}");
+                }
+            }
+        }
+
+        #region HELPER FUNCTIONS
+
         public IQueryable<T> ApplySpecifications(IQueryable<T> entityTableQuery, IList<SpecificationClause> specificationClauses)
         {
             foreach (var queryClause in specificationClauses)
@@ -205,6 +284,8 @@ namespace BibleStudyTool.Infrastructure.Data
             }
             return entityTableQuery;
         }
+
+        #endregion
     }
 }
 

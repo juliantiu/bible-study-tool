@@ -8,49 +8,49 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BibleStudyTool.Public.Endpoints.TagEndpoints
+namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
 {
     [ApiController]
     public class Delete : ControllerBase
     {
-        private readonly IAsyncRepository<Tag> _itemRepository;
+        private readonly IAsyncRepository<TagGroup> _itemRepository;
         private readonly UserManager<BibleReader> _userManager;
 
-        public Delete(IAsyncRepository<Tag> itemRepository,
+        public Delete(IAsyncRepository<TagGroup> itemRepository,
                       UserManager<BibleReader> userManager)
         {
             _itemRepository = itemRepository;
             _userManager = userManager;
         }
 
-        [HttpDelete("api/Tag")]
+        [HttpDelete("api/TagGroup")]
         [Authorize]
-        public async Task<ActionResult<DeleteTagResponse>> DeleteHandler(string id)
+        public async Task<ActionResult<DeleteTagGroupResponse>> DeleteHandler(string id)
         {
             try
             {
-                var response = new DeleteTagResponse();
+                var response = new DeleteTagGroupResponse();
                 var currentUserId = _userManager.GetUserId(User);
                 var idKey = new object[] { id };
-                var tag = await _itemRepository.GetByIdAsync<TagCrudActionException>(idKey);
-                if (tag.Uid != currentUserId)
+                var tagGroup = await _itemRepository.GetByIdAsync<TagGroupCrudActionException>(idKey);
+                if (tagGroup.Uid != currentUserId)
                 {
-                    response.FailureMessage = "The current user does not own the tag being deleted.";
+                    response.FailureMessage = "The current user does not own the tag group being deleted.";
                     return response;
                 }
-                await _itemRepository.DeleteAsync<TagCrudActionException>(tag);
+                await _itemRepository.DeleteAsync<TagGroupCrudActionException>(tagGroup);
                 response.Success = true;
                 return response;
 
             }
-            catch (TagCrudActionException tcaex)
+            catch (TagGroupCrudActionException tgcaex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                                  new EntityCrudActionExceptionResponse() { Timestamp = tcaex.Timestamp, Message = tcaex.Message });
+                                  new EntityCrudActionExceptionResponse() { Timestamp = tgcaex.Timestamp, Message = tgcaex.Message });
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to delete tag.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to delete tag group.");
             }
         }
     }

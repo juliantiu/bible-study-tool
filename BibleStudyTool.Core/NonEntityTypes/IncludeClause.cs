@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq.Expressions;
+using BibleStudyTool.Core.Interfaces;
 
 namespace BibleStudyTool.Core.NonEntityTypes
 {

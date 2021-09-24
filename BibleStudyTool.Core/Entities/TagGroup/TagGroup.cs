@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BibleStudyTool.Core.Entities.JoinEntities;
-using BibleStudyTool.Core.NonEntityTypes;
+using BibleStudyTool.Core.Interfaces;
 
 namespace BibleStudyTool.Core.Entities
 {
@@ -21,6 +21,12 @@ namespace BibleStudyTool.Core.Entities
         {
             Uid = uid;
             Label = label;
+        }
+
+        public void UpdateDetails(string label)
+        {
+            if (label is string la)
+                Label = la;
         }
     }
 }

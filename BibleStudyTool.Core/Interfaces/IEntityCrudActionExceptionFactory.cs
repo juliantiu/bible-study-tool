@@ -1,4 +1,5 @@
 ﻿using System;
+using BibleStudyTool.Core.Exceptions;
 using BibleStudyTool.Core.NonEntityTypes;
 
 namespace BibleStudyTool.Core.Interfaces

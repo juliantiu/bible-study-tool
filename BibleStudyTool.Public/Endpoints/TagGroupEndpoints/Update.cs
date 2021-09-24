@@ -8,45 +8,45 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BibleStudyTool.Public.Endpoints.TagEndpoints
+namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
 {
     [ApiController]
     public class Update : ControllerBase
     {
-        private readonly IAsyncRepository<Tag> _itemRepository;
+        private readonly IAsyncRepository<TagGroup> _itemRepository;
         private readonly UserManager<BibleReader> _userManager;
 
-        public Update(IAsyncRepository<Tag> itemRepository,
+        public Update(IAsyncRepository<TagGroup> itemRepository,
                       UserManager<BibleReader> userManager)
         {
             _itemRepository = itemRepository;
             _userManager = userManager;
         }
 
-        [HttpPut("api/Tag")]
+        [HttpPut("api/TagGroup")]
         [Authorize]
-        public async Task<ActionResult<UpdateTagResponse>> UpdateHandler(UpdateTagRequest request)
+        public async Task<ActionResult<UpdateTagGroupResponse>> UpdateHandler(UpdateTagGroupRequest request)
         {
-            var response = new UpdateTagResponse();
+            var response = new UpdateTagGroupResponse();
             try
             {
                 var currentUserId = _userManager.GetUserId(User);
-                var keyId = new Object[] { request.TagId };
-                var tag = await _itemRepository.GetByIdAsync<TagCrudActionException>(keyId);
-                if (tag.Uid != currentUserId)
+                var keyId = new Object[] { request.TagGroupId };
+                var tagGroup = await _itemRepository.GetByIdAsync<TagGroupCrudActionException>(keyId);
+                if (tagGroup.Uid != currentUserId)
                 {
-                    response.FailureMessage = "The current user does not own the tag being updated.";
+                    response.FailureMessage = "The current user does not own the tag group being updated.";
                     return response;
                 }
-                tag.UpdateDetails(request.Label, request.Color);
-                await _itemRepository.UpdateAsync<TagCrudActionException>(tag);
+                tagGroup.UpdateDetails(request.Label);
+                await _itemRepository.UpdateAsync<TagCrudActionException>(tagGroup);
                 response.Success = true;
                 return response;
             }
-            catch (TagValidationException tve)
+            catch (TagGroupValidationException tgve)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                                  new EntityCrudActionExceptionResponse() { Timestamp = tve.Timestamp, Message = tve.Message });
+                                  new EntityCrudActionExceptionResponse() { Timestamp = tgve.Timestamp, Message = tgve.Message });
             }
             catch (TagCrudActionException tcaex)
             {
@@ -55,7 +55,7 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to update tag '{request.Label}.'");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to update tag group '{request.Label}.'");
             }
         }
     }

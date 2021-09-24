@@ -1,5 +1,6 @@
 ﻿using System;
-namespace BibleStudyTool.Core.NonEntityTypes
+
+namespace BibleStudyTool.Core.Exceptions
 {
     public class DefaultEntityCrudActionException : EntityCrudActionException
     {

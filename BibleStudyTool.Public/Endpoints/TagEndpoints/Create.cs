@@ -23,7 +23,7 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
             _userManager = usermanager;
         }
 
-        [HttpPost("api/tag")]
+        [HttpPost("api/Tag")]
         [Authorize]
         public async Task<ActionResult<CreateTagResponse>> CreateHandler(CreateTagRequest request)
         {

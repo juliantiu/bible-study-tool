@@ -4,20 +4,20 @@ using BibleStudyTool.Core.NonEntityTypes;
 
 namespace BibleStudyTool.Core.Entities
 {
-    public class TagCrudActionException : EntityCrudActionException
+    public class TagGroupValidationException : EntityValidationException
     {
-        public TagCrudActionException()
+        public TagGroupValidationException()
         {
             Timestamp = DateTime.UtcNow;
         }
 
-        public TagCrudActionException(string message)
+        public TagGroupValidationException(string message)
             : base(message)
         {
             Timestamp = DateTime.UtcNow;
         }
 
-        public TagCrudActionException(string message, Exception inner)
+        public TagGroupValidationException(string message, Exception inner)
             : base(message, inner)
         {
             Timestamp = DateTime.UtcNow;

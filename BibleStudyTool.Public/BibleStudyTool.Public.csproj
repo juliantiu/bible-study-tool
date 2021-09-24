@@ -23,6 +23,7 @@
     <None Remove="TagEnpoints\" />
     <None Remove="Endpoints\" />
     <None Remove="Endpoints\NoteEndpoints\" />
+    <None Remove="Endpoints\TagGroupEndpoints\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
@@ -38,5 +39,6 @@
     <Folder Include="Endpoints\TagEndpoints\" />
     <Folder Include="Endpoints\" />
     <Folder Include="Endpoints\NoteEndpoints\" />
+    <Folder Include="Endpoints\TagGroupEndpoints\" />
   </ItemGroup>
 </Project>

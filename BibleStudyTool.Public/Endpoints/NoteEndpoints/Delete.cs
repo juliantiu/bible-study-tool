@@ -22,7 +22,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
             _userManager = userManager;
         }
 
-        [HttpDelete("api/tag")]
+        [HttpDelete("api/Note")]
         [Authorize]
         public async Task<ActionResult<DeleteNoteResponse>> DeleteHandler(string id)
         {

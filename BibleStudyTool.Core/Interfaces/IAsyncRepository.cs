@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
-using BibleStudyTool.Core.Entities;
-using BibleStudyTool.Core.NonEntityTypes;
+using BibleStudyTool.Core.Exceptions;
 
 namespace BibleStudyTool.Core.Interfaces
 {
@@ -15,7 +13,10 @@ namespace BibleStudyTool.Core.Interfaces
         Task<IReadOnlyList<T>> GetByRawQuery<Y>(string query, string[] parameters) where Y : EntityCrudActionException;
         Task<IReadOnlyList<T>> GetBySpefication<Y>(ISpecification<T> specification) where Y : EntityCrudActionException;
         Task<T> CreateAsync<Y>(T entity) where Y : EntityCrudActionException;
+        Task BulkCreateAsync<Y>(T[] entities) where Y : EntityCrudActionException;
         Task UpdateAsync<Y>(T entity) where Y : EntityCrudActionException;
+        Task BulkUpdateAsync<Y>(T[] entities) where Y : EntityCrudActionException;
         Task DeleteAsync<Y>(T entity) where Y : EntityCrudActionException;
+        Task BulkDeleteAsync<Y>(int[] entityIds) where Y : EntityCrudActionException;
     }
 }

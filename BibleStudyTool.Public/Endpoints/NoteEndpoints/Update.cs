@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
-using BibleStudyTool.Core.Entities.Exceptions;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -24,7 +23,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
             _userManager = userManager;
         }
 
-        [HttpPut("api/tag")]
+        [HttpPut("api/Note")]
         [Authorize]
         public async Task<ActionResult<UpdateNoteResponse>> UpdateHandler(UpdateNoteRequest request)
         {

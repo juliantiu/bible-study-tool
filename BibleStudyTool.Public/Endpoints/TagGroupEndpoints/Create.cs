@@ -9,40 +9,40 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
+namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
 {
     public class Create : ControllerBase
     {
-        private readonly IAsyncRepository<Note> _itemRepository;
+        private readonly IAsyncRepository<TagGroup> _itemRepository;
         private readonly UserManager<BibleReader> _userManager;
 
-        public Create(IAsyncRepository<Note> itemRepository,
+        public Create(IAsyncRepository<TagGroup> itemRepository,
                       UserManager<BibleReader> userManager)
         {
             _itemRepository = itemRepository;
             _userManager = userManager;
         }
 
-        [HttpPost("api/Note")]
+        [HttpPost("api/TagGroup")]
         [Authorize]
-        public async Task<ActionResult<CreateNoteResponse>> CreateHandler(CreateNoteRequest request)
+        public async Task<ActionResult<CreateTagGroupResponse>> CreateHandler(CreateTagGroupRequest request)
         {
             try
             {
-                var response = new CreateNoteResponse();
-                var note = new Note(_userManager.GetUserId(User), request.Summary, request.Text);
-                await _itemRepository.CreateAsync<NoteCrudActionException>(note);
+                var response = new CreateTagGroupResponse();
+                var tagGroup = new TagGroup(_userManager.GetUserId(User), request.Label);
+                await _itemRepository.CreateAsync<TagGroupCrudActionException>(tagGroup);
                 response.Success = true;
                 return Ok(response);
             }
-            catch (NoteCrudActionException ncaex)
+            catch (TagGroupCrudActionException ncaex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                   new EntityCrudActionExceptionResponse() { Timestamp = ncaex.Timestamp, Message = ncaex.Message });
             }
             catch
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to create note '{request.Summary}.'");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to create tag group '{request.Label}.'");
             }
         }
     }

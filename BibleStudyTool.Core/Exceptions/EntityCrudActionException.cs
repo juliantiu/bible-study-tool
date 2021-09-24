@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BibleStudyTool.Core.NonEntityTypes
+namespace BibleStudyTool.Core.Exceptions
 {
     public abstract class EntityCrudActionException : Exception
     {

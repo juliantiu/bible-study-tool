@@ -1,5 +1,5 @@
 ﻿using System;
-namespace BibleStudyTool.Core.NonEntityTypes
+namespace BibleStudyTool.Core.Interfaces
 {
     public abstract class EntityGetterRepository
     {
