@@ -1,4 +1,6 @@
 ﻿using System;
+using BibleStudyTool.Core.Interfaces;
+
 namespace BibleStudyTool.Core.Entities.JoinEntities
 {
     public enum NoteReferenceType
@@ -7,10 +9,10 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
         Note
     }
 
-    public class NoteReference
+    public class NoteReference : BaseEntity
     {
-        public int OwningNoteId { get; private set; }
-        public Note OwningNote { get; }
+        public int NoteId { get; private set; }
+        public Note Note { get; }
 
         public int ReferenceId { get; private set; }
         public Note ReferencedNote { get; }
@@ -22,9 +24,9 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
         {
         }
 
-        public NoteReference(int owningNoteId, int referenceId, NoteReferenceType noteReferenceType)
+        public NoteReference(int noteId, int referenceId, NoteReferenceType noteReferenceType)
         {
-            OwningNoteId = owningNoteId;
+            NoteId = noteId;
             ReferenceId = referenceId;
             NoteReferenceType = noteReferenceType;
         }

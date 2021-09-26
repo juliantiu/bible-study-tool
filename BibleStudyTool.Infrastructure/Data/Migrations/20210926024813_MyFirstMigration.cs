@@ -443,13 +443,13 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                 name: "NoteReferences",
                 columns: table => new
                 {
-                    OwningNoteId = table.Column<int>(type: "integer", nullable: false),
+                    NoteId = table.Column<int>(type: "integer", nullable: false),
                     ReferenceId = table.Column<int>(type: "integer", nullable: false),
                     NoteReferenceType = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NoteReferences", x => new { x.OwningNoteId, x.ReferenceId });
+                    table.PrimaryKey("PK_NoteReferences", x => new { x.NoteId, x.ReferenceId });
                     table.ForeignKey(
                         name: "FK_NoteReferences_BibleVerses_ReferenceId",
                         column: x => x.ReferenceId,
@@ -457,8 +457,8 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         principalColumn: "BibleVerseId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_NoteReferences_Notes_OwningNoteId",
-                        column: x => x.OwningNoteId,
+                        name: "FK_NoteReferences_Notes_NoteId",
+                        column: x => x.NoteId,
                         principalTable: "Notes",
                         principalColumn: "NoteId",
                         onDelete: ReferentialAction.Restrict);

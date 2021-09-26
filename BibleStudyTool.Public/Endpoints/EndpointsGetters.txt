@@ -6,11 +6,11 @@
 - List of all of the user's tag and tag groups
 - List of all the user's notes along with its references and tags and tag groups
 
-- Create/delete tag <--> note
-- Create/delete taggroup <--> tag
-- Create/delete taggroup <--> note
+- -Create-/delete tag <--> note
+- -Create-/delete taggroup <--> tag
+- -Create-/delete taggroup <--> note
 - Create/delete Note <--> note reference (verses and other notes)
 
 - -Create-/-Update-/-Delete- Notes
 - -Create-/-Update-/-Delete- Tags
-- -Create-/-Update-/Delete Tag groups
+- -Create-/-Update-/-Delete- Tag groups

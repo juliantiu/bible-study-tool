@@ -1,6 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
 using BibleStudyTool.Core.Exceptions;
-using BibleStudyTool.Core.NonEntityTypes;
 
 namespace BibleStudyTool.Core.Entities
 {

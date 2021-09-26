@@ -179,7 +179,7 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("BibleStudyTool.Core.Entities.JoinEntities.NoteReference", b =>
                 {
-                    b.Property<int>("OwningNoteId")
+                    b.Property<int>("NoteId")
                         .HasColumnType("integer");
 
                     b.Property<int>("ReferenceId")
@@ -188,7 +188,7 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.Property<int>("NoteReferenceType")
                         .HasColumnType("integer");
 
-                    b.HasKey("OwningNoteId", "ReferenceId");
+                    b.HasKey("NoteId", "ReferenceId");
 
                     b.HasIndex("ReferenceId");
 
@@ -620,9 +620,9 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("BibleStudyTool.Core.Entities.JoinEntities.NoteReference", b =>
                 {
-                    b.HasOne("BibleStudyTool.Core.Entities.Note", "OwningNote")
+                    b.HasOne("BibleStudyTool.Core.Entities.Note", "Note")
                         .WithMany("ReferencedIn")
-                        .HasForeignKey("OwningNoteId")
+                        .HasForeignKey("NoteId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
@@ -638,7 +638,7 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.Navigation("OwningNote");
+                    b.Navigation("Note");
 
                     b.Navigation("ReferencedBibleVerse");
 
