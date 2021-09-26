@@ -35,12 +35,12 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
                 response.Success = true;
                 return Ok(response);
             }
-            catch (NoteCrudActionException ncaex)
+            catch (NoteCrudActionException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                                  new EntityCrudActionExceptionResponse() { Timestamp = ncaex.Timestamp, Message = ncaex.Message });
+                                  new EntityCrudActionExceptionResponse() { Timestamp = ex.Timestamp, Message = ex.Message });
             }
-            catch
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to create note '{request.Summary}.'");
             }

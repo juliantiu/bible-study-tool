@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities.JoinEntities;
 using BibleStudyTool.Core.Interfaces;
@@ -10,32 +11,35 @@ using Microsoft.AspNetCore.Mvc;
 namespace BibleStudyTool.Public.Endpoints.TagGroupTagEndpoints
 {
     [ApiController]
-    public class Create : ControllerBase
+    public class Delete : ControllerBase
     {
         private readonly IAsyncRepository<TagGroupTag> _itemRepository;
+        private readonly UserManager<BibleReader> _userManager;
 
-        public Create(IAsyncRepository<TagGroupTag> itemRepository)
+        public Delete(IAsyncRepository<TagGroupTag> itemRepository,
+                      UserManager<BibleReader> userManager)
         {
             _itemRepository = itemRepository;
+            _userManager = userManager;
         }
 
-        [HttpPost("api/TagGroupTag")]
-        public async Task<ActionResult<CreateTagGroupTagResponse>> Createhandler(CreateTagGroupTagRequest request)
+        [HttpDelete("api/TagGroupTags")]
+        public async Task<ActionResult<DeleteTagGroupTagResponse>> DeleteHandler(DeleteTagGroupTagRequest request)
         {
             try
             {
-                var response = new CreateTagGroupTagResponse();
+                var response = new DeleteTagGroupTagResponse();
                 var reqTagGroupTags = request.TagGroupTags;
-                var tagGroupTagsCount = reqTagGroupTags.Count;
-                TagGroupTag[] tagGroupTags = new TagGroupTag[tagGroupTagsCount];
-                for (int i = 0; i < tagGroupTagsCount; ++i)
+                var tagGroupNotesCount = reqTagGroupTags.Count;
+                var entityIds = new List<object[]>();
+                for (int i = 0; i < tagGroupNotesCount; ++i)
                 {
                     var tagGroupTag = reqTagGroupTags[i];
-                    tagGroupTags[i] = new TagGroupTag(tagGroupTag.TagGroupId, tagGroupTag.TagId);
+                    entityIds[i] = new object[] { tagGroupTag.TagGroupId, tagGroupTag.TagId };
                 }
-                await _itemRepository.BulkCreateAsync<TagGroupTagCrudActionException>(tagGroupTags);
+                await _itemRepository.BulkDeleteAsync<TagGroupTagCrudActionException>(entityIds.ToArray());
                 response.Success = true;
-                return Ok(response);
+                return response;
             }
             catch (TagGroupTagCrudActionException ex)
             {
@@ -44,7 +48,7 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupTagEndpoints
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to create tag group tag(s).");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to delete tag group tag associations.");
             }
         }
     }

@@ -17,6 +17,6 @@ namespace BibleStudyTool.Core.Interfaces
         Task UpdateAsync<Y>(T entity) where Y : EntityCrudActionException;
         Task BulkUpdateAsync<Y>(T[] entities) where Y : EntityCrudActionException;
         Task DeleteAsync<Y>(T entity) where Y : EntityCrudActionException;
-        Task BulkDeleteAsync<Y>(int[] entityIds) where Y : EntityCrudActionException;
+        Task BulkDeleteAsync<Y>(object[][] entityIds) where Y : EntityCrudActionException;
     }
 }

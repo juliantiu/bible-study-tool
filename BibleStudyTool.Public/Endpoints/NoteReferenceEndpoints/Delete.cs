@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities.JoinEntities;
 using BibleStudyTool.Core.Interfaces;
@@ -10,44 +11,44 @@ using Microsoft.AspNetCore.Mvc;
 namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
 {
     [ApiController]
-    public class Create : ControllerBase
+    public class Delete : ControllerBase
     {
         private readonly IAsyncRepository<NoteReference> _itemRepository;
         private readonly UserManager<BibleReader> _userManager;
 
-        public Create(IAsyncRepository<NoteReference> itemRepository,
+        public Delete(IAsyncRepository<NoteReference> itemRepository,
                       UserManager<BibleReader> userManager)
         {
             _itemRepository = itemRepository;
             _userManager = userManager;
         }
 
-        [HttpPost("api/NoteReference")]
-        public async Task<ActionResult<CreateNoteReferenceResponse>> CreateHandler(CreateNoteReferenceRequest request)
+        [HttpDelete("api/NoteReferences")]
+        public async Task<ActionResult<DeleteNoteReferenceResponse>> DeleteHandler(DeleteNoteReferenceRequest request)
         {
             try
             {
-                var response = new CreateNoteReferenceResponse();
+                var response = new DeleteNoteReferenceResponse();
                 var reqNoteReferences = request.NoteReferences;
                 var noteReferencesCount = reqNoteReferences.Count;
-                NoteReference[] noteReferences = new NoteReference[noteReferencesCount];
+                var entityIds = new List<object[]>();
                 for (int i = 0; i < noteReferencesCount; ++i)
                 {
                     var noteReference = reqNoteReferences[i];
-                    noteReferences[i] = new NoteReference(noteReference.OwningNoteId, noteReference.ReferenceId, noteReference.NoteReferenceType);
+                    entityIds[i] = new object[] { noteReference.ReferenceId, noteReference.NoteId };
                 }
-                await _itemRepository.BulkCreateAsync<NoteReferenceCrudActionException>(noteReferences);
+                await _itemRepository.BulkDeleteAsync<NoteReferenceCrudActionException>(entityIds.ToArray());
                 response.Success = true;
-                return Ok(response);
+                return response;
             }
-            catch (TagGroupTagCrudActionException ex)
+            catch (NoteReferenceCrudActionException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                   new EntityCrudActionExceptionResponse() { Message = ex.Message, Timestamp = ex.Timestamp });
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to create note reference(s).");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to delete note references.");
             }
         }
     }

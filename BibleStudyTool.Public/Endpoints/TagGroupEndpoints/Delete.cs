@@ -43,10 +43,10 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
                 return response;
 
             }
-            catch (TagGroupCrudActionException tgcaex)
+            catch (TagGroupCrudActionException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                                  new EntityCrudActionExceptionResponse() { Timestamp = tgcaex.Timestamp, Message = tgcaex.Message });
+                                  new EntityCrudActionExceptionResponse() { Timestamp = ex.Timestamp, Message = ex.Message });
             }
             catch (Exception)
             {

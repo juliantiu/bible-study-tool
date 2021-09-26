@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Interfaces;
-using BibleStudyTool.Infrastructure.Data;
 using BibleStudyTool.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -35,12 +34,12 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
                 response.Success = true;
                 return Ok(response);
             }
-            catch (TagGroupCrudActionException ncaex)
+            catch (TagGroupCrudActionException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                                  new EntityCrudActionExceptionResponse() { Timestamp = ncaex.Timestamp, Message = ncaex.Message });
+                                  new EntityCrudActionExceptionResponse() { Timestamp = ex.Timestamp, Message = ex.Message });
             }
-            catch
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to create tag group '{request.Label}.'");
             }

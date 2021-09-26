@@ -181,7 +181,7 @@ namespace BibleStudyTool.Infrastructure.Data
             }
         }
 
-        public async Task BulkDeleteAsync<Y>(int[] entityIds)
+        public async Task BulkDeleteAsync<Y>(object[][] entityIds)
             where Y : EntityCrudActionException
         {
             try
@@ -192,7 +192,7 @@ namespace BibleStudyTool.Infrastructure.Data
                     var dbTable = ctx.Set<T>();
                     foreach (var entityId in entityIds)
                     {
-                        entitiesToDelete.Add(await dbTable.FindAsync(new object[] { entityId }));
+                        entitiesToDelete.Add(await dbTable.FindAsync(entityId).ConfigureAwait(false));
                     }
 
                     ctx.RemoveRange(entitiesToDelete);

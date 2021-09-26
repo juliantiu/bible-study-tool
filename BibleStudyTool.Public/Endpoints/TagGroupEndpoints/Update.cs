@@ -43,15 +43,15 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
                 response.Success = true;
                 return response;
             }
-            catch (TagGroupValidationException tgve)
+            catch (TagGroupValidationException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                                  new EntityCrudActionExceptionResponse() { Timestamp = tgve.Timestamp, Message = tgve.Message });
+                                  new EntityCrudActionExceptionResponse() { Timestamp = ex.Timestamp, Message = ex.Message });
             }
-            catch (TagCrudActionException tcaex)
+            catch (TagCrudActionException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
-                                  new EntityCrudActionExceptionResponse() { Timestamp = tcaex.Timestamp, Message = tcaex.Message });
+                                  new EntityCrudActionExceptionResponse() { Timestamp = ex.Timestamp, Message = ex.Message });
             }
             catch (Exception)
             {

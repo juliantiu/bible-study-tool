@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities.JoinEntities;
 using BibleStudyTool.Core.Interfaces;
+using BibleStudyTool.Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,32 +11,35 @@ using Microsoft.AspNetCore.Mvc;
 namespace BibleStudyTool.Public.Endpoints.TagNoteEndpoints
 {
     [ApiController]
-    public class Create : ControllerBase
+    public class Delete : ControllerBase
     {
         private readonly IAsyncRepository<TagNote> _itemRepository;
+        private readonly UserManager<BibleReader> _userManager;
 
-        public Create(IAsyncRepository<TagNote> itemRepository)
+        public Delete(IAsyncRepository<TagNote> itemRepository,
+                      UserManager<BibleReader> userManager)
         {
             _itemRepository = itemRepository;
+            _userManager = userManager;
         }
 
-        [HttpPost("api/TagNote")]
-        public async Task<ActionResult<CreateTagNoteResponse>> Createhandler(CreateTagNoteRequest request)
+        [HttpDelete("api/TagNotes")]
+        public async Task<ActionResult<DeleteTagNoteResponse>> DeleteHandler(DeleteTagNoteRequest request)
         {
             try
             {
-                var response = new CreateTagNoteResponse();
+                var response = new DeleteTagNoteResponse();
                 var reqTagNotes = request.TagNotes;
                 var tagNotesCount = reqTagNotes.Count;
-                TagNote[] tagNotes = new TagNote[tagNotesCount];
+                var entityIds = new List<object[]>();
                 for (int i = 0; i < tagNotesCount; ++i)
                 {
                     var tagNote = reqTagNotes[i];
-                    new TagNote(tagNote.TagId, tagNote.NoteId);
+                    entityIds[i] = new object[] { tagNote.TagId, tagNote.NoteId };
                 }
-                await _itemRepository.BulkCreateAsync<TagNoteCrudActionException>(tagNotes);
+                await _itemRepository.BulkDeleteAsync<TagNoteCrudActionException>(entityIds.ToArray());
                 response.Success = true;
-                return Ok(response);
+                return response;
             }
             catch (TagNoteCrudActionException ex)
             {
@@ -43,7 +48,7 @@ namespace BibleStudyTool.Public.Endpoints.TagNoteEndpoints
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to create tag note.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to delete tag note associations.");
             }
         }
     }
