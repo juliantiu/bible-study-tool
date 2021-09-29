@@ -1,5 +1,6 @@
 ﻿using System;
 using BibleStudyTool.Core.Entities;
+using BibleStudyTool.Core.Entities.Exceptions;
 using BibleStudyTool.Core.Exceptions;
 using BibleStudyTool.Core.Interfaces;
 

@@ -61,7 +61,7 @@ namespace BibleStudyTool.Infrastructure.Data
             try
             {
                 var entityTableQuery = _dbContext.Set<T>().AsQueryable();
-                var entityTableQueryWithSpecifications = ApplySpecifications(entityTableQuery, specification.SpecificationClauses);
+                var entityTableQueryWithSpecifications = ApplySpecifications(entityTableQuery, specification.SpecificationsClauses);
                 return await entityTableQueryWithSpecifications.ToListAsync();
             }
             catch (Exception ex)
@@ -278,8 +278,8 @@ namespace BibleStudyTool.Infrastructure.Data
             foreach (var queryClause in specificationClauses)
             {
                 if (queryClause is WhereClause<T> whereClause)
-                    entityTableQuery.Where(whereClause.Value);
-                if (queryClause is IncludeClause<T> includeClause)
+                    entityTableQuery.Where(whereClause.Expression);
+                if (queryClause is IncludeClause includeClause)
                     entityTableQuery.Include(includeClause.PropertyName);
             }
             return entityTableQuery;

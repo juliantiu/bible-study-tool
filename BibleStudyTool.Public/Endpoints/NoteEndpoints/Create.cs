@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
+using BibleStudyTool.Core.Entities.Exceptions;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Infrastructure.Data;
 using BibleStudyTool.Infrastructure.Data.Identity;

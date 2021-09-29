@@ -36,6 +36,8 @@
     <None Remove="Entities\JoinEntities\NoteReference\" />
     <None Remove="Exceptions\" />
     <None Remove="Interfaces\Abstracts\" />
+    <None Remove="Entities\Note\Specifications\" />
+    <None Remove="Entities\Note\Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -60,5 +62,7 @@
     <Folder Include="Entities\JoinEntities\NoteReference\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Interfaces\Abstracts\" />
+    <Folder Include="Entities\Note\Specifications\" />
+    <Folder Include="Entities\Note\Exceptions\" />
   </ItemGroup>
 </Project>

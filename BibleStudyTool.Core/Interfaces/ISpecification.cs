@@ -7,6 +7,6 @@ namespace BibleStudyTool.Core.Interfaces
 {
     public interface ISpecification<T>
     {
-        public IList<SpecificationClause> SpecificationClauses { get; set; }
+        IList<SpecificationClause> SpecificationsClauses { get; set; }
     }
 }
