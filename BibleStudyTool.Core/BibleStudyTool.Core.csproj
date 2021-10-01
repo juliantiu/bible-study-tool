@@ -38,6 +38,10 @@
     <None Remove="Interfaces\Abstracts\" />
     <None Remove="Entities\Note\Specifications\" />
     <None Remove="Entities\Note\Exceptions\" />
+    <None Remove="Entities\JoinEntities\BibleBookLanguage\Exceptions\" />
+    <None Remove="Entities\JoinEntities\BibleBookAbbreviationLanguage\Exceptions\" />
+    <None Remove="Entities\JoinEntities\BibleBookAbbreviationLanguage\Specifications\" />
+    <None Remove="Entities\JoinEntities\BibleBookLanguage\Specifications\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -64,5 +68,9 @@
     <Folder Include="Interfaces\Abstracts\" />
     <Folder Include="Entities\Note\Specifications\" />
     <Folder Include="Entities\Note\Exceptions\" />
+    <Folder Include="Entities\JoinEntities\BibleBookLanguage\Exceptions\" />
+    <Folder Include="Entities\JoinEntities\BibleBookAbbreviationLanguage\Exceptions\" />
+    <Folder Include="Entities\JoinEntities\BibleBookAbbreviationLanguage\Specifications\" />
+    <Folder Include="Entities\JoinEntities\BibleBookLanguage\Specifications\" />
   </ItemGroup>
 </Project>

@@ -12,9 +12,16 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
         public Language Language { get; }
 
         public string Abbreviation { get; }
+        public string Style { get; } // todo include in entity type configuration
 
         public BibleBookAbbreviationLanguage()
         {
+        }
+
+        public BibleBookAbbreviationLanguage(string languageCode, string style)
+        {
+            LanguageCode = languageCode;
+            Style = style;
         }
     }
 }

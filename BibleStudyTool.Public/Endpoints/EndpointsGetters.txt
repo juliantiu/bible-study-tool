@@ -1,4 +1,4 @@
-﻿- Listing all of the bible books with their names and abbreviations based on the language settings
+﻿- -Listing all of the bible books with their names and abbreviations based on the language settings-
 - The verses of the selected book with the selected chapter with their texts based on the language settings and the version selected
 - Listing all of the notes of a user for the current book and chapter
     - All the notes associated with every verse in the current book and chapter
