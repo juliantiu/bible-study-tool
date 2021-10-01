@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BibleStudyTool.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BibleReadingDbContext))]
-    [Migration("20210926024813_MyFirstMigration")]
+    [Migration("20211001040200_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -101,6 +101,11 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("BibleBookAbbreviation");
 
+                    b.Property<string>("Style")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("BibleBookAbbreviationStyle");
+
                     b.HasKey("BibleBookId", "LanguageCode");
 
                     b.HasIndex("LanguageCode");
@@ -120,6 +125,11 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("BibleBookName");
+
+                    b.Property<string>("Style")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("BibleBookNameStyle");
 
                     b.HasKey("BibleBookId", "LanguageCode");
 

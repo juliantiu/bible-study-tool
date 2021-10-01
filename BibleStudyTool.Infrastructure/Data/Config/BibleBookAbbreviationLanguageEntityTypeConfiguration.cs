@@ -20,6 +20,10 @@ namespace BibleStudyTool.Infrastructure.Data.Config
                    .HasColumnName("BibleBookAbbreviation")
                    .IsRequired();
 
+            builder.Property(bibleBookLanguage => bibleBookLanguage.Style)
+                   .HasColumnName("BibleBookAbbreviationStyle")
+                   .IsRequired();
+
             builder.HasOne<BibleBook>(bibleBookAbbreviationLanguage => bibleBookAbbreviationLanguage.BibleBook)
                    .WithMany(bibleBook => bibleBook.BibleBookAbbreviationLanguages)
                    .HasForeignKey(bibleVerseBibleVersionLanguage => bibleVerseBibleVersionLanguage.BibleBookId)

@@ -20,6 +20,10 @@ namespace BibleStudyTool.Infrastructure.Data.Config
                    .HasColumnName("BibleBookName")
                    .IsRequired();
 
+            builder.Property(bibleBookLanguage => bibleBookLanguage.Style)
+                   .HasColumnName("BibleBookNameStyle")
+                   .IsRequired();
+
             builder.HasOne<BibleBook>(bibleBookLanguage => bibleBookLanguage.BibleBook)
                    .WithMany(bibleBook => bibleBook.BibleBookLanguages)
                    .HasForeignKey(bibleBookLanguage => bibleBookLanguage.BibleBookId)

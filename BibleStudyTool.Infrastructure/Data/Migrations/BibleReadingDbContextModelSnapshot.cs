@@ -99,6 +99,11 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("BibleBookAbbreviation");
 
+                    b.Property<string>("Style")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("BibleBookAbbreviationStyle");
+
                     b.HasKey("BibleBookId", "LanguageCode");
 
                     b.HasIndex("LanguageCode");
@@ -118,6 +123,11 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("BibleBookName");
+
+                    b.Property<string>("Style")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("BibleBookNameStyle");
 
                     b.HasKey("BibleBookId", "LanguageCode");
 

@@ -265,7 +265,8 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                 {
                     BibleBookId = table.Column<int>(type: "integer", nullable: false),
                     LanguageCode = table.Column<string>(type: "text", nullable: false),
-                    BibleBookAbbreviation = table.Column<string>(type: "text", nullable: false)
+                    BibleBookAbbreviation = table.Column<string>(type: "text", nullable: false),
+                    BibleBookAbbreviationStyle = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -290,7 +291,8 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                 {
                     BibleBookId = table.Column<int>(type: "integer", nullable: false),
                     LanguageCode = table.Column<string>(type: "text", nullable: false),
-                    BibleBookName = table.Column<string>(type: "text", nullable: false)
+                    BibleBookName = table.Column<string>(type: "text", nullable: false),
+                    BibleBookNameStyle = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
