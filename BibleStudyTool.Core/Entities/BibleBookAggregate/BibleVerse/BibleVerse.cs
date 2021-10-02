@@ -23,6 +23,12 @@ namespace BibleStudyTool.Core.Entities
         {
         }
 
+        public BibleVerse(int chapterNumber, int bibleBookId)
+        {
+            ChapterNumber = chapterNumber;
+            BibleBookId = bibleBookId;
+        }
+
         public BibleVerse(int chapterNumber, int verseNumber, int bibleBookId, bool isNewTestament)
         {
             ChapterNumber = chapterNumber;

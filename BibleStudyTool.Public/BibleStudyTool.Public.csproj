@@ -30,6 +30,7 @@
     <None Remove="Endpoints\NoteReferenceEndpoints\" />
     <None Remove="Endpoints\SharedEnpoints\" />
     <None Remove="DTOs\" />
+    <None Remove="Endpoints\BibleVerseBibleVersionLanguageEndpoints\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
@@ -52,5 +53,6 @@
     <Folder Include="Endpoints\NoteReferenceEndpoints\" />
     <Folder Include="Endpoints\SharedEnpoints\" />
     <Folder Include="DTOs\" />
+    <Folder Include="Endpoints\BibleVerseBibleVersionLanguageEndpoints\" />
   </ItemGroup>
 </Project>

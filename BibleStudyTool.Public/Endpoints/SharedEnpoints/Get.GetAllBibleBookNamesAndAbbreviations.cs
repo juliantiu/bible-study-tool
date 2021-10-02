@@ -49,7 +49,7 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
             var bibleBookIdNameMapping = new Dictionary<int, string>();
             var bibleBookLanguageSpecRef = new BibleBookLanguage(languageCode, style);
             var bibleBookLanguageSpecification = new BibleBookInLanguageAndStyleSpecification(bibleBookLanguageSpecRef);
-            var bibleBookLanguages = await _bibleBookLanguageRepository.GetBySpefication<BibleBookLanguageCrudActionException>(bibleBookLanguageSpecification);
+            var bibleBookLanguages = await _bibleBookLanguageRepository.GetBySpecification<BibleBookLanguageCrudActionException>(bibleBookLanguageSpecification);
             foreach (var bibleBook in bibleBookLanguages)
                 bibleBookIdNameMapping.Add(bibleBook.BibleBookId, bibleBook.Name);
 
@@ -58,7 +58,7 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
             var bibleBookAbbreviationLanguageSpecification = new BibleBookAbbreviationInLanguageAndStyleSpecification(bibleBookAbbreviationLanguageSpecRef);
             var bibleBookAbbreviationLanguages =
                 await _bibleBookAbbreviationLanguageRepository
-                    .GetBySpefication<BibleBookAbbreviationLanguageCrudActionException>(bibleBookAbbreviationLanguageSpecification);
+                    .GetBySpecification<BibleBookAbbreviationLanguageCrudActionException>(bibleBookAbbreviationLanguageSpecification);
             foreach (var bibleBook in bibleBookAbbreviationLanguages)
                 bibleBookIdAbbreviationMapping.Add(bibleBook.BibleBookId, bibleBook.Abbreviation);
 

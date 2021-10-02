@@ -19,5 +19,11 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
         public BibleVerseBibleVersionLanguage()
         {
         }
+
+        public BibleVerseBibleVersionLanguage(int bibleVersionId, string languageCode)
+        {
+            BibleVersionId = bibleVersionId;
+            LanguageCode = languageCode;
+        }
     }
 }

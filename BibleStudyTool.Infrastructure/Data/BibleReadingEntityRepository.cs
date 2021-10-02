@@ -55,7 +55,7 @@ namespace BibleStudyTool.Infrastructure.Data
             }
         }
 
-        public async Task<IReadOnlyList<T>> GetBySpefication<Y>(ISpecification<T> specification)
+        public async Task<IReadOnlyList<T>> GetBySpecification<Y>(ISpecification<T> specification)
             where Y : EntityCrudActionException
         {
             try

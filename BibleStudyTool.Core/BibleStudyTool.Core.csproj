@@ -42,6 +42,10 @@
     <None Remove="Entities\JoinEntities\BibleBookAbbreviationLanguage\Exceptions\" />
     <None Remove="Entities\JoinEntities\BibleBookAbbreviationLanguage\Specifications\" />
     <None Remove="Entities\JoinEntities\BibleBookLanguage\Specifications\" />
+    <None Remove="Entities\JoinEntities\BibleVerseBibleVersionLanguage\Exceptions\" />
+    <None Remove="Entities\BibleBookAggregate\BibleVerse\Specifications\" />
+    <None Remove="Entities\BibleBookAggregate\BibleVerse\Exceptions\" />
+    <None Remove="Entities\JoinEntities\BibleVerseBibleVersionLanguage\Specifications\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -72,5 +76,9 @@
     <Folder Include="Entities\JoinEntities\BibleBookAbbreviationLanguage\Exceptions\" />
     <Folder Include="Entities\JoinEntities\BibleBookAbbreviationLanguage\Specifications\" />
     <Folder Include="Entities\JoinEntities\BibleBookLanguage\Specifications\" />
+    <Folder Include="Entities\JoinEntities\BibleVerseBibleVersionLanguage\Exceptions\" />
+    <Folder Include="Entities\BibleBookAggregate\BibleVerse\Specifications\" />
+    <Folder Include="Entities\BibleBookAggregate\BibleVerse\Exceptions\" />
+    <Folder Include="Entities\JoinEntities\BibleVerseBibleVersionLanguage\Specifications\" />
   </ItemGroup>
 </Project>
