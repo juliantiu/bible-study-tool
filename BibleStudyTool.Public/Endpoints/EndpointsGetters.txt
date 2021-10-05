@@ -3,8 +3,8 @@
 - Listing all of the notes of a user for the current book and chapter
     - All the notes associated with every verse in the current book and chapter
         - Includes all of each note's references, tags, and tag groups
-- List of all of the user's tag and tag groups
-- List of all the user's notes along with its references and tags and tag groups
+- -List of all of the user's tag and tag groups-
+- -List of all the user's notes along with its references and tags and tag groups-
 
 - -Create-/-delete- tag <--> note
 - -Create-/-delete- taggroup <--> tag

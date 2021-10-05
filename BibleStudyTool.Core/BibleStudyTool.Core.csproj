@@ -46,6 +46,10 @@
     <None Remove="Entities\BibleBookAggregate\BibleVerse\Specifications\" />
     <None Remove="Entities\BibleBookAggregate\BibleVerse\Exceptions\" />
     <None Remove="Entities\JoinEntities\BibleVerseBibleVersionLanguage\Specifications\" />
+    <None Remove="Entities\Tag\Exceptions\" />
+    <None Remove="Entities\Tag\Specifications\" />
+    <None Remove="Entities\TagGroup\Exceptions\" />
+    <None Remove="Entities\TagGroup\Specifications\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -80,5 +84,9 @@
     <Folder Include="Entities\BibleBookAggregate\BibleVerse\Specifications\" />
     <Folder Include="Entities\BibleBookAggregate\BibleVerse\Exceptions\" />
     <Folder Include="Entities\JoinEntities\BibleVerseBibleVersionLanguage\Specifications\" />
+    <Folder Include="Entities\Tag\Exceptions\" />
+    <Folder Include="Entities\Tag\Specifications\" />
+    <Folder Include="Entities\TagGroup\Exceptions\" />
+    <Folder Include="Entities\TagGroup\Specifications\" />
   </ItemGroup>
 </Project>

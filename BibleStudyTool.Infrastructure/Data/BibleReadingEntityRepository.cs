@@ -278,7 +278,7 @@ namespace BibleStudyTool.Infrastructure.Data
             foreach (var queryClause in specificationClauses)
             {
                 if (queryClause is WhereClause<T> whereClause)
-                    entityTableQuery.Where(whereClause.Expression);
+                    entityTableQuery.Where(whereClause.Expression).AsQueryable();
                 if (queryClause is IncludeClause includeClause)
                     entityTableQuery.Include(includeClause.PropertyName);
             }

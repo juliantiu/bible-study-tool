@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using BibleStudyTool.Public.DTOs;
+
 namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
 {
-    public class GetNotesResponse : ApiResponseBase
+    public class GetAllUserNotesWithTagsAndReferencesResponse : ApiResponseBase
     {
-        public GetNotesResponse()
-        {
-        }
+        public string Uid { get; set; }
+        public IList<NoteDto> Notes { get; set; }
     }
 }

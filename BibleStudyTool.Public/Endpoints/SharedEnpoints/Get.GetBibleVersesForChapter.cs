@@ -83,6 +83,7 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
                     Text = text
                 });
             }
+            response.Success = true;
             response.BibleBookId = bibleBookId;
             response.LanguageCode = languageCode;
             return response;

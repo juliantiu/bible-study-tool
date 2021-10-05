@@ -9,12 +9,12 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
     public partial class Get
     {
         [HttpGet("api/GetAllNotes")]
-        public async Task<ActionResult<GetNotesResponse>> GetAllHandler()
+        public async Task<ActionResult<GetAllUserNotesWithTagsAndReferencesResponse>> GetAllHandler()
         {
             try
             {
-                var response = new GetNotesResponse();
-                var result = await _itemRepository.GetAllAsync<NoteCrudActionException>();
+                var response = new GetAllUserNotesWithTagsAndReferencesResponse();
+                var result = await _noteRepository.GetAllAsync<NoteCrudActionException>();
                 response.Success = true;
                 return response;
             }

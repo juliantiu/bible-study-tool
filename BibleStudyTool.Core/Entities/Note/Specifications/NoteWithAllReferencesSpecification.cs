@@ -4,11 +4,11 @@ using BibleStudyTool.Core.NonEntityTypes;
 
 namespace BibleStudyTool.Core.Entities.Specifications
 {
-    public class NoteWithAllReferencesSpecification : ISpecification<Note>
+    public class NoteWithAllTagsAndReferencesSpecification : ISpecification<Note>
     {
         public IList<SpecificationClause> SpecificationsClauses { get; set; }
 
-        public NoteWithAllReferencesSpecification(Note note)
+        public NoteWithAllTagsAndReferencesSpecification(Note note)
         {
             SpecificationsClauses = new List<SpecificationClause>();
             PopulateIncludeClauses(note);

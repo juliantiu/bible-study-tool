@@ -21,9 +21,9 @@ namespace BibleStudyTool.Core.Entities.JoinEntities.Specifications
                                           IEnumerable<int> bibleVerseIds)
         {
             WhereClause<BibleVerseBibleVersionLanguage> whereUid = new WhereClause<BibleVerseBibleVersionLanguage>();
-            whereUid.Expression = b => (bibleVerseIds.Contains(b.BibleVerseId))
-                                    && (b.LanguageCode == bibleVerseBibleVersionLanguage.LanguageCode)
-                                    && (b.BibleVersionId == bibleVerseBibleVersionLanguage.BibleVersionId);
+            whereUid.Expression = b => (b.LanguageCode == bibleVerseBibleVersionLanguage.LanguageCode)
+                                    && (b.BibleVersionId == bibleVerseBibleVersionLanguage.BibleVersionId)
+                                    && (bibleVerseIds.Contains(b.BibleVerseId));
             SpecificationsClauses.Add(whereUid);
         }
     }

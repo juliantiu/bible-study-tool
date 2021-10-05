@@ -77,6 +77,7 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
                     BibleBookName = bibleBookName
                 });
             }
+            response.Success = true;
             response.LanguageCode = languageCode;
             response.Style = style;
 
