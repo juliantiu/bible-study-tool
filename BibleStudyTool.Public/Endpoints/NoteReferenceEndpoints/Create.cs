@@ -40,7 +40,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
                 response.Success = true;
                 return Ok(response);
             }
-            catch (TagGroupTagCrudActionException ex)
+            catch (NoteReferenceCrudActionException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                   new EntityCrudActionExceptionResponse() { Message = ex.Message, Timestamp = ex.Timestamp });

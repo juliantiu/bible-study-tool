@@ -15,6 +15,8 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
         private readonly IAsyncRepository<BibleBookLanguage> _bibleBookLanguageRepository;
         private readonly IAsyncRepository<BibleVerse> _bibleVerseRepository;
         private readonly IAsyncRepository<BibleVerseBibleVersionLanguage> _bibleVerseBibleVersionLanguageRepository;
+        private readonly IAsyncRepository<Note> _noteRepository;
+        private readonly IAsyncRepository<NoteReference> _noteReferenceRepository;
         private readonly IAsyncRepository<Tag> _tagRepository;
         private readonly IAsyncRepository<TagGroup> _tagGroupRepository;
 
@@ -25,6 +27,8 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
                    IAsyncRepository<BibleBookLanguage> bibleBookLanguageRepository,
                    IAsyncRepository<BibleVerse> bibleVerseRepository,
                    IAsyncRepository<BibleVerseBibleVersionLanguage> bibleVerseBibleVersionLanguageRepository,
+                   IAsyncRepository<Note> noteRepository,
+                   IAsyncRepository<NoteReference> noteReferenceRepository,
                    IAsyncRepository<Tag> tagRepository,
                    IAsyncRepository<TagGroup> tagGroupRepository,
                    UserManager<BibleReader> userManager)
@@ -33,6 +37,8 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
             _bibleBookLanguageRepository = bibleBookLanguageRepository;
             _bibleVerseRepository = bibleVerseRepository;
             _bibleVerseBibleVersionLanguageRepository = bibleVerseBibleVersionLanguageRepository;
+            _noteRepository = noteRepository;
+            _noteReferenceRepository = noteReferenceRepository;
             _tagRepository = tagRepository;
             _tagGroupRepository = tagGroupRepository;
             _userManager = userManager;
