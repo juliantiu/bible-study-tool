@@ -12,7 +12,7 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
     public partial class Get
     {
         [Authorize]
-        [HttpGet("api/GetAllUserTagsHandler")]
+        [HttpGet("get-all-user-tags")]
         public async Task<ActionResult<GetAllUserTagsResponse>> GetAllUserTagsHandler()
         {
             try

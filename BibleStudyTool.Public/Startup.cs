@@ -52,6 +52,7 @@ namespace BibleStudyTool.Public
             services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BibleReadingEntityRepository<>));
             services.AddScoped(typeof(IEntityGetterRepoFactory<>), typeof(EntityGetterRepoFactory<>));
+            services.AddScoped(typeof(IEntityCrudActionExceptionFactory), typeof(EntityCrudActionExceptionFactory));
 
             /* Authentication & JWT configuration
              * Resources:

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.TagGroupTagEndpoints
 {
+    [Route("api/tag-group-tag")]
     [ApiController]
     public class Delete : ControllerBase
     {
@@ -23,7 +24,7 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupTagEndpoints
             _userManager = userManager;
         }
 
-        [HttpDelete("api/TagGroupTags")]
+        [HttpDelete("delete")]
         public async Task<ActionResult<DeleteTagGroupTagResponse>> DeleteHandler(DeleteTagGroupTagRequest request)
         {
             try

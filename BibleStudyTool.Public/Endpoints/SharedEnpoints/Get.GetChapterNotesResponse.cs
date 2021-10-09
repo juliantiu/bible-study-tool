@@ -4,8 +4,8 @@ using BibleStudyTool.Public.DTOs;
 
 namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
 {
-    public class GetAllNotesWithTagsAndReferencesForChapterResponse : ApiResponseBase
+    public class GetChapterNotesResponse : ApiResponseBase
     {
-        public IList<NoteDto> NotesForChapter { get; set; }
+        public IList<NoteDto> ChapterNotes { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
 {
+    [Route("api/shared")]
     [ApiController]
     public partial class Get : ControllerBase
     {

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.BibleReaderEndpoints
 {
+    [Route("api/secure")]
     [ApiController]
     public class Authenticate : ControllerBase
     {
@@ -22,7 +23,7 @@ namespace BibleStudyTool.Public.Endpoints.BibleReaderEndpoints
             _tokenClaimsService = tokenClaimsService;
         }
 
-        [HttpPost("api/authenticate")]
+        [HttpPost("authenticate")]
         [AllowAnonymous]
         public async Task<ActionResult<AuthenticateResponse>> AuthenticateHandler(AuthenticateRequest request)
         {

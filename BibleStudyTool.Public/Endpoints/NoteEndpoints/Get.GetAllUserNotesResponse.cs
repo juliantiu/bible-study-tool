@@ -4,7 +4,7 @@ using BibleStudyTool.Public.DTOs;
 
 namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
 {
-    public class GetAllUserNotesWithTagsAndReferencesResponse : ApiResponseBase
+    public class GetAllUserNotesResponse : ApiResponseBase
     {
         public string Uid { get; set; }
         public IList<NoteDto> Notes { get; set; }

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.TagGroupNoteEndpoints
 {
+    [Route("api/tag-group-note")]
     [ApiController]
     public class Create : ControllerBase
     {
@@ -22,7 +23,7 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupNoteEndpoints
             _userManager = userManager;
         }
 
-        [HttpPost("api/TagGroupNote")]
+        [HttpPost("create")]
         public async Task<ActionResult<CreateTagGroupNoteResponse>> Createhandler(CreateTagGroupNoteRequest request)
         {
             try

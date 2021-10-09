@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.BibleReaderEndpoints
 {
+    [Route("api/secure")]
     [ApiController]
     public class Register : ControllerBase
     {
@@ -25,7 +26,7 @@ namespace BibleStudyTool.Public.Endpoints.BibleReaderEndpoints
             _userManager = userManager;
         }
 
-        [HttpPost("api/register")]
+        [HttpPost("register")]
         [AllowAnonymous]
         public async Task<ActionResult<RegisterResponse>> RegisterHandler(RegisterRequest request)
         {

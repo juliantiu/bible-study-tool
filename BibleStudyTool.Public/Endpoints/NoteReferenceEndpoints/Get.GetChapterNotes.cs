@@ -11,12 +11,12 @@ namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
 {
     public partial class Get
     {
-        [HttpPost("api/GetAllNotesForChapter")]
-        public async Task<ActionResult<GetAllNotesForChapterResponse>> GetAllNotesForChapterHandler(int[] bibleVerseIds)
+        [HttpPost("get-all-chapter-notes")]
+        public async Task<ActionResult<GetChapterNotesResponse>> GetChapterNotesHandler(int[] bibleVerseIds)
         {
             try
             {
-                return Ok(await GetAllNotesForChapterHandler(bibleVerseIds, _noteReferenceRepository));
+                return Ok(await GetChapterNotesHandler(bibleVerseIds, _noteReferenceRepository));
             }
             catch (NoteReferenceCrudActionException ex)
             {
@@ -29,9 +29,9 @@ namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
             }
         }
 
-        public static async Task<GetAllNotesForChapterResponse> GetAllNotesForChapterHandler(int[] bibleVerseIds, IAsyncRepository<NoteReference> noteReferenceRepository)
+        public static async Task<GetChapterNotesResponse> GetChapterNotesHandler(int[] bibleVerseIds, IAsyncRepository<NoteReference> noteReferenceRepository)
         {
-            var response = new GetAllNotesForChapterResponse();
+            var response = new GetChapterNotesResponse();
             var noteReferenceSpecification = new NoteReferenceForChapterSpecification(bibleVerseIds);
             var noteReferences = await noteReferenceRepository.GetBySpecification<NoteReferenceCrudActionException>(noteReferenceSpecification);
             foreach (var noteReference in noteReferences)

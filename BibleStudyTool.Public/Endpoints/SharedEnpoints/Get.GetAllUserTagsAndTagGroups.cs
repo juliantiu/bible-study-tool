@@ -10,7 +10,7 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
     public partial class Get
     {
         [Authorize]
-        [HttpGet("api/GetAllUserTagsAndTagGroups")]
+        [HttpGet("get-all-user-tags-and-tag-groups")]
         public async Task<ActionResult<GetAllUserTagsAndTagGroupsResponse>> GetAllUserTagsAndTagGroupsHandler()
         {
             try

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
 {
+    [Route("api/note")]
     [ApiController]
     public class Update : ControllerBase
     {
@@ -24,7 +25,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
             _userManager = userManager;
         }
 
-        [HttpPut("api/Note")]
+        [HttpPut("update")]
         [Authorize]
         public async Task<ActionResult<UpdateNoteResponse>> UpdateHandler(UpdateNoteRequest request)
         {

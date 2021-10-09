@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
 {
+    [Route("api/note")]
     [ApiController]
     public partial class Get : ControllerBase
     {

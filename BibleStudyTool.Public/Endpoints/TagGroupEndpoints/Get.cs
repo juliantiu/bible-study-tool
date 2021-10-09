@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
 {
+    [Route("api/tag-group")]
     [ApiController]
     public partial class Get : ControllerBase
     {

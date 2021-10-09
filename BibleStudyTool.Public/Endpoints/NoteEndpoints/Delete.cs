@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
 {
+    [Route("api/note")]
     public class Delete : ControllerBase
     {
         private readonly IAsyncRepository<Note> _itemRepository;
@@ -23,7 +24,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
             _userManager = userManager;
         }
 
-        [HttpDelete("api/Note")]
+        [HttpDelete("delete")]
         [Authorize]
         public async Task<ActionResult<DeleteNoteResponse>> DeleteHandler(string id)
         {

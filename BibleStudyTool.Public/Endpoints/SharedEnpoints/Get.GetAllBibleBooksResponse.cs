@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
 {
-    public class BibleBookNamesAndAbbreviationsItem
+    public class BibleBookItem
     {
         public int BibleBookId { get; set; } = 0;
         public string BibleBookName { get; set; } = string.Empty;
         public string BibleBookAbbreviation { get; set; } = string.Empty;
     }
 
-    public class GetAllBibleBookNamesAndAbbreviationsResponse : ApiResponseBase
+    public class GetAllBibleBooksResponse : ApiResponseBase
     {
         public string LanguageCode { get; set; } = string.Empty;
         public string Style { get; set; } = string.Empty;
-        public IList<BibleBookNamesAndAbbreviationsItem> BibleBookNamesAndAbbreviations { get; set; } = new List<BibleBookNamesAndAbbreviationsItem>();
+        public IList<BibleBookItem> BibleBookNamesAndAbbreviations { get; set; } = new List<BibleBookItem>();
     }
 }

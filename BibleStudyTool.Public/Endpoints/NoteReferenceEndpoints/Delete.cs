@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
 {
+    [Route("api/note-reference")]
     [ApiController]
     public class Delete : ControllerBase
     {
@@ -23,7 +24,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
             _userManager = userManager;
         }
 
-        [HttpDelete("api/NoteReferences")]
+        [HttpDelete("delete")]
         public async Task<ActionResult<DeleteNoteReferenceResponse>> DeleteHandler(DeleteNoteReferenceRequest request)
         {
             try

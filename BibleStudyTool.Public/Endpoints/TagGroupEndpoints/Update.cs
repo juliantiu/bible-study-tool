@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
 {
+    [Route("api/tag-group")]
     [ApiController]
     public class Update : ControllerBase
     {
@@ -23,7 +24,7 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
             _userManager = userManager;
         }
 
-        [HttpPut("api/TagGroup")]
+        [HttpPut("/update")]
         [Authorize]
         public async Task<ActionResult<UpdateTagGroupResponse>> UpdateHandler(UpdateTagGroupRequest request)
         {

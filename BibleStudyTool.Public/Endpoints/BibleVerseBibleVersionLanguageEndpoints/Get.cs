@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.BibleVerseBibleVersionLanguageEndpoints
 {
+    [Route("api/bible-verse-bible-version-language")]
     [ApiController]
     public partial class Get : ControllerBase
     {

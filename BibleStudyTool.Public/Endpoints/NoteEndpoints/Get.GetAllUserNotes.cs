@@ -14,13 +14,13 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
     public partial class Get
     {
         [Authorize]
-        [HttpPost("api/GetAllUserNotesWithTagsAndReferences")]
-        public async Task<ActionResult<GetAllUserNotesWithTagsAndReferencesResponse>> GetAllUserNotesWithTagsAndReferencesHandler()
+        [HttpPost("all-user-notes-with-tags-and-references")]
+        public async Task<ActionResult<GetAllUserNotesResponse>> GetAllUserNotesHandler()
         {
             try
             {
                 var userId = _userManager.GetUserId(User);
-                var response = await GetAllUserNotesWithTagsAndReferencesHandler(userId, _noteRepository);
+                var response = await GetAllUserNotesHandler(userId, _noteRepository);
                 return response;
             }
             catch (NoteCrudActionException ex)
@@ -35,10 +35,10 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
             }
         }
 
-        public async Task<ActionResult<GetAllUserNotesWithTagsAndReferencesResponse>> GetAllUserNotesWithTagsAndReferencesHandler(string uid,
+        public async Task<ActionResult<GetAllUserNotesResponse>> GetAllUserNotesHandler(string uid,
                                                                                                                                   IAsyncRepository<Note> noteRepository)
         {
-            var response = new GetAllUserNotesWithTagsAndReferencesResponse();
+            var response = new GetAllUserNotesResponse();
             var noteSpecRef = new Note(uid, string.Empty, string.Empty);
             var noteSpecification = new NoteWithAllTagsAndReferencesSpecification(noteSpecRef);
             var notes = await noteRepository.GetBySpecification<NoteCrudActionException>(noteSpecification);

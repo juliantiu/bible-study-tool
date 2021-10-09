@@ -12,12 +12,12 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
 {
     public partial class Get
     {
-        [HttpGet("api/GetAllBibleBookNamesAndAbbreviations")]
-        public async Task<ActionResult<GetAllBibleBookNamesAndAbbreviationsResponse>> GetAllBibleBookNamesAndAbbreviationsHandler(string languageCode, string style)
+        [HttpGet("get-all-bible-books")]
+        public async Task<ActionResult<GetAllBibleBooksResponse>> GetAllBibleBooks(string languageCode, string style)
         {
             try
             {
-                var response = await GetAllBibleBookNamesAndAbbreviationsHandler(languageCode, style, _bibleBookAbbreviationLanguageRepository, _bibleBookLanguageRepository);
+                var response = await GetAllBibleBooks(languageCode, style, _bibleBookAbbreviationLanguageRepository, _bibleBookLanguageRepository);
                 return Ok(response);
             }
             catch (BibleBookLanguageCrudActionException ex)
@@ -39,13 +39,12 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
             }
         }
 
-        public static async Task<GetAllBibleBookNamesAndAbbreviationsResponse>
-            GetAllBibleBookNamesAndAbbreviationsHandler(string languageCode,
-                                                        string style,
-                                                        IAsyncRepository<BibleBookAbbreviationLanguage> _bibleBookAbbreviationLanguageRepository,
-                                                        IAsyncRepository<BibleBookLanguage> _bibleBookLanguageRepository)
+        public static async Task<GetAllBibleBooksResponse>GetAllBibleBooks(string languageCode,
+                                                                                               string style,
+                                                                                               IAsyncRepository<BibleBookAbbreviationLanguage> _bibleBookAbbreviationLanguageRepository,
+                                                                                               IAsyncRepository<BibleBookLanguage> _bibleBookLanguageRepository)
         {
-            var response = new GetAllBibleBookNamesAndAbbreviationsResponse();
+            var response = new GetAllBibleBooksResponse();
             var bibleBookIdNameMapping = new Dictionary<int, string>();
             var bibleBookLanguageSpecRef = new BibleBookLanguage(languageCode, style);
             var bibleBookLanguageSpecification = new BibleBookInLanguageAndStyleSpecification(bibleBookLanguageSpecRef);
@@ -70,7 +69,7 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
                 if (bibleBookIdAbbreviationMapping.TryGetValue(id, out string abbreviation))
                     bibleBookAbbreviation = abbreviation;
 
-                response.BibleBookNamesAndAbbreviations.Add(new BibleBookNamesAndAbbreviationsItem()
+                response.BibleBookNamesAndAbbreviations.Add(new BibleBookItem()
                 {
                     BibleBookAbbreviation = bibleBookAbbreviation,
                     BibleBookId = id,

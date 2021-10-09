@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
 {
+    [Route("api/note-reference")]
     [ApiController]
     public class Create : ControllerBase
     {
@@ -22,7 +23,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
             _userManager = userManager;
         }
 
-        [HttpPost("api/NoteReference")]
+        [HttpPost("new")]
         public async Task<ActionResult<CreateNoteReferenceResponse>> CreateHandler(CreateNoteReferenceRequest request)
         {
             try

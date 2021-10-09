@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.TagEndpoints
 {
+    [Route("api/tag")]
     [ApiController]
     public class Create : ControllerBase
     {
@@ -23,7 +24,7 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
             _userManager = usermanager;
         }
 
-        [HttpPost("api/Tag")]
+        [HttpPost("create")]
         [Authorize]
         public async Task<ActionResult<CreateTagResponse>> CreateHandler(CreateTagRequest request)
         {

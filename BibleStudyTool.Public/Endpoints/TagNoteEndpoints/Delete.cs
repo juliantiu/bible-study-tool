@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.TagNoteEndpoints
 {
+    [Route("api/tag-note")]
     [ApiController]
     public class Delete : ControllerBase
     {
@@ -23,7 +24,7 @@ namespace BibleStudyTool.Public.Endpoints.TagNoteEndpoints
             _userManager = userManager;
         }
 
-        [HttpDelete("api/TagNotes")]
+        [HttpDelete("delete")]
         public async Task<ActionResult<DeleteTagNoteResponse>> DeleteHandler(DeleteTagNoteRequest request)
         {
             try

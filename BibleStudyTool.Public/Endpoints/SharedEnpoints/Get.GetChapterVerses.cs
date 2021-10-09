@@ -16,20 +16,20 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
 {
 	public partial class Get
 	{
-		[HttpGet("api/GetBibleVersesForChapter")]
-		public async Task<ActionResult<GetBibleVersesForChapterResponse>> GetBibleVersesForChapterHandler(int bibleVersionId,
-                                                                                                          int bibleBookId,
-                                                                                                          int chapterNumber,
-                                                                                                          string languageCode)
+		[HttpGet("get-chapter-verses")]
+		public async Task<ActionResult<GetBibleVersesForChapterResponse>> GetChapterVersesHandler(int bibleVersionId,
+                                                                                                  int bibleBookId,
+                                                                                                  int chapterNumber,
+                                                                                                  string languageCode)
         {
             try
             {
-                return Ok(await GetBibleVersesForChapterHandler(bibleVersionId,
-                                                                bibleBookId,
-                                                                chapterNumber,
-                                                                languageCode,
-                                                                _bibleVerseRepository,
-                                                                _bibleVerseBibleVersionLanguageRepository));
+                return Ok(await GetChapterVersesHandler(bibleVersionId,
+                                                        bibleBookId,
+                                                        chapterNumber,
+                                                        languageCode,
+                                                        _bibleVerseRepository,
+                                                        _bibleVerseBibleVersionLanguageRepository));
             }
             catch (BibleVerseCrudActionException ex)
             {
@@ -48,7 +48,7 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
             }
         }
 
-        public static async Task<GetBibleVersesForChapterResponse> GetBibleVersesForChapterHandler(int bibleVersionId,
+        public static async Task<GetBibleVersesForChapterResponse> GetChapterVersesHandler(int bibleVersionId,
                                                                                                    int bibleBookId,
                                                                                                    int chapterNumber,
                                                                                                    string languageCode,

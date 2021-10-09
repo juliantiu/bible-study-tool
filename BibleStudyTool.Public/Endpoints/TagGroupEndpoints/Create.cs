@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
 {
+    [Route("api/tag-group")]
+    [ApiController]
     public class Create : ControllerBase
     {
         private readonly IAsyncRepository<TagGroup> _itemRepository;
@@ -22,7 +24,7 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
             _userManager = userManager;
         }
 
-        [HttpPost("api/TagGroup")]
+        [HttpPost("/create")]
         [Authorize]
         public async Task<ActionResult<CreateTagGroupResponse>> CreateHandler(CreateTagGroupRequest request)
         {

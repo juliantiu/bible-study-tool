@@ -3,7 +3,7 @@ using BibleStudyTool.Public.DTOs;
 
 namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
 {
-    public class GetAllNotesForChapterResponse : ApiResponseBase
+    public class GetChapterNotesResponse : ApiResponseBase
     {
         public IList<NoteReferenceDto> NoteReferencesForChapter { get; set; }
     }

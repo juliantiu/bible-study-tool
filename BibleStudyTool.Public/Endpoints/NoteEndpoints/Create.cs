@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
 {
+    [Route("api/note")]
     public class Create : ControllerBase
     {
         private readonly IAsyncRepository<Note> _itemRepository;
@@ -24,7 +25,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
             _userManager = userManager;
         }
 
-        [HttpPost("api/Note")]
+        [HttpPost("new")]
         [Authorize]
         public async Task<ActionResult<CreateNoteResponse>> CreateHandler(CreateNoteRequest request)
         {
