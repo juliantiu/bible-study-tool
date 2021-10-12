@@ -62,7 +62,7 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
             var bibleVerses =
                 await bibleVerseRepository.GetBySpecification<BibleVerseCrudActionException>(bibleVerseSpecification);
 
-            var bibleVerseIds = bibleVerses.Select(b => b.BibleBookId);
+            var bibleVerseIds = bibleVerses.Select(b => b.BibleVerseId); 
             var bibleVerseBibleVersionLanguageSpecRef = new BibleVerseBibleVersionLanguage(bibleVersionId, languageCode);
             var bibleVerseBibleVersionLanguageSpecification = new BibleVerseTextForChapterAndBookSpecifications(bibleVerseBibleVersionLanguageSpecRef, bibleVerseIds);
             var bibleVerseBibleVersionLanguages =
@@ -77,7 +77,7 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
                 response.BibleVersesForChapter.Add(new BibleVerseForChapterItem()
                 {
                     BibleVerseId = bibleVerse.BibleVerseId,
-                    ChapterNumber = chapterNumber,
+                    ChapterNumber = bibleVerse.ChapterNumber,
                     VerseNumber = bibleVerse.VerseNumber,
                     IsNewTestament = bibleVerse.IsNewTestament,
                     Text = text
@@ -85,6 +85,7 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
             }
             response.Success = true;
             response.BibleBookId = bibleBookId;
+            response.ChapterNumber = chapterNumber;
             response.LanguageCode = languageCode;
             return response;
         }

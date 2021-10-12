@@ -6,6 +6,7 @@ using BibleStudyTool.Core.Exceptions;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Core.NonEntityTypes;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace BibleStudyTool.Infrastructure.Data
 {
@@ -60,7 +61,7 @@ namespace BibleStudyTool.Infrastructure.Data
         {
             try
             {
-                var entityTableQuery = _dbContext.Set<T>().AsQueryable();
+                IQueryable<T> entityTableQuery = _dbContext.Set<T>().AsQueryable();
                 var entityTableQueryWithSpecifications = ApplySpecifications(entityTableQuery, specification.SpecificationsClauses);
                 return await entityTableQueryWithSpecifications.ToListAsync();
             }
@@ -275,14 +276,15 @@ namespace BibleStudyTool.Infrastructure.Data
 
         public IQueryable<T> ApplySpecifications(IQueryable<T> entityTableQuery, IList<SpecificationClause> specificationClauses)
         {
+            var query = entityTableQuery.AsQueryable();
             foreach (var queryClause in specificationClauses)
             {
                 if (queryClause is WhereClause<T> whereClause)
-                    entityTableQuery.Where(whereClause.Expression).AsQueryable();
+                    query = query.Where(whereClause.Expression).AsQueryable();
                 if (queryClause is IncludeClause includeClause)
-                    entityTableQuery.Include(includeClause.PropertyName);
+                    query = query.Include(includeClause.PropertyName);
             }
-            return entityTableQuery;
+            return query;
         }
 
         #endregion

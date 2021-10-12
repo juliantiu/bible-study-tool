@@ -19,7 +19,7 @@ namespace BibleStudyTool.Core.Entities.JoinEntities.Specifications
         {
             WhereClause<BibleBookAbbreviationLanguage> whereLanguageCodeAndStyle = new WhereClause<BibleBookAbbreviationLanguage>();
             whereLanguageCodeAndStyle.Expression = bbal => (bbal.LanguageCode == bibleBookAbbreviationLanguage.LanguageCode)
-                                                        && (bbal.BibleBookId == bibleBookAbbreviationLanguage.BibleBookId);
+                                                        && (bbal.Style == bibleBookAbbreviationLanguage.Style);
             SpecificationsClauses.Add(whereLanguageCodeAndStyle);
         }
     }
