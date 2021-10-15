@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
+using BibleStudyTool.Core.Entities.JoinEntities;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Infrastructure.Data.Identity;
+using BibleStudyTool.Public.Endpoints.TagGroupTagEndpoints;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -14,25 +17,44 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
     [ApiController]
     public class Create : ControllerBase
     {
-        private readonly IAsyncRepository<TagGroup> _itemRepository;
+        private readonly IAsyncRepository<TagGroup> _tagGroupRepository;
+        private readonly IAsyncRepository<TagGroupTag> _tagGroupTagRepository;
         private readonly UserManager<BibleReader> _userManager;
 
-        public Create(IAsyncRepository<TagGroup> itemRepository,
+        public Create(IAsyncRepository<TagGroup> tagGroupRepository,
+                      IAsyncRepository<TagGroupTag> tagGroupTagRepository,
                       UserManager<BibleReader> userManager)
         {
-            _itemRepository = itemRepository;
+            _tagGroupRepository = tagGroupRepository;
+            _tagGroupTagRepository = tagGroupTagRepository;
             _userManager = userManager;
         }
 
-        [HttpPost("/create")]
-        [Authorize]
+        [HttpPost("create")]
         public async Task<ActionResult<CreateTagGroupResponse>> CreateHandler(CreateTagGroupRequest request)
         {
+            var tagGroupId = 0;
+            var userId = _userManager.GetUserId(User);
             try
             {
                 var response = new CreateTagGroupResponse();
-                var tagGroup = new TagGroup(_userManager.GetUserId(User), request.Label);
-                await _itemRepository.CreateAsync<TagGroupCrudActionException>(tagGroup);
+
+                if (request.TagIds.Count < 2)
+                {
+                    response.FailureMessage = "There needs to be 2 or more tags to constitute a tag grouping.";
+                    return Ok(response);
+                }
+
+                var tagGroupRef = new TagGroup(userId);
+                var tagGroup = await _tagGroupRepository.CreateAsync<TagGroupCrudActionException>(tagGroupRef);
+                tagGroupId = tagGroup.TagGroupId;
+
+                var tagGroupTags = new List<CreateTagGroupTagRequestObject>();
+                foreach (var tagId in request.TagIds)
+                    tagGroupTags.Add(new CreateTagGroupTagRequestObject() { TagGroupId = tagGroupId, TagId = tagId });
+
+                await TagGroupTagEndpoints.Create.CreateHandler(tagGroupTags, _tagGroupTagRepository);
+
                 response.Success = true;
                 return Ok(response);
             }
@@ -41,9 +63,16 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                   new EntityCrudActionExceptionResponse() { Timestamp = ex.Timestamp, Message = ex.Message });
             }
+            catch (TagGroupTagCrudActionException ex)
+            {
+                await Delete.DeleteHandler(tagGroupId, userId, _tagGroupRepository, _userManager);
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                  new EntityCrudActionExceptionResponse() { Message = ex.Message, Timestamp = ex.Timestamp });
+            }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to create tag group '{request.Label}.'");
+                await Delete.DeleteHandler(tagGroupId, userId, _tagGroupRepository, _userManager);
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to create tag group.");
             }
         }
     }

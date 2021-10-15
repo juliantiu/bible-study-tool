@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.Specifications;
 using BibleStudyTool.Core.Interfaces;
+using BibleStudyTool.Public.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,7 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
             var tags = await tagRepository.GetBySpecification<TagCrudActionException>(tagSpecification);
             foreach (var tag in tags)
             {
-                response.Tags.Add(new DTOs.TagDto()
+                response.Tags.Add(new TagDto()
                 {
                     Color = tag.Color,
                     Label = tag.Label,

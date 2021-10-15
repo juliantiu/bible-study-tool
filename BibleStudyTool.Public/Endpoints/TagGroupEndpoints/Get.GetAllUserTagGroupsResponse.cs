@@ -6,7 +6,7 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
 {
     public class GetAllUserTagGroupsResponse : ApiResponseBase
     {
-        public IList<TagGroupDto> TagGroups { get; set; }
-        public string Uid { get; set; }
+        public IList<TagGroupDto> TagGroups { get; set; } = new List<TagGroupDto>();
+        public string Uid { get; set; } = string.Empty;
     }
 }

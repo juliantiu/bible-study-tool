@@ -14,11 +14,6 @@ namespace BibleStudyTool.Infrastructure.Data.Config
             builder.Property(tagGroup => tagGroup.Uid)
                    .HasColumnName("TagGroupUid")
                    .IsRequired();
-
-            builder.Property(tagGroup => tagGroup.Label)
-                   .HasColumnName("TagGroupLabel")
-                   .HasMaxLength(100)
-                   .IsRequired();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Interfaces;
@@ -14,34 +15,22 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
     [ApiController]
     public class Delete : ControllerBase
     {
-        private readonly IAsyncRepository<TagGroup> _itemRepository;
+        private readonly IAsyncRepository<TagGroup> _tagGroupRepository;
         private readonly UserManager<BibleReader> _userManager;
 
-        public Delete(IAsyncRepository<TagGroup> itemRepository,
+        public Delete(IAsyncRepository<TagGroup> tagGroupRepository,
                       UserManager<BibleReader> userManager)
         {
-            _itemRepository = itemRepository;
+            _tagGroupRepository = tagGroupRepository;
             _userManager = userManager;
         }
 
-        [HttpDelete("/delete")]
-        [Authorize]
-        public async Task<ActionResult<DeleteTagGroupResponse>> DeleteHandler(string id)
+        [HttpDelete("delete")]
+        public async Task<ActionResult<DeleteTagGroupResponse>> DeleteHandler(int id)
         {
             try
             {
-                var response = new DeleteTagGroupResponse();
-                var currentUserId = _userManager.GetUserId(User);
-                var idKey = new object[] { id };
-                var tagGroup = await _itemRepository.GetByIdAsync<TagGroupCrudActionException>(idKey);
-                if (tagGroup.Uid != currentUserId)
-                {
-                    response.FailureMessage = "The current user does not own the tag group being deleted.";
-                    return response;
-                }
-                await _itemRepository.DeleteAsync<TagGroupCrudActionException>(tagGroup);
-                response.Success = true;
-                return response;
+                return Ok(await DeleteHandler(id, _userManager.GetUserId(User), _tagGroupRepository, _userManager));
 
             }
             catch (TagGroupCrudActionException ex)
@@ -53,6 +42,25 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Failed to delete tag group.");
             }
+        }
+
+        public static async Task<DeleteTagGroupResponse> DeleteHandler(int id,
+                                                                       string uid,
+                                                                       IAsyncRepository<TagGroup> tagGroupRepository,
+                                                                       UserManager<BibleReader> userManager)
+        {
+            var response = new DeleteTagGroupResponse();
+            var currentUserId = uid;
+            var idKey = new object[] { id };
+            var tagGroup = await tagGroupRepository.GetByIdAsync<TagGroupCrudActionException>(idKey);
+            if (tagGroup.Uid != currentUserId)
+            {
+                response.FailureMessage = "The current user does not own the tag group being deleted.";
+                return response;
+            }
+            await tagGroupRepository.DeleteAsync<TagGroupCrudActionException>(tagGroup);
+            response.Success = true;
+            return response;
         }
     }
 }

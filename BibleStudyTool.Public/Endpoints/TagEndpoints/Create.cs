@@ -25,7 +25,6 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
         }
 
         [HttpPost("create")]
-        [Authorize]
         public async Task<ActionResult<CreateTagResponse>> CreateHandler(CreateTagRequest request)
         {
             try

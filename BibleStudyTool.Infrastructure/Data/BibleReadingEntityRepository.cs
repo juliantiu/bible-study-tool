@@ -116,7 +116,7 @@ namespace BibleStudyTool.Infrastructure.Data
             {
                 throw
                     _entityCrudActionExceptionFactory
-                        .CreateEntityCrudActionException<Y>($"CreateAsync error :: {ex.Message}");
+                        .CreateEntityCrudActionException<Y>($"CreateAsync error :: {ex.InnerException.Message}");
             }
         }
 
@@ -124,11 +124,8 @@ namespace BibleStudyTool.Infrastructure.Data
         {
             try
             {
-                using (var ctx = new BibleReadingDbContext())
-                {
-                    ctx.RemoveRange(entities);
-                    await ctx.SaveChangesAsync();
-                }
+                _dbContext.Set<T>().AddRange(entities);
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex) when (ex is DbUpdateException
                                        || ex is DbUpdateConcurrencyException
@@ -138,7 +135,7 @@ namespace BibleStudyTool.Infrastructure.Data
             {
                 throw
                     _entityCrudActionExceptionFactory
-                        .CreateEntityCrudActionException<Y>($"BulkDeleteAsync error :: {ex.Message}");
+                        .CreateEntityCrudActionException<Y>($"BulkDeleteAsync error :: {ex.InnerException.Message}");
             }
         }
 
@@ -187,18 +184,15 @@ namespace BibleStudyTool.Infrastructure.Data
         {
             try
             {
-                using (var ctx = new BibleReadingDbContext())
+                IList<T> entitiesToDelete = new List<T>();
+                var dbTable = _dbContext.Set<T>();
+                foreach (var entityId in entityIds)
                 {
-                    IList<T> entitiesToDelete = new List<T>();
-                    var dbTable = ctx.Set<T>();
-                    foreach (var entityId in entityIds)
-                    {
-                        entitiesToDelete.Add(await dbTable.FindAsync(entityId).ConfigureAwait(false));
-                    }
-
-                    ctx.RemoveRange(entitiesToDelete);
-                    await ctx.SaveChangesAsync();
+                    entitiesToDelete.Add(await dbTable.FindAsync(entityId).ConfigureAwait(false));
                 }
+
+                _dbContext.Set<T>().RemoveRange(entitiesToDelete);
+                await _dbContext.SaveChangesAsync();
             }
             catch (Exception ex) when (ex is DbUpdateException
                                        || ex is DbUpdateConcurrencyException
@@ -253,11 +247,8 @@ namespace BibleStudyTool.Infrastructure.Data
             {
                 try
                 {
-                    using (var ctx = new BibleReadingDbContext())
-                    {
-                        ctx.UpdateRange(entities);
-                        await ctx.SaveChangesAsync();
-                    }
+                    _dbContext.UpdateRange(entities);
+                    await _dbContext.SaveChangesAsync();
                 }
                 catch (Exception ex) when (ex is DbUpdateException
                                            || ex is DbUpdateConcurrencyException

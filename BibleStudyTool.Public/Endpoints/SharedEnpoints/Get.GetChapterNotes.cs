@@ -64,7 +64,7 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                   new EntityCrudActionExceptionResponse() { Message = ex.Message, Timestamp = ex.Timestamp });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to get note reference(s) for the given bible book chapter.");
             }

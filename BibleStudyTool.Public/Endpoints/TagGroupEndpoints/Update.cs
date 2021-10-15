@@ -26,22 +26,22 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
 
         [HttpPut("/update")]
         [Authorize]
-        public async Task<ActionResult<UpdateTagGroupResponse>> UpdateHandler(UpdateTagGroupRequest request)
+        public ActionResult<UpdateTagGroupResponse> UpdateHandler(UpdateTagGroupRequest request)
         {
             var response = new UpdateTagGroupResponse();
             try
             {
-                var currentUserId = _userManager.GetUserId(User);
-                var keyId = new Object[] { request.TagGroupId };
-                var tagGroup = await _itemRepository.GetByIdAsync<TagGroupCrudActionException>(keyId);
-                if (tagGroup.Uid != currentUserId)
-                {
-                    response.FailureMessage = "The current user does not own the tag group being updated.";
-                    return response;
-                }
-                tagGroup.UpdateDetails(request.Label);
-                await _itemRepository.UpdateAsync<TagCrudActionException>(tagGroup);
-                response.Success = true;
+                //var currentUserId = _userManager.GetUserId(User);
+                //var keyId = new Object[] { request.TagGroupId };
+                //var tagGroup = await _itemRepository.GetByIdAsync<TagGroupCrudActionException>(keyId);
+                //if (tagGroup.Uid != currentUserId)
+                //{
+                //    response.FailureMessage = "The current user does not own the tag group being updated.";
+                //    return response;
+                //}
+                //tagGroup.UpdateDetails(request.Label);
+                //await _itemRepository.UpdateAsync<TagCrudActionException>(tagGroup);
+                //response.Success = true;
                 return response;
             }
             catch (TagGroupValidationException ex)
@@ -56,7 +56,7 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to update tag group '{request.Label}.'");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to update tag group.");
             }
         }
     }

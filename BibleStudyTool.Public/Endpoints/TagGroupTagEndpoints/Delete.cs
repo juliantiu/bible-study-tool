@@ -14,13 +14,13 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupTagEndpoints
     [ApiController]
     public class Delete : ControllerBase
     {
-        private readonly IAsyncRepository<TagGroupTag> _itemRepository;
+        private readonly IAsyncRepository<TagGroupTag> _tagGroupTagRepository;
         private readonly UserManager<BibleReader> _userManager;
 
-        public Delete(IAsyncRepository<TagGroupTag> itemRepository,
+        public Delete(IAsyncRepository<TagGroupTag> tagGoupTagRepository,
                       UserManager<BibleReader> userManager)
         {
-            _itemRepository = itemRepository;
+            _tagGroupTagRepository = tagGoupTagRepository;
             _userManager = userManager;
         }
 
@@ -29,18 +29,7 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupTagEndpoints
         {
             try
             {
-                var response = new DeleteTagGroupTagResponse();
-                var reqTagGroupTags = request.TagGroupTags;
-                var tagGroupNotesCount = reqTagGroupTags.Count;
-                var entityIds = new List<object[]>();
-                for (int i = 0; i < tagGroupNotesCount; ++i)
-                {
-                    var tagGroupTag = reqTagGroupTags[i];
-                    entityIds[i] = new object[] { tagGroupTag.TagGroupId, tagGroupTag.TagId };
-                }
-                await _itemRepository.BulkDeleteAsync<TagGroupTagCrudActionException>(entityIds.ToArray());
-                response.Success = true;
-                return response;
+                return Ok(await DeleteHandler(request.TagGroupTags, _tagGroupTagRepository));
             }
             catch (TagGroupTagCrudActionException ex)
             {
@@ -51,6 +40,23 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupTagEndpoints
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Failed to delete tag group tag associations.");
             }
+        }
+
+        public static async Task<DeleteTagGroupTagResponse> DeleteHandler(IList<DeleteTagGroupTagRequestObject> tagGroupTags,
+                                                                          IAsyncRepository<TagGroupTag> tagGroupTagRepository)
+        {
+            var response = new DeleteTagGroupTagResponse();
+            var reqTagGroupTags = tagGroupTags;
+            var tagGroupNotesCount = reqTagGroupTags.Count;
+            var entityIds = new List<object[]>();
+            for (int i = 0; i < tagGroupNotesCount; ++i)
+            {
+                var tagGroupTag = reqTagGroupTags[i];
+                entityIds[i] = new object[] { tagGroupTag.TagGroupId, tagGroupTag.TagId };
+            }
+            await tagGroupTagRepository.BulkDeleteAsync<TagGroupTagCrudActionException>(entityIds.ToArray());
+            response.Success = true;
+            return response;
         }
     }
 }

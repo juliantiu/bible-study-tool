@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.Specifications;
@@ -36,16 +37,22 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
                                                                                          IAsyncRepository<TagGroup> tagGroupRepository)
         {
             var response = new GetAllUserTagGroupsResponse();
-            var tagGroupSpecRef = new TagGroup(uid, string.Empty);
+            var tagGroupSpecRef = new TagGroup(uid);
             var tagGroupSpecification = new TagGroupForUserSpecification(tagGroupSpecRef);
             var tagGroupss = await tagGroupRepository.GetBySpecification<TagGroupCrudActionException>(tagGroupSpecification);
             foreach (var tagGroup in tagGroupss)
             {
                 response.TagGroups.Add(new TagGroupDto()
                 {
-                    Label = tagGroup.Label,
                     Uid = tagGroup.Uid,
-                    TagGroupId = tagGroup.TagGroupId
+                    TagGroupId = tagGroup.TagGroupId,
+                    Tags = tagGroup.TagGroupTags.Select(tagGroupTag => new TagDto()
+                    {
+                        Color = tagGroupTag.Tag.Color,
+                        Label = tagGroupTag.Tag.Label,
+                        TagId = tagGroupTag.Tag.TagId,
+                        Uid = tagGroupTag.Tag.Uid
+                    }).ToList()
                 });
             }
             response.Success = true;

@@ -13,6 +13,7 @@ namespace BibleStudyTool.Core.Entities.Specifications
         {
             SpecificationsClauses = new List<SpecificationClause>();
             PopulateWhereClauses(tagGroup);
+            PopulateIncludeClauses();
         }
 
         private void PopulateWhereClauses(TagGroup tagGroup)
@@ -20,6 +21,14 @@ namespace BibleStudyTool.Core.Entities.Specifications
             WhereClause<TagGroup> whereUid = new WhereClause<TagGroup>();
             whereUid.Expression = tg => tg.Uid == tagGroup.Uid;
             SpecificationsClauses.Add(whereUid);
+        }
+
+        private void PopulateIncludeClauses()
+        {
+            var TagGroupReference = new TagGroup();
+            IncludeClause includeTagGroupTags = new IncludeClause();
+            includeTagGroupTags.PropertyName = nameof(TagGroupReference.TagGroupTags);
+            SpecificationsClauses.Add(includeTagGroupTags);
         }
     }
 }

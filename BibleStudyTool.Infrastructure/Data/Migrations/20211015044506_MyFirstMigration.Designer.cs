@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BibleStudyTool.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BibleReadingDbContext))]
-    [Migration("20211001040200_MyFirstMigration")]
+    [Migration("20211015044506_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -333,12 +333,6 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<string>("Label")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("TagGroupLabel");
 
                     b.Property<string>("Uid")
                         .IsRequired()

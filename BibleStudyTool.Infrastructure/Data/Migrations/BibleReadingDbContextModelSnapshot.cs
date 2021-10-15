@@ -332,12 +332,6 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("Label")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
-                        .HasColumnName("TagGroupLabel");
-
                     b.Property<string>("Uid")
                         .IsRequired()
                         .HasColumnType("text")
