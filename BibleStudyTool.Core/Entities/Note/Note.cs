@@ -14,7 +14,6 @@ namespace BibleStudyTool.Core.Entities
         public string Summary { get; private set; }
         public string Text { get; private set; }
 
-        public IList<TagGroupNote> TagGroupNotes { get; }
         public IList<TagNote> TagNotes { get; }
         public IList<NoteReference> ReferencedNotes { get; }
         public IList<NoteReference> ReferencedIn { get; }

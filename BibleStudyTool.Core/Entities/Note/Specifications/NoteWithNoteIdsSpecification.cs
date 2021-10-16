@@ -34,10 +34,6 @@ namespace BibleStudyTool.Core.Entities.Specifications
             IncludeClause includeTags = new IncludeClause();
             includeTags.PropertyName = nameof(note.TagNotes);
             SpecificationsClauses.Add(includeTags);
-
-            IncludeClause includeTagGroups = new IncludeClause();
-            includeTagGroups.PropertyName = nameof(note.TagGroupNotes);
-            SpecificationsClauses.Add(includeTagGroups);
         }
     }
 }

@@ -11,7 +11,6 @@ namespace BibleStudyTool.Core.Entities
 
         public string Uid { get; private set; }
 
-        public IList<TagGroupNote> TagGroupNotes { get; }
         public IList<TagGroupTag> TagGroupTags { get; private set; }
 
         public TagGroup() { }

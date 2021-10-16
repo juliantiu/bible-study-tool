@@ -26,7 +26,6 @@
     <None Remove="Endpoints\TagGroupEndpoints\" />
     <None Remove="Endpoints\TagNoteEndpoints\" />
     <None Remove="Endpoints\TagGroupTagEnpoints\" />
-    <None Remove="Endpoints\TagGroupNoteEndpoints\" />
     <None Remove="Endpoints\NoteReferenceEndpoints\" />
     <None Remove="Endpoints\SharedEnpoints\" />
     <None Remove="DTOs\" />
@@ -49,7 +48,6 @@
     <Folder Include="Endpoints\TagGroupEndpoints\" />
     <Folder Include="Endpoints\TagNoteEndpoints\" />
     <Folder Include="Endpoints\TagGroupTagEndpoints\" />
-    <Folder Include="Endpoints\TagGroupNoteEndpoints\" />
     <Folder Include="Endpoints\NoteReferenceEndpoints\" />
     <Folder Include="Endpoints\SharedEnpoints\" />
     <Folder Include="DTOs\" />

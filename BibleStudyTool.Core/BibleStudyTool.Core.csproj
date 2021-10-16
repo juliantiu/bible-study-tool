@@ -17,7 +17,6 @@
     <None Remove="Entities\BibleAggregate\BibleBook\BibleVerse\" />
     <None Remove="Entities\JoinEntities\" />
     <None Remove="Entities\JoinEntities\TagGroupTag\" />
-    <None Remove="Entities\JoinEntities\TagGroupNote\" />
     <None Remove="Entities\JoinEntities\TagNote\" />
     <None Remove="Entities\JoinEntities\VerseNote\" />
     <None Remove="Entities\BibleAggregate\LanguageAggregate\BibleVersion\" />
@@ -60,7 +59,6 @@
     <Folder Include="Entities\Note\" />
     <Folder Include="Entities\JoinEntities\" />
     <Folder Include="Entities\JoinEntities\TagGroupTag\" />
-    <Folder Include="Entities\JoinEntities\TagGroupNote\" />
     <Folder Include="Entities\JoinEntities\TagNote\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Services\" />
