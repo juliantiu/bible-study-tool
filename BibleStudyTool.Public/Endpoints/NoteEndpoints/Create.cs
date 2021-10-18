@@ -44,8 +44,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
         [HttpPost("create")]
         public async Task<ActionResult<CreateNoteResponse>> CreateHandler(CreateNoteRequest request)
         {
-            //string userId =_userManager.GetUserId(User);
-            string userId = "1";
+            string userId =_userManager.GetUserId(User);
             try
             {
                 return Ok(await CreateHandler(request.Summary,
