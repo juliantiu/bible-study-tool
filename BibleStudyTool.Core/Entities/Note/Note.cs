@@ -27,6 +27,14 @@ namespace BibleStudyTool.Core.Entities
             Text = text;
         }
 
+        public Note(int noteId, string uid, string summary, string text)
+        {
+            NoteId = noteId;
+            Uid = uid;
+            Summary = summary;
+            Text = text;
+        }
+
         public Note UpdateDetails(string summary, string text)
         {
             if (summary is string su)

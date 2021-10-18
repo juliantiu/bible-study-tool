@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities.JoinEntities;
 using BibleStudyTool.Core.Interfaces;
@@ -13,14 +14,11 @@ namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
     [ApiController]
     public class Create : ControllerBase
     {
-        private readonly IAsyncRepository<NoteReference> _itemRepository;
-        private readonly UserManager<BibleReader> _userManager;
+        private readonly IAsyncRepository<NoteReference> _noteReferenceRepository;
 
-        public Create(IAsyncRepository<NoteReference> itemRepository,
-                      UserManager<BibleReader> userManager)
+        public Create(IAsyncRepository<NoteReference> noteReferenceRepository)
         {
-            _itemRepository = itemRepository;
-            _userManager = userManager;
+            _noteReferenceRepository = noteReferenceRepository;
         }
 
         [HttpPost("new")]
@@ -28,18 +26,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
         {
             try
             {
-                var response = new CreateNoteReferenceResponse();
-                var reqNoteReferences = request.NoteReferences;
-                var noteReferencesCount = reqNoteReferences.Count;
-                NoteReference[] noteReferences = new NoteReference[noteReferencesCount];
-                for (int i = 0; i < noteReferencesCount; ++i)
-                {
-                    var noteReference = reqNoteReferences[i];
-                    noteReferences[i] = new NoteReference(noteReference.OwningNoteId, noteReference.ReferenceId, noteReference.NoteReferenceType);
-                }
-                await _itemRepository.BulkCreateAsync<NoteReferenceCrudActionException>(noteReferences);
-                response.Success = true;
-                return Ok(response);
+                return Ok(await CreateHandler(request.NoteReferences, _noteReferenceRepository));
             }
             catch (NoteReferenceCrudActionException ex)
             {
@@ -50,6 +37,23 @@ namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to create note reference(s).");
             }
+        }
+
+        public static async Task<CreateNoteReferenceResponse> CreateHandler(IList<CreateNoteReferenceRequestObject> noteReferenceList,
+                                                                            IAsyncRepository<NoteReference> noteReferenceRepository)
+        {
+            var response = new CreateNoteReferenceResponse();
+            var reqNoteReferences = noteReferenceList;
+            var noteReferencesCount = reqNoteReferences.Count;
+            NoteReference[] noteReferences = new NoteReference[noteReferencesCount];
+            for (int i = 0; i < noteReferencesCount; ++i)
+            {
+                var noteReference = reqNoteReferences[i];
+                noteReferences[i] = new NoteReference(noteReference.OwningNoteId, noteReference.ReferencedNoteId, noteReference.ReferencedBibleVerseId);
+            }
+            await noteReferenceRepository.BulkCreateAsync<NoteReferenceCrudActionException>(noteReferences);
+            response.Success = true;
+            return response;
         }
     }
 }

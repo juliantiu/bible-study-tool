@@ -17,7 +17,7 @@ namespace BibleStudyTool.Core.Entities
         public BibleBook BibleBook { get; }
 
         public IList<BibleVerseBibleVersionLanguage> BibleVerseBibleVersionLanguages { get; }
-        public IList<NoteReference> NoteReferences { get; }
+        public IList<NoteReference> ReferencedNotes { get; }
 
         public BibleVerse()
         {
@@ -35,6 +35,15 @@ namespace BibleStudyTool.Core.Entities
             VerseNumber = verseNumber;
             BibleBookId = bibleBookId;
             IsNewTestament = isNewTestament;
-        }   
+        }
+
+        public BibleVerse(int bibleVerseId, int chapterNumber, int verseNumber, int bibleBookId, bool isNewTestament)
+        {
+            BibleVerseId = bibleVerseId;
+            ChapterNumber = chapterNumber;
+            VerseNumber = verseNumber;
+            BibleBookId = bibleBookId;
+            IsNewTestament = isNewTestament;
+        }
     }
 }

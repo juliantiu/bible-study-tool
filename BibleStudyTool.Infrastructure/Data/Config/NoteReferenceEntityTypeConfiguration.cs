@@ -10,10 +10,7 @@ namespace BibleStudyTool.Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<NoteReference> builder)
         {
-            builder.HasKey(noteReference => new { noteReference.NoteId, noteReference.ReferenceId });
-
-            builder.Property(noteReference => noteReference.NoteReferenceType)
-                   .IsRequired();
+            builder.HasKey(noteReference => noteReference.NoteReferenceSurrogateKey);
 
             builder.HasOne<Note>(noteReference => noteReference.Note)
                    .WithMany(note => note.ReferencedIn)
@@ -22,12 +19,14 @@ namespace BibleStudyTool.Infrastructure.Data.Config
 
             builder.HasOne<Note>(noteReference => noteReference.ReferencedNote)
                    .WithMany(note => note.ReferencedNotes)
-                   .HasForeignKey(noteReference => noteReference.ReferenceId)
+                   .HasForeignKey(noteReference => noteReference.ReferencedNoteId)
+                   .IsRequired(false)
                    .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne<BibleVerse>(noteReference => noteReference.ReferencedBibleVerse)
-                   .WithMany(bibleVerse => bibleVerse.NoteReferences)
-                   .HasForeignKey(noteReference => noteReference.ReferenceId)
+                   .WithMany(bibleVerse => bibleVerse.ReferencedNotes)
+                   .HasForeignKey(noteReference => noteReference.ReferencedNoteId)
+                   .IsRequired(false)
                    .OnDelete(DeleteBehavior.ClientCascade);
         }
     }

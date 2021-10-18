@@ -337,30 +337,6 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TagGroupNotes",
-                columns: table => new
-                {
-                    TagGroupId = table.Column<int>(type: "integer", nullable: false),
-                    NoteId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TagGroupNotes", x => new { x.TagGroupId, x.NoteId });
-                    table.ForeignKey(
-                        name: "FK_TagGroupNotes_Notes_NoteId",
-                        column: x => x.NoteId,
-                        principalTable: "Notes",
-                        principalColumn: "NoteId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_TagGroupNotes_TagGroups_TagGroupId",
-                        column: x => x.TagGroupId,
-                        principalTable: "TagGroups",
-                        principalColumn: "TagGroupId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TagGroupTags",
                 columns: table => new
                 {
@@ -444,16 +420,18 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                 name: "NoteReferences",
                 columns: table => new
                 {
+                    NoteReferenceSurrogateKey = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     NoteId = table.Column<int>(type: "integer", nullable: false),
-                    ReferenceId = table.Column<int>(type: "integer", nullable: false),
-                    NoteReferenceType = table.Column<int>(type: "integer", nullable: false)
+                    ReferencedNoteId = table.Column<int>(type: "integer", nullable: true),
+                    ReferencedBibleVerseId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NoteReferences", x => new { x.NoteId, x.ReferenceId });
+                    table.PrimaryKey("PK_NoteReferences", x => x.NoteReferenceSurrogateKey);
                     table.ForeignKey(
-                        name: "FK_NoteReferences_BibleVerses_ReferenceId",
-                        column: x => x.ReferenceId,
+                        name: "FK_NoteReferences_BibleVerses_ReferencedNoteId",
+                        column: x => x.ReferencedNoteId,
                         principalTable: "BibleVerses",
                         principalColumn: "BibleVerseId",
                         onDelete: ReferentialAction.Restrict);
@@ -464,8 +442,8 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         principalColumn: "NoteId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_NoteReferences_Notes_ReferenceId",
-                        column: x => x.ReferenceId,
+                        name: "FK_NoteReferences_Notes_ReferencedNoteId",
+                        column: x => x.ReferencedNoteId,
                         principalTable: "Notes",
                         principalColumn: "NoteId",
                         onDelete: ReferentialAction.Restrict);
@@ -539,14 +517,14 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                 column: "LanguageCode");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NoteReferences_ReferenceId",
+                name: "IX_NoteReferences_NoteId",
                 table: "NoteReferences",
-                column: "ReferenceId");
+                column: "NoteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TagGroupNotes_NoteId",
-                table: "TagGroupNotes",
-                column: "NoteId");
+                name: "IX_NoteReferences_ReferencedNoteId",
+                table: "NoteReferences",
+                column: "ReferencedNoteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TagGroupTags_TagId",
@@ -590,9 +568,6 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "NoteReferences");
-
-            migrationBuilder.DropTable(
-                name: "TagGroupNotes");
 
             migrationBuilder.DropTable(
                 name: "TagGroupTags");

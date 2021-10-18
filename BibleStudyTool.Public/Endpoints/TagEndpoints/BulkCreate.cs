@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Infrastructure.Data.Identity;
+using BibleStudyTool.Public.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -12,25 +15,25 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
 {
     [Route("api/tag")]
     [ApiController]
-    public class Create : ControllerBase
+    public class BulkCreate : ControllerBase
     {
         private readonly IAsyncRepository<Tag> _tagRepository;
         private readonly UserManager<BibleReader> _userManager;
 
-        public Create(IAsyncRepository<Tag> itemRepository,
+        public BulkCreate(IAsyncRepository<Tag> tagRepository,
                       UserManager<BibleReader> usermanager)
         {
-            _tagRepository = itemRepository;
+            _tagRepository = tagRepository;
             _userManager = usermanager;
         }
 
-        [HttpPost("create")]
-        public async Task<ActionResult<CreateTagResponse>> CreateHandler(CreateTagRequest request)
+        [HttpPost("bulk-create")]
+        public async Task<ActionResult<BulkCreateTagsResponse>> BulkCreateHandler(BulkCreateTagsRequest request)
         {
             try
             {
                 var userId = _userManager.GetUserId(User);
-                return Ok(await CreateHandler(request.Label, request.Color, userId, _tagRepository));
+                return Ok(await BulkCreateHandler(request.Tags, userId, _tagRepository));
             }
             catch (TagCrudActionException ex)
             {
@@ -39,15 +42,14 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to create tag '{request.Label}.'");
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to create tags.");
             }
         }
 
-        public static async Task<CreateTagResponse> CreateHandler(string label, string color, string userId, IAsyncRepository<Tag> tagRepository)
+        public static async Task<BulkCreateTagsResponse> BulkCreateHandler(IList<TagDto> tagsList, string userId, IAsyncRepository<Tag> tagRepository)
         {
-            var response = new CreateTagResponse();
-            var tagRef = new Tag(userId, label, color);
-            response.Tag = await tagRepository.CreateAsync<TagCrudActionException>(tagRef);
+            var response = new BulkCreateTagsResponse();
+            await tagRepository.BulkCreateAsync<TagCrudActionException>(tagsList.Select(tag => new Tag(userId, tag.Label, tag.Color)).ToArray());
             response.Success = true;
             return response;
         }

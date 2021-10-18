@@ -7,8 +7,8 @@ namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
     public class CreateNoteReferenceRequestObject
     {
         public int OwningNoteId { get; set; }
-        public int ReferenceId { get; set; }
-        public NoteReferenceType NoteReferenceType;
+        public int? ReferencedNoteId { get; set; }
+        public int? ReferencedBibleVerseId { get; set; }
     }
 
     public class CreateNoteReferenceRequest

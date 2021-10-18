@@ -3,32 +3,28 @@ using BibleStudyTool.Core.Interfaces;
 
 namespace BibleStudyTool.Core.Entities.JoinEntities
 {
-    public enum NoteReferenceType
-    {
-        BibleVerse,
-        Note
-    }
-
     public class NoteReference : BaseEntity
     {
+        public int NoteReferenceSurrogateKey { get; set; }
+
         public int NoteId { get; private set; }
         public Note Note { get; }
 
-        public int ReferenceId { get; private set; }
+        public int? ReferencedNoteId { get; private set; }
         public Note ReferencedNote { get; }
-        public BibleVerse ReferencedBibleVerse { get; }
 
-        public NoteReferenceType NoteReferenceType { get; private set; }
+        public int? ReferencedBibleVerseId { get; private set; }
+        public BibleVerse ReferencedBibleVerse { get; }
 
         public NoteReference()
         {
         }
 
-        public NoteReference(int noteId, int referenceId, NoteReferenceType noteReferenceType)
+        public NoteReference(int noteId, int? referencedNoteId, int? referencedBibleVerseId)
         {
             NoteId = noteId;
-            ReferenceId = referenceId;
-            NoteReferenceType = noteReferenceType;
+            ReferencedNoteId = referencedNoteId;
+            ReferencedBibleVerseId = referencedBibleVerseId;
         }
     }
 }

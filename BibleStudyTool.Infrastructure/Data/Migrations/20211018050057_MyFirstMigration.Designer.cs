@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BibleStudyTool.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BibleReadingDbContext))]
-    [Migration("20211015044506_MyFirstMigration")]
+    [Migration("20211018050057_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -191,35 +191,27 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("BibleStudyTool.Core.Entities.JoinEntities.NoteReference", b =>
                 {
-                    b.Property<int>("NoteId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ReferenceId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("NoteReferenceType")
-                        .HasColumnType("integer");
-
-                    b.HasKey("NoteId", "ReferenceId");
-
-                    b.HasIndex("ReferenceId");
-
-                    b.ToTable("NoteReferences");
-                });
-
-            modelBuilder.Entity("BibleStudyTool.Core.Entities.JoinEntities.TagGroupNote", b =>
-                {
-                    b.Property<int>("TagGroupId")
-                        .HasColumnType("integer");
+                    b.Property<int>("NoteReferenceSurrogateKey")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("NoteId")
                         .HasColumnType("integer");
 
-                    b.HasKey("TagGroupId", "NoteId");
+                    b.Property<int?>("ReferencedBibleVerseId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("ReferencedNoteId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("NoteReferenceSurrogateKey");
 
                     b.HasIndex("NoteId");
 
-                    b.ToTable("TagGroupNotes");
+                    b.HasIndex("ReferencedNoteId");
+
+                    b.ToTable("NoteReferences");
                 });
 
             modelBuilder.Entity("BibleStudyTool.Core.Entities.JoinEntities.TagGroupTag", b =>
@@ -633,41 +625,20 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("BibleStudyTool.Core.Entities.BibleVerse", "ReferencedBibleVerse")
-                        .WithMany("NoteReferences")
-                        .HasForeignKey("ReferenceId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                        .WithMany("ReferencedNotes")
+                        .HasForeignKey("ReferencedNoteId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.HasOne("BibleStudyTool.Core.Entities.Note", "ReferencedNote")
                         .WithMany("ReferencedNotes")
-                        .HasForeignKey("ReferenceId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                        .HasForeignKey("ReferencedNoteId")
+                        .OnDelete(DeleteBehavior.ClientCascade);
 
                     b.Navigation("Note");
 
                     b.Navigation("ReferencedBibleVerse");
 
                     b.Navigation("ReferencedNote");
-                });
-
-            modelBuilder.Entity("BibleStudyTool.Core.Entities.JoinEntities.TagGroupNote", b =>
-                {
-                    b.HasOne("BibleStudyTool.Core.Entities.Note", "Note")
-                        .WithMany("TagGroupNotes")
-                        .HasForeignKey("NoteId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.HasOne("BibleStudyTool.Core.Entities.TagGroup", "TagGroup")
-                        .WithMany("TagGroupNotes")
-                        .HasForeignKey("TagGroupId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
-
-                    b.Navigation("Note");
-
-                    b.Navigation("TagGroup");
                 });
 
             modelBuilder.Entity("BibleStudyTool.Core.Entities.JoinEntities.TagGroupTag", b =>
@@ -772,7 +743,7 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                 {
                     b.Navigation("BibleVerseBibleVersionLanguages");
 
-                    b.Navigation("NoteReferences");
+                    b.Navigation("ReferencedNotes");
                 });
 
             modelBuilder.Entity("BibleStudyTool.Core.Entities.BibleVersion", b =>
@@ -799,8 +770,6 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
 
                     b.Navigation("ReferencedNotes");
 
-                    b.Navigation("TagGroupNotes");
-
                     b.Navigation("TagNotes");
                 });
 
@@ -813,8 +782,6 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("BibleStudyTool.Core.Entities.TagGroup", b =>
                 {
-                    b.Navigation("TagGroupNotes");
-
                     b.Navigation("TagGroupTags");
                 });
 #pragma warning restore 612, 618

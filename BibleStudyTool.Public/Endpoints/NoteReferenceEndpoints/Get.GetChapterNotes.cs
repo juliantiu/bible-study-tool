@@ -39,8 +39,8 @@ namespace BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints
                 response.NoteReferencesForChapter.Add(new NoteReferenceDto()
                 {
                     NoteId = noteReference.NoteId,
-                    NoteReferenceType = noteReference.NoteReferenceType,
-                    ReferenceId = noteReference.ReferenceId
+                    ReferenceNoteId = noteReference.ReferencedNoteId,
+                    ReferencedBibleVerseId = noteReference.ReferencedBibleVerseId
                 });
             }
             response.Success = true;

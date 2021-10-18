@@ -29,9 +29,10 @@ Get all tags and tag groups -
 
 NOTE
 ********************************************************************************
-Create a note 
-Create a note with footnote tag
-Create a note with (ministry and footnote) tags
-Create a note referencing Genesis 1:1
-Create a note referencing Genesis 1:2
-Create a note with Schedule tag referncing Genesis 1:1 and 1:2 and also referencing the notes referencing Genesis 1:1 and !:2
+Create a note -
+Create a note with footnote tag -
+Create a note with (ministry and footnote) tags -
+Create a note with new tags Petition and Pray reading -
+Create a note referencing Genesis 1:1 -
+Create a note referencing Genesis 2:1 -
+Create a note with Schedule tag referncing Genesis 1:1 and 1:2 and also referencing the notes referencing Genesis 1:1 and 2:1 -
