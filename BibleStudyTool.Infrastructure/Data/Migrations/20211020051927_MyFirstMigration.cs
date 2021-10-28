@@ -170,7 +170,7 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         column: x => x.BibleBookId,
                         principalTable: "BibleBooks",
                         principalColumn: "BibleBookId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -275,13 +275,13 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         column: x => x.BibleBookId,
                         principalTable: "BibleBooks",
                         principalColumn: "BibleBookId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_BibleBookAbbreviationLanguage_Languages_LanguageCode",
                         column: x => x.LanguageCode,
                         principalTable: "Languages",
                         principalColumn: "Code",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -301,13 +301,13 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         column: x => x.BibleBookId,
                         principalTable: "BibleBooks",
                         principalColumn: "BibleBookId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_BibleBookLanguage_Languages_LanguageCode",
                         column: x => x.LanguageCode,
                         principalTable: "Languages",
                         principalColumn: "Code",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -327,13 +327,13 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         column: x => x.BibleVersionId,
                         principalTable: "BibleVersions",
                         principalColumn: "BibleVersionId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_BibleVersionLanguage_Languages_LanguageCode",
                         column: x => x.LanguageCode,
                         principalTable: "Languages",
                         principalColumn: "Code",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -351,13 +351,13 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         column: x => x.TagGroupId,
                         principalTable: "TagGroups",
                         principalColumn: "TagGroupId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TagGroupTags_Tags_TagId",
                         column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "TagId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -375,13 +375,13 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         column: x => x.NoteId,
                         principalTable: "Notes",
                         principalColumn: "NoteId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_TagNotes_Tags_TagId",
                         column: x => x.TagId,
                         principalTable: "Tags",
                         principalColumn: "TagId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -401,19 +401,19 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                         column: x => x.BibleVerseId,
                         principalTable: "BibleVerses",
                         principalColumn: "BibleVerseId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_BibleVerseBibleVersionLanguage_BibleVersions_BibleVersionId",
                         column: x => x.BibleVersionId,
                         principalTable: "BibleVersions",
                         principalColumn: "BibleVersionId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_BibleVerseBibleVersionLanguage_Languages_LanguageCode",
                         column: x => x.LanguageCode,
                         principalTable: "Languages",
                         principalColumn: "Code",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
@@ -430,23 +430,23 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                 {
                     table.PrimaryKey("PK_NoteReferences", x => x.NoteReferenceSurrogateKey);
                     table.ForeignKey(
-                        name: "FK_NoteReferences_BibleVerses_ReferencedNoteId",
-                        column: x => x.ReferencedNoteId,
+                        name: "FK_NoteReferences_BibleVerses_ReferencedBibleVerseId",
+                        column: x => x.ReferencedBibleVerseId,
                         principalTable: "BibleVerses",
                         principalColumn: "BibleVerseId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_NoteReferences_Notes_NoteId",
                         column: x => x.NoteId,
                         principalTable: "Notes",
                         principalColumn: "NoteId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_NoteReferences_Notes_ReferencedNoteId",
                         column: x => x.ReferencedNoteId,
                         principalTable: "Notes",
                         principalColumn: "NoteId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -520,6 +520,11 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                 name: "IX_NoteReferences_NoteId",
                 table: "NoteReferences",
                 column: "NoteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NoteReferences_ReferencedBibleVerseId",
+                table: "NoteReferences",
+                column: "ReferencedBibleVerseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NoteReferences_ReferencedNoteId",

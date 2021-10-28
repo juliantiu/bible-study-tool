@@ -15,12 +15,12 @@ namespace BibleStudyTool.Infrastructure.Data.Config
             builder.HasOne<Tag>(tagNote => tagNote.Tag)
                    .WithMany(tag => tag.TagNotes)
                    .HasForeignKey(tagNote => tagNote.TagId)
-                   .OnDelete(DeleteBehavior.ClientCascade);
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne<Note>(tagNote => tagNote.Note)
                    .WithMany(note => note.TagNotes)
                    .HasForeignKey(tagNote => tagNote.NoteId)
-                   .OnDelete(DeleteBehavior.ClientCascade);
+                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

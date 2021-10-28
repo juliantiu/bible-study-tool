@@ -6,11 +6,16 @@ using BibleStudyTool.Core.Entities.JoinEntities;
 
 namespace BibleStudyTool.Public.DTOs
 {
+    public class NoteReferencesContainer
+    {
+        public IList<int> ReferencedNotes { get; set; } = new List<int>();
+        public IList<int> ReferencedBibleVerses { get; set; } = new List<int>();
+    }
+
     public class NoteDto
     {
-        public IList<NoteDto> ReferencedIn { get; set; }
-        public IList<NoteDto> ReferencedNotes { get; set; }
-        public IList<TagNote> Tags { get; set; }
+        public NoteReferencesContainer References { get; set; }
+        public IEnumerable<int> Tags { get; set; }
 
         public int NoteId { get; set; }
 
@@ -28,9 +33,18 @@ namespace BibleStudyTool.Public.DTOs
             NoteId = noteRef.NoteId;
             Uid = noteRef.Uid;
             Summary = noteRef.Summary;
-            Text = noteRef.Summary;
+            Text = noteRef.Text;
+            Tags = noteRef.TagNotes.Select(tagNote => tagNote.TagId);
+        }
 
-            Tags = noteRef.TagNotes;
+        public NoteDto(Note noteRef, NoteReferencesContainer noteReferenceContainer)
+        {
+            NoteId = noteRef.NoteId;
+            Uid = noteRef.Uid;
+            Summary = noteRef.Summary;
+            Text = noteRef.Text;
+            Tags = noteRef.TagNotes.Select(tagNote => tagNote.TagId);
+            References = noteReferenceContainer;
         }
     }
 }

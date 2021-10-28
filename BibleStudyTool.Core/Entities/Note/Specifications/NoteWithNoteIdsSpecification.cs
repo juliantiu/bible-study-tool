@@ -10,14 +10,14 @@ namespace BibleStudyTool.Core.Entities.Specifications
     {
         public IList<SpecificationClause> SpecificationsClauses { get; set; }
 
-        public NoteFromNoteIdsSpecification(Note note, int[] noteIds)
+        public NoteFromNoteIdsSpecification(Note note, IEnumerable<int> noteIds)
         {
             SpecificationsClauses = new List<SpecificationClause>();
             PopulateIncludeClauses(note);
             PopulateWhereClauses(note, noteIds);
         }
 
-        private void PopulateWhereClauses(Note note, int[] noteIds)
+        private void PopulateWhereClauses(Note note, IEnumerable<int> noteIds)
         {
             WhereClause<Note> whereUid = new WhereClause<Note>();
             whereUid.Expression = n => (n.Uid == note.Uid)
@@ -27,10 +27,6 @@ namespace BibleStudyTool.Core.Entities.Specifications
 
         private void PopulateIncludeClauses(Note note)
         {
-            IncludeClause includeNoteReferences = new IncludeClause();
-            includeNoteReferences.PropertyName = nameof(note.ReferencedNotes);
-            SpecificationsClauses.Add(includeNoteReferences);
-
             IncludeClause includeTags = new IncludeClause();
             includeTags.PropertyName = nameof(note.TagNotes);
             SpecificationsClauses.Add(includeTags);

@@ -36,3 +36,5 @@ Create a note with new tags Petition and Pray reading -
 Create a note referencing Genesis 1:1 -
 Create a note referencing Genesis 2:1 -
 Create a note with Schedule tag referncing Genesis 1:1 and 1:2 and also referencing the notes referencing Genesis 1:1 and 2:1 -
+
+Delete a note with its references and tags -

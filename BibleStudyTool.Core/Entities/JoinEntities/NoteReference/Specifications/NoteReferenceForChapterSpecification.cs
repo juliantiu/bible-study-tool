@@ -18,9 +18,9 @@ namespace BibleStudyTool.Core.Entities.JoinEntities.Specifications
 
         private void PopulateWhereClauses(int[] bibleVerseIds)
         {
-            WhereClause<NoteReference> whereUid = new WhereClause<NoteReference>();
-            whereUid.Expression = nr => (bibleVerseIds.Contains(nr.ReferencedBibleVerseId ?? 0));
-            SpecificationsClauses.Add(whereUid);
+            WhereClause<NoteReference> whereReferencedBibleVerseIds = new WhereClause<NoteReference>();
+            whereReferencedBibleVerseIds.Expression = nr => (bibleVerseIds.Contains(nr.ReferencedBibleVerseId ?? 0));
+            SpecificationsClauses.Add(whereReferencedBibleVerseIds);
         }
     }
 }

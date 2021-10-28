@@ -25,7 +25,6 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
         }
 
         [HttpDelete("delete")]
-        [Authorize]
         public async Task<ActionResult<DeleteNoteResponse>> DeleteHandler(int id)
         {
             try

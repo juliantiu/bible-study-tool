@@ -24,17 +24,17 @@ namespace BibleStudyTool.Infrastructure.Data.Config
             builder.HasOne<BibleVerse>(bibleVerseBibleVersionLanguage => bibleVerseBibleVersionLanguage.BibleVerse)
                    .WithMany(bibleVerse => bibleVerse.BibleVerseBibleVersionLanguages)
                    .HasForeignKey(bibleVerseBibleVersionLanguage => bibleVerseBibleVersionLanguage.BibleVerseId)
-                   .OnDelete(DeleteBehavior.ClientSetNull);
+                   .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne<BibleVersion>(bibleVerseBibleVersionLanguage => bibleVerseBibleVersionLanguage.BibleVersion)
                    .WithMany(bibleVersion => bibleVersion.BibleVerseBibleVersionLanguages)
                    .HasForeignKey(bibleVerseBibleVersionLanguage => bibleVerseBibleVersionLanguage.BibleVersionId)
-                   .OnDelete(DeleteBehavior.ClientSetNull);
+                   .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne<Language>(bibleVerseBibleVersionLanguage => bibleVerseBibleVersionLanguage.Language)
                    .WithMany(language => language.BibleVerseBibleVersionLanguages)
                    .HasForeignKey(bibleVerseBibleVersionLanguage => bibleVerseBibleVersionLanguage.LanguageCode)
-                   .OnDelete(DeleteBehavior.ClientSetNull);
+                   .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

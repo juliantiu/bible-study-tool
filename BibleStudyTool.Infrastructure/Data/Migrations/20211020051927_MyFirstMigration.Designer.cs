@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BibleStudyTool.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(BibleReadingDbContext))]
-    [Migration("20211018050057_MyFirstMigration")]
+    [Migration("20211020051927_MyFirstMigration")]
     partial class MyFirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -208,6 +208,8 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.HasKey("NoteReferenceSurrogateKey");
 
                     b.HasIndex("NoteId");
+
+                    b.HasIndex("ReferencedBibleVerseId");
 
                     b.HasIndex("ReferencedNoteId");
 
@@ -535,6 +537,7 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.HasOne("BibleStudyTool.Core.Entities.BibleBook", "BibleBook")
                         .WithMany("BibleVerses")
                         .HasForeignKey("BibleBookId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("BibleBook");
@@ -545,11 +548,13 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.HasOne("BibleStudyTool.Core.Entities.BibleBook", "BibleBook")
                         .WithMany("BibleBookAbbreviationLanguages")
                         .HasForeignKey("BibleBookId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("BibleStudyTool.Core.Entities.Language", "Language")
                         .WithMany("BibleBookAbbreviationLanguages")
                         .HasForeignKey("LanguageCode")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("BibleBook");
@@ -562,11 +567,13 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.HasOne("BibleStudyTool.Core.Entities.BibleBook", "BibleBook")
                         .WithMany("BibleBookLanguages")
                         .HasForeignKey("BibleBookId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("BibleStudyTool.Core.Entities.Language", "Language")
                         .WithMany("BibleBookLanguages")
                         .HasForeignKey("LanguageCode")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("BibleBook");
@@ -579,16 +586,19 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.HasOne("BibleStudyTool.Core.Entities.BibleVerse", "BibleVerse")
                         .WithMany("BibleVerseBibleVersionLanguages")
                         .HasForeignKey("BibleVerseId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("BibleStudyTool.Core.Entities.BibleVersion", "BibleVersion")
                         .WithMany("BibleVerseBibleVersionLanguages")
                         .HasForeignKey("BibleVersionId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("BibleStudyTool.Core.Entities.Language", "Language")
                         .WithMany("BibleVerseBibleVersionLanguages")
                         .HasForeignKey("LanguageCode")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("BibleVerse");
@@ -603,12 +613,13 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.HasOne("BibleStudyTool.Core.Entities.BibleVersion", "BibleVersion")
                         .WithMany("BibleVersionLanguages")
                         .HasForeignKey("BibleVersionId")
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("BibleStudyTool.Core.Entities.Language", "Language")
                         .WithMany("BibleVersionLanguages")
                         .HasForeignKey("LanguageCode")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("BibleVersion");
@@ -621,18 +632,18 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.HasOne("BibleStudyTool.Core.Entities.Note", "Note")
                         .WithMany("ReferencedIn")
                         .HasForeignKey("NoteId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BibleStudyTool.Core.Entities.BibleVerse", "ReferencedBibleVerse")
                         .WithMany("ReferencedNotes")
-                        .HasForeignKey("ReferencedNoteId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
+                        .HasForeignKey("ReferencedBibleVerseId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BibleStudyTool.Core.Entities.Note", "ReferencedNote")
                         .WithMany("ReferencedNotes")
                         .HasForeignKey("ReferencedNoteId")
-                        .OnDelete(DeleteBehavior.ClientCascade);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Note");
 
@@ -646,13 +657,13 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.HasOne("BibleStudyTool.Core.Entities.TagGroup", "TagGroup")
                         .WithMany("TagGroupTags")
                         .HasForeignKey("TagGroupId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BibleStudyTool.Core.Entities.Tag", "Tag")
                         .WithMany("TagGroupTags")
                         .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Tag");
@@ -665,13 +676,13 @@ namespace BibleStudyTool.Infrastructure.Data.Migrations
                     b.HasOne("BibleStudyTool.Core.Entities.Note", "Note")
                         .WithMany("TagNotes")
                         .HasForeignKey("NoteId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BibleStudyTool.Core.Entities.Tag", "Tag")
                         .WithMany("TagNotes")
                         .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Note");

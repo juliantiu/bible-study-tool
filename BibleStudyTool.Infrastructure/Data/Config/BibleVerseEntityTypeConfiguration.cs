@@ -23,7 +23,7 @@ namespace BibleStudyTool.Infrastructure.Data.Config
             builder.HasOne<BibleBook>(bibleVerse => bibleVerse.BibleBook)
                    .WithMany(bibleBook => bibleBook.BibleVerses)
                    .HasForeignKey(bibleVerse => bibleVerse.BibleBookId)
-                   .OnDelete(DeleteBehavior.ClientSetNull);
+                   .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

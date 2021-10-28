@@ -27,12 +27,12 @@ namespace BibleStudyTool.Infrastructure.Data.Config
             builder.HasOne<BibleBook>(bibleBookAbbreviationLanguage => bibleBookAbbreviationLanguage.BibleBook)
                    .WithMany(bibleBook => bibleBook.BibleBookAbbreviationLanguages)
                    .HasForeignKey(bibleVerseBibleVersionLanguage => bibleVerseBibleVersionLanguage.BibleBookId)
-                   .OnDelete(DeleteBehavior.ClientSetNull);
+                   .OnDelete(DeleteBehavior.SetNull);
 
             builder.HasOne<Language>(bibleBookAbbreviationLanguage => bibleBookAbbreviationLanguage.Language)
                    .WithMany(language => language.BibleBookAbbreviationLanguages)
                    .HasForeignKey(bibleBookAbbreviationLanguage => bibleBookAbbreviationLanguage.LanguageCode)
-                   .OnDelete(DeleteBehavior.ClientSetNull);
+                   .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }

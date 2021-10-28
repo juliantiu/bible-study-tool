@@ -6,6 +6,6 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
 {
     public class GetChapterNotesResponse : ApiResponseBase
     {
-        public IList<NoteDto> ChapterNotes { get; set; }
+        public IList<NoteDto> ChapterNotes { get; set; } = new List<NoteDto>();
     }
 }
