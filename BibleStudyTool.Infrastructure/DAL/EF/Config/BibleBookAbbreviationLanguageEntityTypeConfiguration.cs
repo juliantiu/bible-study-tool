@@ -4,7 +4,7 @@ using BibleStudyTool.Core.Entities.JoinEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BibleStudyTool.Infrastructure.Data.Config
+namespace BibleStudyTool.Infrastructure.DAL.Config
 {
     public class BibleBookAbbreviationLanguageEntityTypeConfiguration : IEntityTypeConfiguration<BibleBookAbbreviationLanguage>
     {

@@ -3,7 +3,7 @@ using BibleStudyTool.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace BibleStudyTool.Infrastructure.Data.Config
+namespace BibleStudyTool.Infrastructure.DAL.Config
 {
     public class BibleBookEntityTypeConfiguration : IEntityTypeConfiguration<BibleBook>
     {

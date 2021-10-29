@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace BibleStudyTool.Infrastructure.Data.Migrations
+namespace BibleStudyTool.Infrastructure.DAL.Migrations
 {
     public partial class MyFirstMigration : Migration
     {

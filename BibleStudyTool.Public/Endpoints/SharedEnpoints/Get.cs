@@ -2,7 +2,7 @@
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.JoinEntities;
 using BibleStudyTool.Core.Interfaces;
-using BibleStudyTool.Infrastructure.Data.Identity;
+using BibleStudyTool.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

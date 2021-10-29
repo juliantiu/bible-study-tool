@@ -8,7 +8,7 @@ using BibleStudyTool.Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace BibleStudyTool.Infrastructure.Data.Identity
+namespace BibleStudyTool.Infrastructure.Identity
 {
     public class IdentityTokenClaimService: ITokenClaimsService
     {

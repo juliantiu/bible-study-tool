@@ -15,12 +15,20 @@
     <None Remove="Identity\" />
     <None Remove="System.IdentityModel.Tokens.Jwt" />
     <None Remove="Data\Migrations\" />
+    <None Remove="DAL\Npgsql\" />
+    <None Remove="DAL\EF\" />
+    <None Remove="DAL\EF\Migrations\" />
+    <None Remove="DAL\EF\Config\" />
+    <None Remove="ServiceLayer\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Data\Config\" />
+    <Folder Include="DAL\" />
     <Folder Include="Identity\" />
-    <Folder Include="Data\Migrations\" />
+    <Folder Include="DAL\Npgsql\" />
+    <Folder Include="DAL\EF\" />
+    <Folder Include="DAL\EF\Migrations\" />
+    <Folder Include="DAL\EF\Config\" />
+    <Folder Include="ServiceLayer\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />

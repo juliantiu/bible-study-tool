@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
 
-namespace BibleStudyTool.Infrastructure.Data.Identity
+namespace BibleStudyTool.Infrastructure.Identity
 {
     public class BibleReader: IdentityUser
     {

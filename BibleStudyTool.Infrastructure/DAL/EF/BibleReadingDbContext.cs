@@ -15,11 +15,11 @@ using System;
 using System.Reflection;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.JoinEntities;
-using BibleStudyTool.Infrastructure.Data.Identity;
+using BibleStudyTool.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BibleStudyTool.Infrastructure.Data
+namespace BibleStudyTool.Infrastructure.DAL
 {
     /*
      * Uses the default IdentiyDbContext.

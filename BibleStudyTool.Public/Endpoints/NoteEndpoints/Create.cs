@@ -5,7 +5,7 @@ using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.Exceptions;
 using BibleStudyTool.Core.Entities.JoinEntities;
 using BibleStudyTool.Core.Interfaces;
-using BibleStudyTool.Infrastructure.Data.Identity;
+using BibleStudyTool.Infrastructure.Identity;
 using BibleStudyTool.Public.DTOs;
 using BibleStudyTool.Public.Endpoints.NoteReferenceEndpoints;
 using BibleStudyTool.Public.Endpoints.TagEndpoints;
