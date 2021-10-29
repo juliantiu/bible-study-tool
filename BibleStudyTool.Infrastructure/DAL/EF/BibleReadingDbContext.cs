@@ -1,6 +1,6 @@
 ﻿/*
  * * EF core migration and update commands from cli
- * ** dotnet ef migrations add MyFirstMigration --project BibleStudyTool.Infrastructure --startup-project BibleStudyTool.Public --context BibleReadingDbContext --output-dir ./Data/Migrations
+ * ** dotnet ef migrations add MyFirstMigration --project BibleStudyTool.Infrastructure --startup-project BibleStudyTool.Public --context BibleReadingDbContext --output-dir ./DAL/EF/Migrations
  * ** dotnet ef database update --project BibleStudyTool.Infrastructure --startup-project BibleStudyTool.Public
  * * Clearing All DB tables
  * 
