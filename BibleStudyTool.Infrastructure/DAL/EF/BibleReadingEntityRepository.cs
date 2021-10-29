@@ -6,9 +6,8 @@ using BibleStudyTool.Core.Exceptions;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Core.NonEntityTypes;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
-namespace BibleStudyTool.Infrastructure.DAL
+namespace BibleStudyTool.Infrastructure.DAL.EF
 {
     public class BibleReadingEntityRepository<T> : IAsyncRepository<T> where T : BaseEntity
     {

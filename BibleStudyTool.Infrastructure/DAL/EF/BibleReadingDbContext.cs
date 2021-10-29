@@ -19,7 +19,7 @@ using BibleStudyTool.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BibleStudyTool.Infrastructure.DAL
+namespace BibleStudyTool.Infrastructure.DAL.EF
 {
     /*
      * Uses the default IdentiyDbContext.
