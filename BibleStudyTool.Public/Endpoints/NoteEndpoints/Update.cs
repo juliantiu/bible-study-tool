@@ -4,6 +4,8 @@ using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.Exceptions;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Infrastructure.Identity;
+using BibleStudyTool.Infrastructure.ServiceLayer;
+using BibleStudyTool.Public.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -15,34 +17,34 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
     [ApiController]
     public class Update : ControllerBase
     {
-        private readonly IAsyncRepository<Note> _itemRepository;
+        private readonly INoteService _noteService;
         private readonly UserManager<BibleReader> _userManager;
 
-        public Update(IAsyncRepository<Note> itemRepository,
+        public Update(INoteService noteService,
                       UserManager<BibleReader> userManager)
         {
-            _itemRepository = itemRepository;
+            _noteService = noteService;
             _userManager = userManager;
         }
 
         [HttpPut("update")]
         [Authorize]
-        public async Task<ActionResult<UpdateNoteResponse>> UpdateHandler(UpdateNoteRequest request)
+        public async Task<ActionResult<UpdateNoteResponse>> UpdateHandlerAsync(UpdateNoteRequest request)
         {
-            var response = new UpdateNoteResponse();
             try
             {
-                var currentUserId = _userManager.GetUserId(User);
-                var keyId = new object[] { request.NoteId };
-                var note = await _itemRepository.GetByIdAsync<NoteCrudActionException>(keyId);
-                if (note.Uid != currentUserId)
+                var uid = _userManager.GetUserId(User);
+                var updatedNote = await _noteService.UpdateAsync(request.NoteId, uid, request.Summary, request.Text);
+                var response = new UpdateNoteResponse();
+                if (updatedNote is null)
                 {
-                    response.FailureMessage = "The current user does not own the note being updated.";
-                    return response;
+                    response.FailureMessage = "The note to be updated does not belong to the current logged in user.";
                 }
-                note.UpdateDetails(request.Summary, request.Text);
-                await _itemRepository.UpdateAsync<NoteCrudActionException>(note);
-                response.Success = true;
+                else
+                {
+                    response.Success = true;
+                    response.Note = new NoteDto(updatedNote);
+                }
                 return response;
             }
             catch (NoteCrudActionException ex)

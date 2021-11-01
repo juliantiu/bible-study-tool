@@ -4,6 +4,7 @@ using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.Exceptions;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Infrastructure.Identity;
+using BibleStudyTool.Infrastructure.ServiceLayer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -14,23 +15,33 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
     [Route("api/note")]
     public class Delete : ControllerBase
     {
-        private readonly IAsyncRepository<Note> _noteRepository;
+        private readonly INoteService _noteService;
         private readonly UserManager<BibleReader> _userManager;
 
-        public Delete(IAsyncRepository<Note> noteRepository,
+        public Delete(INoteService noteService,
                       UserManager<BibleReader> userManager)
         {
-            _noteRepository = noteRepository;
+            _noteService = noteService;
             _userManager = userManager;
         }
 
         [HttpDelete("delete")]
-        public async Task<ActionResult<DeleteNoteResponse>> DeleteHandler(int id)
+        public async Task<ActionResult<DeleteNoteResponse>> DeleteHandler(int noteId)
         {
             try
             {
-                string userId = _userManager.GetUserId(User);
-                return Ok(await DeleteHandler(id, userId, _noteRepository));
+                var uid = _userManager.GetUserId(User);
+                var deletedNote = await _noteService.DeleteAsync(uid, noteId);
+                var response = new DeleteNoteResponse();
+                if (!deletedNote)
+                {
+                    response.FailureMessage = "The note to be deleted does not belong to the current logged in user.";
+                }
+                else
+                {
+                    response.Success = true;
+                }
+                return response;
 
             }
             catch (NoteCrudActionException ex)
@@ -42,21 +53,6 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Failed to delete note.");
             }
-        }
-
-        public static async Task<DeleteNoteResponse> DeleteHandler(int noteId, string userId, IAsyncRepository<Note> noteRepository)
-        {
-            var response = new DeleteNoteResponse();
-            var keyId = new object[] { noteId };
-            var note = await noteRepository.GetByIdAsync<NoteCrudActionException>(keyId);
-            if (note.Uid != userId)
-            {
-                response.FailureMessage = "The current user does not own the note being deleted.";
-                return response;
-            }
-            await noteRepository.DeleteAsync<NoteCrudActionException>(note);
-            response.Success = true;
-            return response;
         }
     }
 }

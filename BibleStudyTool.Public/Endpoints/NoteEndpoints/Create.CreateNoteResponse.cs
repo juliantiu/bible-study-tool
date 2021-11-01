@@ -6,6 +6,8 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
 {
     public class CreateNoteResponse : ApiResponseBase
     {
+        public NoteDto Note { get; set; }
+
         public CreateNoteResponse()
         {
         }

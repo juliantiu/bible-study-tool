@@ -20,6 +20,8 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using BibleStudyTool.Core.NonEntityTypes;
+using BibleStudyTool.Infrastructure.ServiceLayer;
+using BibleStudyTool.Infrastructure.DAL.Npgsql;
 
 namespace BibleStudyTool.Public
 {
@@ -48,11 +50,23 @@ namespace BibleStudyTool.Public
                     .AddEntityFrameworkStores<BibleReadingDbContext>()
                     .AddDefaultTokenProviders();
 
-            // Scoped Services
+            // Scoped services
             services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BibleReadingEntityRepository<>));
             services.AddScoped(typeof(IEntityGetterRepoFactory<>), typeof(EntityGetterRepoFactory<>));
             services.AddScoped(typeof(IEntityCrudActionExceptionFactory), typeof(EntityCrudActionExceptionFactory));
+
+            // Entity query services
+            services.AddScoped(typeof(TagNoteQueries), _ => new TagNoteQueries(cnxstr));
+            services.AddScoped(typeof(NoteQueries), _ => new NoteQueries(cnxstr));
+            services.AddScoped(typeof(NoteReferenceQueries), _ => new NoteReferenceQueries(cnxstr));
+
+            // Entity services
+            services.AddScoped(typeof(ITagService), typeof(TagService));
+            services.AddScoped(typeof(ITagGroupService), typeof(TagGroupService));
+            services.AddScoped(typeof(ITagNoteService), typeof(TagNoteService));
+            services.AddScoped(typeof(INoteService), typeof(NoteService));
+            services.AddScoped(typeof(INoteReferenceService), typeof(NoteReferenceService));
 
             /* Authentication & JWT configuration
              * Resources:

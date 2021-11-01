@@ -2,6 +2,7 @@
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Infrastructure.Identity;
+using BibleStudyTool.Infrastructure.ServiceLayer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
     [ApiController]
     public partial class Get : ControllerBase
     {
+        private readonly INoteService _noteService;
         private readonly IAsyncRepository<Note> _noteRepository;
         private readonly IEntityGetterRepoFactory<NoteGetterRepository> _entityGetterRepoFactory;
 
@@ -18,10 +20,12 @@ namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
 
         private readonly INoteGetterRepository _noteGetterRepository;
 
-        public Get(IAsyncRepository<Note> noteRepository,
+        public Get(INoteService noteService,
+                   IAsyncRepository<Note> noteRepository,
                    IEntityGetterRepoFactory<NoteGetterRepository> entityGetterRepoFactory,
                    UserManager<BibleReader> userManager)
         {
+            _noteService = noteService; 
             _noteRepository = noteRepository;
             _entityGetterRepoFactory = entityGetterRepoFactory;
 

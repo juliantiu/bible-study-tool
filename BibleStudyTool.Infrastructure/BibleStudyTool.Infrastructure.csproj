@@ -20,6 +20,7 @@
     <None Remove="DAL\EF\Migrations\" />
     <None Remove="DAL\EF\Config\" />
     <None Remove="ServiceLayer\" />
+    <None Remove="Npgsql" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DAL\" />
@@ -35,11 +36,12 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="5.0.11" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.11" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.13.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.14.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Npgsql" Version="6.0.0-rc.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BibleStudyTool.Core\BibleStudyTool.Core.csproj" />

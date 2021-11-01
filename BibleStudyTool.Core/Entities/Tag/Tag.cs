@@ -25,6 +25,14 @@ namespace BibleStudyTool.Core.Entities
             Color = color;
         }
 
+        public Tag(int tagId, string uid, string label, string color)
+        {
+            TagId = tagId;
+            Uid = uid;
+            Label = label;
+            Color = color;
+        }
+
         public Tag UpdateDetails(string label, string color)
         {
             if (label is string la)
