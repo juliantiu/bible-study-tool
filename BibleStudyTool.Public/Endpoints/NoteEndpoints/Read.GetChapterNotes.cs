@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BibleStudyTool.Public.Endpoints.NoteEndpoints
 {
-    public partial class Get
+    public partial class Read
     {
         [HttpGet("get-chapter-notes")]
         public async Task<ActionResult<GetChapterNotesResponse>> GetChapterNotes

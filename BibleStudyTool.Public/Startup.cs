@@ -53,7 +53,6 @@ namespace BibleStudyTool.Public
             // Scoped services
             services.AddScoped<ITokenClaimsService, IdentityTokenClaimService>();
             services.AddScoped(typeof(IAsyncRepository<>), typeof(BibleReadingEntityRepository<>));
-            services.AddScoped(typeof(IEntityGetterRepoFactory<>), typeof(EntityGetterRepoFactory<>));
             services.AddScoped(typeof(IEntityCrudActionExceptionFactory), typeof(EntityCrudActionExceptionFactory));
 
             // Entity query services

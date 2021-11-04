@@ -29,7 +29,8 @@
     <None Remove="Endpoints\NoteReferenceEndpoints\" />
     <None Remove="Endpoints\SharedEnpoints\" />
     <None Remove="DTOs\" />
-    <None Remove="Endpoints\BibleVerseBibleVersionLanguageEndpoints\" />
+    <None Remove="Endpoints\BibleReadingEndpoints\" />
+    <None Remove="Endpoints\NoteTakingEndpoints\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
@@ -51,6 +52,7 @@
     <Folder Include="Endpoints\NoteReferenceEndpoints\" />
     <Folder Include="Endpoints\SharedEnpoints\" />
     <Folder Include="DTOs\" />
-    <Folder Include="Endpoints\BibleVerseBibleVersionLanguageEndpoints\" />
+    <Folder Include="Endpoints\BibleReadingEndpoints\" />
+    <Folder Include="Endpoints\NoteTakingEndpoints\" />
   </ItemGroup>
 </Project>
