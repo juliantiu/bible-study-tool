@@ -41,7 +41,7 @@ namespace BibleStudyTool.Public.Endpoints.TagEndpoints
             var tags = await tagRepository.GetBySpecification<TagCrudActionException>(tagSpecification);
             foreach (var tag in tags)
             {
-                response.Tags.Add(new TagDto()
+                response.Tags.Add(new TagDto
                 {
                     Color = tag.Color,
                     Label = tag.Label,

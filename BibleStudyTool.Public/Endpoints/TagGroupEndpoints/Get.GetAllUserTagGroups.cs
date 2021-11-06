@@ -46,7 +46,7 @@ namespace BibleStudyTool.Public.Endpoints.TagGroupEndpoints
                 {
                     Uid = tagGroup.Uid,
                     TagGroupId = tagGroup.TagGroupId,
-                    Tags = tagGroup.TagGroupTags.Select(tagGroupTag => new TagDto()
+                    Tags = tagGroup.TagGroupTags.Select(tagGroupTag => new TagDto
                     {
                         Color = tagGroupTag.Tag.Color,
                         Label = tagGroupTag.Tag.Label,

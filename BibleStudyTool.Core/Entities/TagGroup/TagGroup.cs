@@ -5,19 +5,21 @@ using BibleStudyTool.Core.Interfaces;
 
 namespace BibleStudyTool.Core.Entities
 {
-    public class TagGroup : BaseEntity
+    public class TagGroup : TagGroupBase
     {
-        public int TagGroupId { get; private set; }
 
-        public string Uid { get; private set; }
-
-        public IList<TagGroupTag> TagGroupTags { get; private set; }
+        public IEnumerable<TagGroupTag> TagGroupTags { get; private set; }
 
         public TagGroup() { }
 
         public TagGroup(string uid)
         {
             Uid = uid;
+        }
+
+        public void AssignTags(IEnumerable<TagGroupTag> tagGroupTags)
+        {
+            TagGroupTags = tagGroupTags;
         }
     }
 }

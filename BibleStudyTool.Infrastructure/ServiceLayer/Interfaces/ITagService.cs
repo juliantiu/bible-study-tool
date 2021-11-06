@@ -7,9 +7,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 {
     public interface ITagService
     {
-        Task BulkCreateTag(IEnumerable<Tag> tags);
+        Task<IEnumerable<Tag>> CreateTagsAsync(IEnumerable<Tag> newTags);
         Task<Tag> CreateTagAsync(string uid, string label, string color);
-        Task DeleteTag(int tagId);
-        Task<Tag> UpdateTag(string uid, string Label, string color); 
     }
 }

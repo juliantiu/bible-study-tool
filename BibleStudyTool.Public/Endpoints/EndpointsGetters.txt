@@ -1,16 +1,15 @@
-﻿- -Listing all of the bible books with their names and abbreviations based on the language settings-
-- -The verses of the selected book with the selected chapter with their texts based on the language settings and the version selected-
-- -Listing all of the notes of a user for the current book and chapter-
-    - -All the notes associated with every verse in the current book and chapter-
-        - -Includes all of each note's references, tags, and tag groups-
+﻿- Listing all of the bible books with their names and abbreviations based on the language settings
+- The verses of the selected book with the selected chapter with their texts based on the language settings and the version selected
+- Listing all of the notes of a user for the current book and chapter
+    - All the notes associated with every verse in the current book and chapter
+        - Includes all of each note's references, tags, and tag groups
 - -List of all of the user's tag and tag groups-
 - -List of all the user's notes along with its references and tags and tag groups-
 
-- -Create-/-delete- tag <--> note
-- -Create-/-delete- taggroup <--> tag
-- -Create-/-delete- taggroup <--> note
-- -Create-/-delete- Note <--> note reference (verses and other notes)
+- -Create-/delete tag <--> note
+- -Create-/delete taggroup <--> tag
+- -Create-/delete Note <--> note reference (verses and other notes)
 
-- -Create-/-Update-/-Delete- Notes
-- -Create-/-Update-/-Delete- Tags
-- -Create-/-Update-/-Delete- Tag groups
+- -Create-/Update/Delete Notes
+- -Create-/Update/Delete Tags
+- -Create-/Update/Delete Tag groups

@@ -14,24 +14,43 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 {
     public class NoteService : INoteService
     {
-        private readonly NoteQueries _noteQueries;
-        private readonly INoteReferenceService _noteReferenceService;
         private readonly IAsyncRepository<Note> _noteRepository;
+
+        private readonly INoteReferenceService _noteReferenceService;
         private readonly ITagNoteService _tagNoteService;
         private readonly ITagService _tagService;
 
+        private readonly NoteQueries _noteQueries;
+
         public NoteService
-            (NoteQueries noteQueries, INoteReferenceService noteReferenceService, IAsyncRepository<Note> noteRepository,
-            ITagNoteService tagNoteService, ITagService tagService)
+            (IAsyncRepository<Note> noteRepository,
+            INoteReferenceService noteReferenceService,
+            ITagNoteService tagNoteService,
+            ITagService tagService,
+            NoteQueries noteQueries)
         {
-            _noteQueries = noteQueries;
-            _noteReferenceService = noteReferenceService;
+
             _noteRepository = noteRepository;
+
+            _noteReferenceService = noteReferenceService;
             _tagNoteService = tagNoteService;
             _tagService = tagService;
+
+            _noteQueries = noteQueries;
         }
 
-        public async Task<Note> CreateAsync
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="summary"></param>
+        /// <param name="text"></param>
+        /// <param name="bibleVerseReferences"></param>
+        /// <param name="noteReferences"></param>
+        /// <param name="existingTags"></param>
+        /// <param name="newTags"></param>
+        /// <returns></returns>
+        public async Task<NoteWithTagsAndReferences> CreateAsync
             (string uid, string summary, string text, IEnumerable<int> bibleVerseReferences,
              IEnumerable<int> noteReferences, IEnumerable<int> existingTags, IEnumerable<Tag> newTags)
         {
@@ -48,9 +67,21 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             // Add the note references
             await addNoteReferences(createdNote.NoteId, noteReferences, bibleVerseReferences);
 
-            return createdNote;
+            // Get all the user's tags
+            var noteTags = await getNoteTagsAsync(createdNote.NoteId);
+
+            // Get all the note's references
+            var references = await getNoteReferences(createdNote.NoteId);
+
+            return new NoteWithTagsAndReferences(createdNote, noteTags, references);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="noteId"></param>
+        /// <returns></returns>
         public async Task<bool> DeleteAsync(string uid, int noteId)
         {
             var note = await getNoteByIdAsync(noteId);
@@ -62,6 +93,13 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             return true;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="bibleBookId"></param>
+        /// <param name="chapterNumber"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<NoteWithTagsAndReferences>> GetAllChapterNotes(string uid, int bibleBookId, int chapterNumber)
         {
             // Get all notes for a chapter
@@ -101,6 +139,14 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             return notes;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="noteId"></param>
+        /// <param name="uid"></param>
+        /// <param name="summary"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public async Task<Note> UpdateAsync(int noteId, string uid, string summary, string text)
         {
             var note = await getNoteByIdAsync(noteId);
@@ -113,7 +159,9 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             return note;
         }
 
-        #region HELPER METHODS
+        #region************************************************** HELPER METHODS
+        // *********************************************************************
+        // *********************************************************************
         private async Task<IEnumerable<Tag>> createNewTags(IEnumerable<Tag> newTags)
         {
             var createdTags = new List<Tag>();
@@ -211,6 +259,38 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             {
                 allReferences[noteId][0].Add(reference.ReferencedNoteId ?? 0);
             }
+        }
+
+        private async Task<IEnumerable<Tag>> getNoteTagsAsync(int noteId)
+        {
+            IList<Tag> noteTags = new List<Tag>();
+            try
+            {
+                var noteTagMappings = await _tagNoteService.GetTagsForNotesAsync(new int[1] { noteId });
+                if (noteTagMappings.TryGetValue(noteId, out var tags))
+                {
+                    noteTags = tags;
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Failed to get tags for note."); // TODO: Log
+            }
+            return noteTags;
+        }
+
+        private async Task<IEnumerable<NoteReference>> getNoteReferences(int noteId)
+        {
+            IEnumerable<NoteReference> noteReferences = new List<NoteReference>();
+            try
+            {
+                noteReferences = await _noteReferenceService.GetNoteReferencesAsync(new int[1] { noteId });
+            }
+            catch
+            {
+                Console.WriteLine("Failed to get references for note.");
+            }
+            return noteReferences;
         }
         #endregion
     }

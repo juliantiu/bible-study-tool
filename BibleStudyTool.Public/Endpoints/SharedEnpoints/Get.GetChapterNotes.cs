@@ -31,50 +31,50 @@ namespace BibleStudyTool.Public.Endpoints.SharedEnpoints
                 var bibleVerseIds = versesForChapter.BibleVersesForChapter.Select(bvfc => bvfc.BibleVerseId).ToArray();
 
                 // Gets all the notes that references the chapter
-                var notesReferencesForChapter = await NoteReferenceEndpoints.Get.GetChapterNotesHandler(bibleVerseIds, _noteReferenceRepository);
-                var noteReferencesIds = notesReferencesForChapter.NoteReferencesForChapter.Select(noteRef => noteRef.NoteId).ToHashSet().ToArray();
+                //var notesReferencesForChapter = await NoteReferenceEndpoints.Get.GetChapterNotesHandler(bibleVerseIds, _noteReferenceRepository);
+                //var noteReferencesIds = notesReferencesForChapter.NoteReferencesForChapter.Select(noteRef => noteRef.NoteId).ToHashSet().ToArray();
 
                 // Gets all the notes that references the resulting notes from above
-                var notesReferencesForNotes = await NoteReferenceEndpoints.Get.GetNotesThatReferencesSpecifiedNotesHandler(noteReferencesIds, _noteReferenceRepository);
+                //var notesReferencesForNotes = await NoteReferenceEndpoints.Get.GetNotesThatReferencesSpecifiedNotesHandler(noteReferencesIds, _noteReferenceRepository);
 
                 var noteIdsToReferencesMapping = new Dictionary<int, NoteReferencesContainer>();
                 var noteIds = new HashSet<int>();
 
                 // Record note references that reference the given chapter in the lookup table
-                foreach (var noteReference in notesReferencesForChapter.NoteReferencesForChapter)
-                {
-                    noteIds.Add(noteReference.NoteId);
-                    if (noteIdsToReferencesMapping.TryGetValue(noteReference.NoteId, out var noteReferenceContainer))
-                    {
-                        if (noteReference.ReferencedBibleVerseId is int rbvid)
-                            noteReferenceContainer.ReferencedBibleVerses.Add(rbvid);
-                    }
-                    else
-                    {
-                        var noteReferencesContainer = new NoteReferencesContainer();
-                        if (noteReference.ReferencedBibleVerseId is int rbvid)
-                            noteReferencesContainer.ReferencedBibleVerses.Add(rbvid);
-                        noteIdsToReferencesMapping.Add(noteReference.NoteId, noteReferencesContainer);
-                    }
-                }
+                //foreach (var noteReference in notesReferencesForChapter.NoteReferencesForChapter)
+                //{
+                //    noteIds.Add(noteReference.NoteId);
+                //    if (noteIdsToReferencesMapping.TryGetValue(noteReference.NoteId, out var noteReferenceContainer))
+                //    {
+                //        if (noteReference.ReferencedBibleVerseId is int rbvid)
+                //            noteReferenceContainer.ReferencedBibleVerses.Add(rbvid);
+                //    }
+                //    else
+                //    {
+                //        var noteReferencesContainer = new NoteReferencesContainer();
+                //        if (noteReference.ReferencedBibleVerseId is int rbvid)
+                //            noteReferencesContainer.ReferencedBibleVerses.Add(rbvid);
+                //        noteIdsToReferencesMapping.Add(noteReference.NoteId, noteReferencesContainer);
+                //    }
+                //}
 
                 // Record the note references that references the notes that references the given chapter in the lookup table
-                foreach (var noteReference in notesReferencesForNotes.NoteReferencesForChapter)
-                {
-                    noteIds.Add(noteReference.NoteId);
-                    if (noteIdsToReferencesMapping.TryGetValue(noteReference.NoteId, out var noteReferenceContainer))
-                    {
-                        if (noteReference.ReferencedNoteId is int rnid)
-                            noteReferenceContainer.ReferencedNotes.Add(rnid);
-                    }
-                    else
-                    {
-                        var noteReferencesContainer = new NoteReferencesContainer();
-                        if (noteReference.ReferencedNoteId is int rnid)
-                            noteReferencesContainer.ReferencedNotes.Add(rnid);
-                        noteIdsToReferencesMapping.Add(noteReference.NoteId, noteReferencesContainer);
-                    }
-                }
+                //foreach (var noteReference in notesReferencesForNotes.NoteReferencesForChapter)
+                //{
+                //    noteIds.Add(noteReference.NoteId);
+                //    if (noteIdsToReferencesMapping.TryGetValue(noteReference.NoteId, out var noteReferenceContainer))
+                //    {
+                //        if (noteReference.ReferencedNoteId is int rnid)
+                //            noteReferenceContainer.ReferencedNotes.Add(rnid);
+                //    }
+                //    else
+                //    {
+                //        var noteReferencesContainer = new NoteReferencesContainer();
+                //        if (noteReference.ReferencedNoteId is int rnid)
+                //            noteReferencesContainer.ReferencedNotes.Add(rnid);
+                //        noteIdsToReferencesMapping.Add(noteReference.NoteId, noteReferencesContainer);
+                //    }
+                //}
 
                 var userId = _userManager.GetUserId(User);
                 var noteSpecRef = new Note(userId, string.Empty, string.Empty);

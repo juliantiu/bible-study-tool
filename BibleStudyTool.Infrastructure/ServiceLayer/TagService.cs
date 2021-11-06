@@ -15,25 +15,27 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             _tagRepository = tagRepository;
         }
 
-        public Task BulkCreateTag(IEnumerable<Tag> tags)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<Tag> CreateTagAsync(string uid, string label, string color)
         {
             var tagRef = new Tag(uid, label, color);
             return await _tagRepository.CreateAsync<TagCrudActionException>(tagRef);
         }
 
-        public Task DeleteTag(int tagId)
+        public async Task<IEnumerable<Tag>> CreateTagsAsync(IEnumerable<Tag> newTags)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Tag> UpdateTag(string uid, string Label, string color)
-        {
-            throw new NotImplementedException();
+            IList<Tag> tags = new List<Tag>();
+            foreach (var newTag in newTags)
+            {
+                try
+                {
+                    tags.Add(await CreateTagAsync(newTag.Uid, newTag.Label, newTag.Color));
+                }
+                catch
+                {
+                    Console.WriteLine($"Failed to create tag '{newTag.Label}.'"); // TODO: log
+                }
+            }
+            return tags;
         }
     }
 }

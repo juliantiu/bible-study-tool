@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BibleStudyTool.Core.Entities.JoinEntities;
 
 namespace BibleStudyTool.Core.Entities
@@ -13,9 +14,9 @@ namespace BibleStudyTool.Core.Entities
         public string Summary { get; set; }
         public string Text { get; set; }
 
-        public IList<int> ReferencedNotes { get; set; }
-        public IList<int> ReferencedBibleVerses { get; set; }
-        public IList<Tag> Tags { get; set; }
+        public IEnumerable<int> ReferencedNotes { get; set; }
+        public IEnumerable<int> ReferencedBibleVerses { get; set; }
+        public IEnumerable<Tag> Tags { get; set; }
 
         public NoteWithTagsAndReferences() { }
 
@@ -25,6 +26,33 @@ namespace BibleStudyTool.Core.Entities
             Uid = note.Uid;
             Summary = note.Summary;
             Text = note.Text;
+        }
+
+        public NoteWithTagsAndReferences(Note note, IEnumerable<Tag> tags, IEnumerable<NoteReference> noteReferences)
+        {
+            NoteId = note.NoteId;
+            Uid = note.Uid;
+            Summary = note.Summary;
+            Text = note.Text;
+
+            Tags = tags;
+
+            var referencedNotes = new List<int>();
+            var referencedBibleVerseIds = new List<int>();
+            foreach (var noteReference in noteReferences)
+            {
+                if (noteReference.ReferencedNoteId is int rn)
+                {
+                    referencedNotes.Add(rn);
+                }
+                else if (noteReference.ReferencedBibleVerseId is int rbv)
+                {
+                    referencedBibleVerseIds.Add(rbv);
+                }
+            }
+
+            ReferencedNotes = referencedNotes;
+            ReferencedBibleVerses = referencedBibleVerseIds;
         }
     }
 }

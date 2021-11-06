@@ -7,7 +7,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 {
     public interface INoteService
     {
-        Task<Note> CreateAsync
+        Task<NoteWithTagsAndReferences> CreateAsync
             (string uid, string summary, string text, IEnumerable<int> bibleVerseReferences,
             IEnumerable<int> noteReferences, IEnumerable<int> existingTags, IEnumerable<Tag> newTags);
         Task<bool> DeleteAsync(string uid, int noteId);

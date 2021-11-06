@@ -56,12 +56,13 @@ namespace BibleStudyTool.Public
             services.AddScoped(typeof(IEntityCrudActionExceptionFactory), typeof(EntityCrudActionExceptionFactory));
 
             // Entity query services
-            services.AddScoped(typeof(TagNoteQueries), _ => new TagNoteQueries(cnxstr));
             services.AddScoped(typeof(NoteQueries), _ => new NoteQueries(cnxstr));
             services.AddScoped(typeof(NoteReferenceQueries), _ => new NoteReferenceQueries(cnxstr));
+            services.AddScoped(typeof(TagQueries), _ => new TagQueries(cnxstr));
 
             // Entity services
             services.AddScoped(typeof(ITagService), typeof(TagService));
+            services.AddScoped(typeof(ITagGroupTagService), typeof(TagGroupTagService));
             services.AddScoped(typeof(ITagGroupService), typeof(TagGroupService));
             services.AddScoped(typeof(ITagNoteService), typeof(TagNoteService));
             services.AddScoped(typeof(INoteService), typeof(NoteService));
