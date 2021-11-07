@@ -38,9 +38,11 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             return tags;
         }
 
-        public async Task<Tag> UpdateTag(int tagId, string uid, string label, string color)
+        public async Task<Tag> UpdateTagAsync(int tagId, string uid, string label, string color)
         {
-
+            var tag = new Tag(tagId, uid, label, color);
+            await _tagRepository.UpdateAsync<TagCrudActionException>(tag);
+            return tag;
         }
     }
 }

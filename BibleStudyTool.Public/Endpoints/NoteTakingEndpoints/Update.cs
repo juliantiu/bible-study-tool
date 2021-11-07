@@ -12,14 +12,17 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
     {
         private readonly INoteReferenceService _noteReferenceService;
         private readonly INoteService _noteService;
+        private readonly ITagService _tagService;
         private readonly UserManager<BibleReader> _userManager;
 
         public Update(INoteReferenceService noteReferenceService,
                       INoteService noteService,
+                      ITagService tagService,
                       UserManager<BibleReader> userManager)
         {
             _noteReferenceService = noteReferenceService;
             _noteService = noteService;
+            _tagService = tagService;
             _userManager = userManager;
         }
     }
