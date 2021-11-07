@@ -1,10 +1,8 @@
 ﻿using System;
 namespace BibleStudyTool.Core.Exceptions
 {
-    public abstract class EntityCrudActionException : Exception
+    public abstract class EntityCrudActionException : TimestampedException
     {
-        public DateTime Timestamp { get; set; }
-
         public EntityCrudActionException()
         {
         }

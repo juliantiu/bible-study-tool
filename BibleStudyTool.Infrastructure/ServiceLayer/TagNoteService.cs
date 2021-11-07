@@ -13,10 +13,14 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
     {
         private readonly IAsyncRepository<TagNote> _tagNoteRepository;
         private readonly TagQueries _tagQueries;
+        private readonly TagNoteQueries _tagNoteQueries;
 
-        public TagNoteService(IAsyncRepository<TagNote> tagNoteRepository, TagQueries tagQueries)
+        public TagNoteService(IAsyncRepository<TagNote> tagNoteRepository,
+                              TagNoteQueries tagNoteQueries,
+                              TagQueries tagQueries)
         {
             _tagNoteRepository = tagNoteRepository;
+            _tagNoteQueries = tagNoteQueries;
             _tagQueries = tagQueries;
         }
 
@@ -29,6 +33,11 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         public async Task<IDictionary<int, IList<Tag>>> GetTagsForNotesAsync(int[] noteIds)
         {
             return await _tagQueries.GetTagsForNotesQueryAsync(noteIds);
+        }
+
+        public async Task RemoveTagsFromNote(int noteId, IEnumerable<int> tagIdsToDelete)
+        {
+            await _tagNoteQueries.DeleteTagNotes(noteId, tagIdsToDelete);
         }
     }
 }

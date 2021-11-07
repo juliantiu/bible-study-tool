@@ -7,8 +7,9 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 {
     public interface INoteReferenceService
     {
-        Task AssignNoteReferencesAsync(int noteId, IEnumerable<int> referencedNotes, IEnumerable<int> referencedBibleVerses);
-        Task<IEnumerable<NoteReference>> GetNoteReferencesAsync(int[] noteIds);
+        Task AssignReferencesAsync(int noteId, IEnumerable<int> referencedNotes, IEnumerable<int> referencedBibleVerses);
+        Task<IEnumerable<NoteReference>> GetNotesReferencesAsync(int[] noteIds);
         Task<IEnumerable<NoteReference>> GetParentNoteReferencesAsync(int[] noteIds);
+        Task RemoveReferencesAsync(int noteId, IEnumerable<int> referencedNotes, IEnumerable<int> referencedBibleVerses);
     }
 }

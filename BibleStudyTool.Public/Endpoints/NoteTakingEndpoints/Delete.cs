@@ -8,7 +8,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
 {
     [Route("api/note-taking/delete")]
     [ApiController]
-    public partial class Delete
+    public partial class Delete : ControllerBase
     {
         private readonly INoteReferenceService _noteReferenceService;
         private readonly INoteService _noteService;

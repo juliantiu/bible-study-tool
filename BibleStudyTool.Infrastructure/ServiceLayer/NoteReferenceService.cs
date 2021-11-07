@@ -18,7 +18,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             _noteReferenceQueries = noteReferenceQueries;
         }
 
-        public async Task AssignNoteReferencesAsync(int noteId, IEnumerable<int> referencedNotes, IEnumerable<int> referencedBibleVerses)
+        public async Task AssignReferencesAsync(int noteId, IEnumerable<int> referencedNotes, IEnumerable<int> referencedBibleVerses)
         {
             var noteReferences = new List<NoteReference>();
             foreach (var referencedNote in referencedNotes)
@@ -28,7 +28,12 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             await _noteReferenceRepository.BulkCreateAsync<NoteReferenceCrudActionException>(noteReferences.ToArray());
         }
 
-        public Task<IEnumerable<NoteReference>> GetNoteReferencesAsync(int[] noteIds)
+        public async Task RemoveReferencesAsync(int noteId, IEnumerable<int> referencedNotes, IEnumerable<int> referencedBibleVerses)
+        {
+            await _noteReferenceQueries.DeleteNoteReferences(noteId, referencedNotes, referencedBibleVerses);
+        }
+
+        public Task<IEnumerable<NoteReference>> GetNotesReferencesAsync(int[] noteIds)
         {
             return _noteReferenceQueries.GetNoteReferences(noteIds);
         }

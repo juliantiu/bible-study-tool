@@ -10,5 +10,6 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
     {
         Task BulkCreateTagNotesAsync(int noteId, IEnumerable<int> tagIds);
         Task<IDictionary<int, IList<Tag>>> GetTagsForNotesAsync(int[] noteIds);
+        Task RemoveTagsFromNote(int noteId, IEnumerable<int> tagIdsToDelete);
     }
 }

@@ -6,19 +6,16 @@ namespace BibleStudyTool.Core.Exceptions
     {
         public DefaultEntityCrudActionException()
         {
-            Timestamp = DateTime.UtcNow;
         }
 
         public DefaultEntityCrudActionException(string message)
             : base(message)
         {
-            Timestamp = DateTime.UtcNow;
         }
 
         public DefaultEntityCrudActionException(string message, Exception inner)
             : base(message, inner)
         {
-            Timestamp = DateTime.UtcNow;
         }
     }
 }

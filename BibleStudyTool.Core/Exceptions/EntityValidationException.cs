@@ -1,10 +1,8 @@
 ﻿using System;
 namespace BibleStudyTool.Core.Exceptions
 {
-    public class EntityValidationException : Exception
+    public class EntityValidationException : TimestampedException
     {
-        public DateTime Timestamp { get; set; }
-
         public EntityValidationException()
         {
         }

@@ -9,5 +9,6 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
     {
         Task<IEnumerable<Tag>> CreateTagsAsync(IEnumerable<Tag> newTags);
         Task<Tag> CreateTagAsync(string uid, string label, string color);
+        Task<Tag> UpdateTag(int tagId, string uid, string label, string color);
     }
 }
