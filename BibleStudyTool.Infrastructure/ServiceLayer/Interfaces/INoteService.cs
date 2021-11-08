@@ -10,7 +10,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         Task<NoteWithTagsAndReferences> CreateAsync
             (string uid, string summary, string text, IEnumerable<int> bibleVerseReferences,
             IEnumerable<int> noteReferences, IEnumerable<int> existingTags, IEnumerable<Tag> newTags);
-        Task<bool> DeleteAsync(string uid, int noteId);
+        Task DeleteAsync(string uid, int noteId);
         Task<IEnumerable<NoteWithTagsAndReferences>> GetAllChapterNotes(string uid, int bibleBookId, int chapterNumber);
         Task<NoteWithTagsAndReferences> UpdateAsync
             (int noteId, string uid, string summary, string text,

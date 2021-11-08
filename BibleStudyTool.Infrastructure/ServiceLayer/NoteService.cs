@@ -78,15 +78,18 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         /// <param name="uid"></param>
         /// <param name="noteId"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteAsync(string uid, int noteId)
+        public async Task DeleteAsync(string uid, int noteId)
         {
             var note = await getNoteByIdAsync(noteId);
-            if (note.Uid != uid)
+            if (note == null)
             {
-                return false;
+                throw new Exception("The note to be deleted does not exist.");
+            }
+            else if (note.Uid != uid)
+            {
+                throw new UnauthorizedException("The logged in user does not own the note to be deleted.");
             }
             await _noteRepository.DeleteAsync<NoteCrudActionException>(note);
-            return true;
         }
 
         /// <summary>

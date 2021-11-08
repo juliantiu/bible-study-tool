@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using BibleStudyTool.Core.Entities.Exceptions;
+using BibleStudyTool.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,18 +9,17 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
 {
     public partial class Delete
     {
-        [HttpDelete("note")]
+        [HttpDelete("tag")]
         [Authorize]
-        public async Task<IActionResult> DeleteNoteAsync(int noteId)
+        public async Task<IActionResult> DeleteTagAsync(int tagId)
         {
             try
             {
                 var uid = _userManager.GetUserId(User);
-                await _noteService.DeleteAsync(uid, noteId);
+                await _tagService.DeleteTagAsync(uid, tagId);
                 return Ok();
-
             }
-            catch (NoteCrudActionException ex)
+            catch (TagCrudActionException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                   new EntityCrudActionExceptionResponse() { Timestamp = ex.Timestamp, Message = ex.Message });
