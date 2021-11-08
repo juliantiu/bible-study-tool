@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.JoinEntities;
+using BibleStudyTool.Core.Exceptions;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Infrastructure.DAL.Npgsql;
 
@@ -42,6 +43,20 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             var tags = await _tagQueries.GetTagsInTagGroupAsync(tagGroupId);
 
             return new TagGroupWithTags(newTagGroup, tags);
+        }
+
+        public async Task DeleteTagGroupAsync(string uid, int tagGroupId)
+        {
+            TagGroup tagGroup = await _tagGroupRepository.GetByIdAsync<TagCrudActionException>(new object[1] { tagGroupId });
+            if (tagGroup == null)
+            {
+                throw new Exception("The tag group to be deleted does not exist.");
+            }
+            else if (tagGroup.Uid != uid)
+            {
+                throw new UnauthorizedException("The logged in user does not own the tag group to be deleted.");
+            }
+            await _tagGroupRepository.DeleteAsync<TagCrudActionException>(tagGroup);
         }
 
         #region************************************************** HELPER METHODS
