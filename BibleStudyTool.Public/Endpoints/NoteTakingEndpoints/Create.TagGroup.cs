@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
     public partial class Create
     {
         [HttpPost("tag-group")]
+        [Authorize]
         public async Task<ActionResult<TagGroupWithTags>> CreateTagGroupAsync([FromBody]IEnumerable<int> tagIds)
         {
             try

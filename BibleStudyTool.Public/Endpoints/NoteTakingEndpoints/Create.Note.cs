@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.Exceptions;
 using BibleStudyTool.Public.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
     public partial class Create
     {
         [HttpPost("note")]
+        [Authorize]
         public async Task<ActionResult<CreateNoteResponse>> CreateNoteAsync(CreateNoteRequest request)
         {
             string userId = _userManager.GetUserId(User);
