@@ -21,5 +21,16 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             var tagGroupTag = new TagGroupTag(tagGroupId, tagId);
             return await _tagGroupTagRepository.CreateAsync<TagGroupTagCrudActionException>(tagGroupTag);
         }
+
+        public async Task RemoveTagsFromTagGroup(int tagGroupId, IEnumerable<int> tagIds)
+        {
+            var tagGroupTagKeys = new List<object[]>();
+            foreach (var tagId in tagIds)
+            {
+                tagGroupTagKeys.Add(new object[2] { tagGroupId, tagId });
+            }
+
+            await _tagGroupTagRepository.BulkDeleteAsync<TagGroupTagCrudActionException>(tagGroupTagKeys.ToArray());
+        }
     }
 }

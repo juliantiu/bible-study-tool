@@ -25,11 +25,6 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 
         public async Task<TagGroupWithTags> CreateTagGroupAsync(string uid, IEnumerable<int> tagIds)
         {
-            if (tagIds.Count() < 2)
-            {
-                return null;
-            }
-
             // Create the new tag group
             var tagGroup = new TagGroup(uid);
             var newTagGroup = await _tagGroupRepository.CreateAsync<TagGroupCrudActionException>(tagGroup);
@@ -59,6 +54,40 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             await _tagGroupRepository.DeleteAsync<TagCrudActionException>(tagGroup);
         }
 
+        public async Task<TagGroupWithTags> UpdateTagGroupAsync(string uid, int tagGroupId, IEnumerable<int> tagIds)
+        {
+            TagGroup tagGroup = await _tagGroupRepository.GetByIdAsync<TagCrudActionException>(new object[1] { tagGroupId });
+            if (tagGroup == null)
+            {
+                throw new Exception("The tag group to be updated does not exist.");
+            }
+            else if (tagGroup.Uid != uid)
+            {
+                throw new UnauthorizedException("The logged in user does not own the tag group to be updated.");
+            }
+
+            // Get all tags associated with the tag group
+            var tagsInTagGroup = await _tagQueries.GetTagsInTagGroupAsync(tagGroupId);
+
+            // Determine which tags need to be deleted
+            var tagsToBeDeleted = determineTagsToBeDeleted(tagsInTagGroup, tagIds);
+
+            // Delete tags that need to be deleted
+            await removeTagsFromTagGroupAsync(tagGroupId, tagsToBeDeleted);
+
+            // Determine which tags need to be added
+            var tagsToBeAdded = determineTagsToBeAdded(tagsInTagGroup, tagIds);
+
+            // Add tags that need to be added
+            var tagGroupTags = await associateTagsWithTagGroup(tagGroupId, tagsToBeAdded);
+            tagGroup.AssignTags(tagGroupTags);
+
+            // Get tags with the tag IDs associated to the tag group after the deletion and additions
+            var tags = await _tagQueries.GetTagsInTagGroupAsync(tagGroupId);
+
+            return new TagGroupWithTags(tagGroup, tags);
+        }
+
         #region************************************************** HELPER METHODS
         // *********************************************************************
         // *********************************************************************
@@ -78,6 +107,47 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 }
             }
             return tagGroupTags;
+        }
+
+        private IEnumerable<int> determineTagsToBeDeleted
+            (IEnumerable<Tag> tags, IEnumerable<int> tagIds)
+        {
+            IList<int> tagsToBeDeleted = new List<int>();
+            foreach (var tag in tags)
+            {
+                var tagGroupTag_tagId = tag.TagId;
+                if (tagIds.Contains(tagGroupTag_tagId) == false)
+                {
+                    tagsToBeDeleted.Add(tagGroupTag_tagId);
+                }
+            }
+            return tagsToBeDeleted;
+        }
+
+        private IEnumerable<int> determineTagsToBeAdded
+            (IEnumerable<Tag> tags, IEnumerable<int> tagIds)
+        {
+            IList<int> tagsToBeAdded = new List<int>();
+            foreach (var tagId in tagIds)
+            {
+                if (tags.Any(tgt => tgt.TagId == tagId) == false)
+                {
+                    tagsToBeAdded.Add(tagId);
+                }
+            }
+            return tagsToBeAdded;
+        }
+
+        private async Task removeTagsFromTagGroupAsync(int tagGroupId, IEnumerable<int> tagIds)
+        {
+            try
+            {
+                await _tagGroupTagService.RemoveTagsFromTagGroup(tagGroupId, tagIds);
+            }
+            catch
+            {
+                Console.WriteLine("Failed to remove all or some tags from the tag group."); //TODO: log
+            }
         }
         #endregion
     }

@@ -10,18 +10,18 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
     [ApiController]
     public partial class Update : ControllerBase
     {
-        private readonly INoteReferenceService _noteReferenceService;
         private readonly INoteService _noteService;
+        private readonly ITagGroupService _tagGroupService;
         private readonly ITagService _tagService;
         private readonly UserManager<BibleReader> _userManager;
 
-        public Update(INoteReferenceService noteReferenceService,
-                      INoteService noteService,
+        public Update(INoteService noteService,
+                      ITagGroupService tagGroupService,
                       ITagService tagService,
                       UserManager<BibleReader> userManager)
         {
-            _noteReferenceService = noteReferenceService;
             _noteService = noteService;
+            _tagGroupService = tagGroupService;
             _tagService = tagService;
             _userManager = userManager;
         }

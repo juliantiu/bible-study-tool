@@ -8,5 +8,6 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
     public interface ITagGroupTagService
     {
         Task<TagGroupTag> CreateTagGroupTag(int tagGroupId, int tagId);
+        Task RemoveTagsFromTagGroup(int tagGroupId, IEnumerable<int> tagIds)
     }
 }
