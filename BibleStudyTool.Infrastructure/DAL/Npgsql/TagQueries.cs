@@ -12,7 +12,15 @@ namespace BibleStudyTool.Infrastructure.DAL.Npgsql
         {
         }
 
-        public async Task<IEnumerable<Tag>> GetTagsInTagGroupAsync(int tagGroupId)
+        /// <summary>
+        ///     Gets the tags that belong to a tag group.
+        /// </summary>
+        /// <param name="tagGroupId"></param>
+        /// <returns>
+        ///     A list of all the tags that belong to a tag group.
+        /// </returns>
+        public async Task<IEnumerable<Tag>> GetTagsInTagGroupAsync
+            (int tagGroupId)
         {
             using (var sqlCnx = GetConnection())
             using (var sqlCmd = new NpgsqlCommand(string.Empty, sqlCnx))
@@ -30,26 +38,40 @@ ON ""Tags"".""TagId"" = ""TagGroupTags"".""TagId""
 AND ""TagGroupTags"".""TagGroupId"" = @TagGroupId
 ORDER BY ""Tags"".""TagId"" ASC
 ";
-                DbUtilties.AddInt32Parameter(sqlCmd, "@TagGroupId", tagGroupId);
+                DbUtilties.AddInt32Parameter
+                    (sqlCmd, "@TagGroupId", tagGroupId);
 
                 IList<Tag> tags = new List<Tag>();
                 using (var reader = await sqlCmd.ExecuteReaderAsync())
                 {
                     while (reader.Read())
                     {
-                        var noteId = DbUtilties.GetInt32OrDefault(reader, "NoteId");
+                        var noteId = DbUtilties.GetInt32OrDefault
+                            (reader, "NoteId");
 
-                        tags.Add(new Tag(DbUtilties.GetInt32OrDefault(reader, "TagId"),
-                                         DbUtilties.GetStringOrDefault(reader, "TagUid"),
-                                         DbUtilties.GetStringOrDefault(reader, "TagLabel"),
-                                         DbUtilties.GetStringOrDefault(reader, "TagColor")));
+                        tags.Add(new Tag(DbUtilties.GetInt32OrDefault
+                                            (reader, "TagId"),
+                                         DbUtilties.GetStringOrDefault
+                                            (reader, "TagUid"),
+                                         DbUtilties.GetStringOrDefault
+                                            (reader, "TagLabel"),
+                                         DbUtilties.GetStringOrDefault
+                                            (reader, "TagColor")));
                     }
                 }
                 return tags;
             }
         }
 
-        public async Task<IDictionary<int, IList<Tag>>> GetTagsForNotesQueryAsync(int[] noteIds)
+        /// <summary>
+        ///     Gets all tag IDs associated with the notes.
+        /// </summary>
+        /// <param name="noteIds"></param>
+        /// <returns>
+        ///     A dictionary with note ID as the key and the note's tags.
+        /// </returns>
+        public async Task<IDictionary<int, IList<Tag>>>
+            GetTagIdsForNotesQueryAsync(int[] noteIds)
         {
             using (var sqlCnx = GetConnection())
             using (var sqlCmd = new NpgsqlCommand(string.Empty, sqlCnx))
@@ -74,19 +96,66 @@ ORDER BY ""NoteId"" ASC
                 {
                     while (reader.Read())
                     {
-                        var noteId = DbUtilties.GetInt32OrDefault(reader, "NoteId");
+                        var noteId = DbUtilties.GetInt32OrDefault
+                            (reader, "NoteId");
+
                         if (!(noteTagsMapping.ContainsKey(noteId)))
                         {
                             noteTagsMapping[noteId] = new List<Tag>();
                         }
 
-                        noteTagsMapping[noteId].Add(new Tag(DbUtilties.GetInt32OrDefault(reader, "TagId"),
-                                                            DbUtilties.GetStringOrDefault(reader, "TagUid"),
-                                                            DbUtilties.GetStringOrDefault(reader, "TagLabel"),
-                                                            DbUtilties.GetStringOrDefault(reader, "TagColor")));
+                        noteTagsMapping[noteId].Add
+                            (new Tag(DbUtilties.GetInt32OrDefault
+                                        (reader, "TagId"),
+                                    DbUtilties.GetStringOrDefault
+                                        (reader, "TagUid"),
+                                    DbUtilties.GetStringOrDefault
+                                        (reader, "TagLabel"),
+                                    DbUtilties.GetStringOrDefault
+                                        (reader, "TagColor")));
                     }
                 }
                 return noteTagsMapping;
+            }
+        }
+
+        /// <summary>
+        ///     Gets all user tags.
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>
+        ///     The list of tags that belong to the user.
+        /// </returns>
+        public async Task<IEnumerable<Tag>> GetAllUserTagsAsync(string userId)
+        {
+            using (var sqlCnx = GetConnection())
+            using (var sqlCmd = new NpgsqlCommand(string.Empty, sqlCnx))
+            {
+                sqlCmd.CommandText = @"
+SELECT *
+FROM ""Tags""
+WHERE ""TagUid"" = @TagUid;
+";
+                DbUtilties.AddNonEmptyVarcharParameter
+                    (sqlCmd, "@TagUid", userId);
+
+                var tags = new List<Tag>();
+                using (var reader = await sqlCmd.ExecuteReaderAsync())
+                {
+                    while (reader.Read())
+                    {
+                        tags.Add
+                            (new Tag(DbUtilties.GetInt32OrDefault
+                                        (reader, "TagId"),
+                                    DbUtilties.GetStringOrDefault
+                                        (reader, "TagUid"),
+                                    DbUtilties.GetStringOrDefault
+                                        (reader, "TagLabel"),
+                                    DbUtilties.GetStringOrDefault
+                                        (reader, "TagColor")));
+                    }
+                }
+                return tags;
             }
         }
     }

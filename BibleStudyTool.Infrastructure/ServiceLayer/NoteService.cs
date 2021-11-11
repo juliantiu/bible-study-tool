@@ -99,7 +99,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         /// <param name="bibleBookId"></param>
         /// <param name="chapterNumber"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<NoteWithTagsAndReferences>> GetAllChapterNotes(string uid, int bibleBookId, int chapterNumber)
+        public async Task<IEnumerable<NoteWithTagsAndReferences>> GetAllChapterNotesAsync(string uid, int bibleBookId, int chapterNumber)
         {
             // Get all notes for a chapter
             var notes = new List<NoteWithTagsAndReferences>();

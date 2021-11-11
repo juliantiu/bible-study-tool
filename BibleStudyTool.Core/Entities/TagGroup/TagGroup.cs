@@ -17,6 +17,12 @@ namespace BibleStudyTool.Core.Entities
             Uid = uid;
         }
 
+        public TagGroup(int tagGroupId, string uid)
+        {
+            TagGroupId = tagGroupId;
+            Uid = uid;
+        }
+
         public void AssignTags(IEnumerable<TagGroupTag> tagGroupTags)
         {
             TagGroupTags = tagGroupTags;

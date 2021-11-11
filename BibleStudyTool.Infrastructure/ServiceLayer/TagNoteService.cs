@@ -32,7 +32,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 
         public async Task<IDictionary<int, IList<Tag>>> GetTagsForNotesAsync(int[] noteIds)
         {
-            return await _tagQueries.GetTagsForNotesQueryAsync(noteIds);
+            return await _tagQueries.GetTagIdsForNotesQueryAsync(noteIds);
         }
 
         public async Task RemoveTagsFromNote(int noteId, IEnumerable<int> tagIdsToDelete)

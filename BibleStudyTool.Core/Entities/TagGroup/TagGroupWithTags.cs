@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BibleStudyTool.Core.Entities
 {
     public class TagGroupWithTags : TagGroupBase
     {
-        public IEnumerable<Tag> TagGroupTags { get; private set; }
+        public IList<Tag> TagGroupTags { get; private set; }
 
         public TagGroupWithTags()
         {
@@ -15,7 +16,7 @@ namespace BibleStudyTool.Core.Entities
         {
             Uid = tagGroup.Uid;
             TagGroupId = tagGroup.TagGroupId;
-            TagGroupTags = tagGroupTags;
+            TagGroupTags = tagGroupTags.ToList();
         }
     }
 }

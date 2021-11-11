@@ -22,8 +22,6 @@
     <None Remove="BibleReaderEndpoints\" />
     <None Remove="TagEnpoints\" />
     <None Remove="Endpoints\" />
-    <None Remove="Endpoints\NoteEndpoints\" />
-    <None Remove="Endpoints\TagGroupEndpoints\" />
     <None Remove="Endpoints\TagNoteEndpoints\" />
     <None Remove="Endpoints\TagGroupTagEnpoints\" />
     <None Remove="Endpoints\NoteReferenceEndpoints\" />
@@ -43,12 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Endpoints\BibleReaderEndpoints\" />
-    <Folder Include="Endpoints\TagEndpoints\" />
     <Folder Include="Endpoints\" />
-    <Folder Include="Endpoints\NoteEndpoints\" />
-    <Folder Include="Endpoints\TagGroupEndpoints\" />
     <Folder Include="Endpoints\TagNoteEndpoints\" />
-    <Folder Include="Endpoints\TagGroupTagEndpoints\" />
     <Folder Include="Endpoints\NoteReferenceEndpoints\" />
     <Folder Include="Endpoints\SharedEnpoints\" />
     <Folder Include="DTOs\" />
