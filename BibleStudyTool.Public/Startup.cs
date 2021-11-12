@@ -56,6 +56,7 @@ namespace BibleStudyTool.Public
             services.AddScoped(typeof(IEntityCrudActionExceptionFactory), typeof(EntityCrudActionExceptionFactory));
 
             // Entity query services
+            services.AddScoped(typeof(LanguageQueries), _ => new LanguageQueries(cnxstr));
             services.AddScoped(typeof(NoteQueries), _ => new NoteQueries(cnxstr));
             services.AddScoped(typeof(NoteReferenceQueries), _ => new NoteReferenceQueries(cnxstr));
             services.AddScoped(typeof(TagQueries), _ => new TagQueries(cnxstr));
@@ -63,6 +64,7 @@ namespace BibleStudyTool.Public
             services.AddScoped(typeof(TagNoteQueries), _ => new TagNoteQueries(cnxstr));
 
             // Entity services
+            services.AddScoped(typeof(ILanguageService), typeof(LanguageQueries));
             services.AddScoped(typeof(ITagService), typeof(TagService));
             services.AddScoped(typeof(ITagGroupTagService), typeof(TagGroupTagService));
             services.AddScoped(typeof(ITagGroupService), typeof(TagGroupService));

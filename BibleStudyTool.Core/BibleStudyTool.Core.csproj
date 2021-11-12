@@ -51,6 +51,7 @@
     <None Remove="Entities\TagGroup\Specifications\" />
     <None Remove="Entities\JoinEntities\NoteReference\Specifications\" />
     <None Remove="Entities\JoinEntities\NoteReference\Exceptions\" />
+    <None Remove="Entities\Language\Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -90,5 +91,6 @@
     <Folder Include="Entities\TagGroup\Specifications\" />
     <Folder Include="Entities\JoinEntities\NoteReference\Specifications\" />
     <Folder Include="Entities\JoinEntities\NoteReference\Exceptions\" />
+    <Folder Include="Entities\Language\Exceptions\" />
   </ItemGroup>
 </Project>
