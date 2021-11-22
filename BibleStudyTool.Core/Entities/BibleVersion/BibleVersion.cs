@@ -19,6 +19,14 @@ namespace BibleStudyTool.Core.Entities
         {
         }
 
+        public BibleVersion
+            (int bibleVersonId, string defaultName, string defaultAbbreviation)
+        {
+            BibleVersionId = bibleVersonId;
+            DefaultName = defaultName;
+            DefaultAbbreviation = defaultAbbreviation;
+        }
+
         public BibleVersion(string defaultName, string defaultAbbreviation)
         {
             DefaultName = defaultName;
