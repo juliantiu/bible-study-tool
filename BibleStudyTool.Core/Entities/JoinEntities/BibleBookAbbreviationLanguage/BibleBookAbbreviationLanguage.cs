@@ -18,6 +18,14 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
         {
         }
 
+        public BibleBookAbbreviationLanguage(int bibleBookId, string languageCode, string abbreviation, string style)
+        {
+            BibleBookId = bibleBookId;
+            LanguageCode = languageCode;
+            Abbreviation = abbreviation;
+            Style = style;
+        }
+
         public BibleBookAbbreviationLanguage(string languageCode, string style)
         {
             LanguageCode = languageCode;

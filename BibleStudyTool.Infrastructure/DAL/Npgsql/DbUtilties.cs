@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using Npgsql;
 using NpgsqlTypes;
 
@@ -68,6 +67,18 @@ namespace BibleStudyTool.Infrastructure.DAL.Npgsql
             }
 
             return string.Empty;
+        }
+
+        internal static bool GetBool(NpgsqlDataReader reader, string columnName)
+        {
+            var ordinal = GetOrdinal(reader, columnName);
+
+            if (!reader.IsDBNull(ordinal))
+            {
+                return reader.GetBoolean(ordinal);
+            }
+
+            return false;
         }
     }
 }

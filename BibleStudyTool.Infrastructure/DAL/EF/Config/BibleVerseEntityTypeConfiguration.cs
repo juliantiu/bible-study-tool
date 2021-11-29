@@ -17,9 +17,6 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Config
             builder.Property(bibleVerse => bibleVerse.VerseNumber)
                    .IsRequired();
 
-            builder.Property(bibleVerse => bibleVerse.IsNewTestament)
-                   .IsRequired();
-
             builder.HasOne<BibleBook>(bibleVerse => bibleVerse.BibleBook)
                    .WithMany(bibleBook => bibleBook.BibleVerses)
                    .HasForeignKey(bibleVerse => bibleVerse.BibleBookId)

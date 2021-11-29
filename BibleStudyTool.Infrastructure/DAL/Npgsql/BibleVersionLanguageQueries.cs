@@ -31,7 +31,7 @@ namespace BibleStudyTool.Infrastructure.DAL.Npgsql
                 sqlCmd.CommandText = @"
 SELECT *
 FROM ""BibleVersions"" bv
-JOIN ""BibleVersionLanguages"" bvl
+JOIN ""BibleVersionLanguage"" bvl
 ON bv.BibleVersionId = bvl.BibleVersionId
 AND ""LanguageCode"" = @LanguageCode;
 ";

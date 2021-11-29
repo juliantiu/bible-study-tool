@@ -17,7 +17,6 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Config
             
 			builder.Property(note => note.Summary)
                    .HasColumnName("NoteSummary")
-               	   .HasMaxLength(240)
                    .IsRequired();
 
             builder.Property(note => note.Text)

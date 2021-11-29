@@ -18,6 +18,14 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
         {
         }
 
+        public BibleBookLanguage(int bibleBookId, string languageCode, string name, string style)
+        {
+            BibleBookId = bibleBookId;
+            Name = name;
+            LanguageCode = languageCode;
+            Style = style;
+        }
+
         public BibleBookLanguage(string languageCode, string style)
         {
             LanguageCode = languageCode;

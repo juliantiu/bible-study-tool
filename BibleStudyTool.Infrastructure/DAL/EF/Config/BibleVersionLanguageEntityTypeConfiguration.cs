@@ -14,12 +14,10 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Config
 
             builder.Property(bibleVersionLanguage => bibleVersionLanguage.Name)
                    .HasColumnName("BibleVersionName")
-                   .HasMaxLength(150)
                    .IsRequired();
 
             builder.Property(bibleVersionLanguage => bibleVersionLanguage.Abbreviation)
-                   .HasColumnName("BibleVersionAbbreviation")
-                   .HasMaxLength(20);
+                   .HasColumnName("BibleVersionAbbreviation");
 
             builder.HasOne<BibleVersion>(bibleVersionLanguage => bibleVersionLanguage.BibleVersion)
                    .WithMany(bibleVersion => bibleVersion.BibleVersionLanguages)

@@ -77,6 +77,10 @@ namespace BibleStudyTool.Public
                 _ => new BibleVersionLanguageQueries(cnxstr));
 
             services.AddScoped
+                (typeof(BibleBookLanguageQueries),
+                _ => new BibleBookLanguageQueries(cnxstr));
+
+            services.AddScoped
                 (typeof(NoteQueries), _ => new NoteQueries(cnxstr));
 
             services.AddScoped
@@ -98,6 +102,10 @@ namespace BibleStudyTool.Public
 
             services.AddScoped
                 (typeof(ILanguageService), typeof(LanguageQueries));
+
+            services.AddScoped
+                (typeof(IBibleBookLanguageService),
+                typeof(BibleBookLanguageService));
 
             services.AddScoped
                 (typeof(ITagService), typeof(TagService));

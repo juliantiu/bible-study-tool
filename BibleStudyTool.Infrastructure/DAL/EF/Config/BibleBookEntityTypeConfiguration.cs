@@ -13,7 +13,17 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Config
 
             builder.Property(bibleBook => bibleBook.DefaultName)
                    .HasColumnName("BibleBookDefaultName")
-                   .HasMaxLength(30)
+                   .IsRequired();
+
+            builder.Property(bibleBook => bibleBook.DefaultName)
+                   .HasColumnName("BibleBookDefaultAbbreviation")
+                   .IsRequired();
+
+            builder.Property(bibleBook => bibleBook.Order)
+                   .HasColumnName("BibleBookOrder")
+                   .IsRequired();
+
+            builder.Property(bibleBook => bibleBook.IsNewTestament)
                    .IsRequired();
         }
     }

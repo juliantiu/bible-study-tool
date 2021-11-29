@@ -13,7 +13,6 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Config
 
             builder.Property(language => language.Name)
                    .HasColumnName("LanguageName")
-                   .HasMaxLength(70)
                    .IsRequired();
 
             builder.Property(language => language.Endonym)

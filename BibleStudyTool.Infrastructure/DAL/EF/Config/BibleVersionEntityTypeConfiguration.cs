@@ -13,12 +13,10 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Config
 
             builder.Property(bibleVersion => bibleVersion.DefaultName)
                    .HasColumnName("BibleVersionDefaultName")
-                   .HasMaxLength(150)
                    .IsRequired();
 
             builder.Property(bibleVersion => bibleVersion.DefaultAbbreviation)
-                   .HasColumnName("BibleVersionDefaultAbbreviation")
-                   .HasMaxLength(20);
+                   .HasColumnName("BibleVersionDefaultAbbreviation");
         }
     }
 }

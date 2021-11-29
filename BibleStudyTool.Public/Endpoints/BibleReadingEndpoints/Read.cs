@@ -14,14 +14,17 @@ namespace BibleStudyTool.Public.Endpoints.BibleReadingEndpoints
     [ApiController]
     public partial class Read : ControllerBase
     {
+        private readonly IBibleBookLanguageService _bibleBookLanguageService;
         private readonly IBibleVersionLanguageService
             _bibleVersionLanguageService;
         private readonly ILanguageService _languageService;
 
         public Read
-            (IBibleVersionLanguageService bibleVersionLanguageService,
+            (IBibleBookLanguageService bibleBookLanguageService,
+            IBibleVersionLanguageService bibleVersionLanguageService,
             ILanguageService languageService)
         {
+            _bibleBookLanguageService = bibleBookLanguageService;
             _bibleVersionLanguageService = bibleVersionLanguageService;
             _languageService = languageService;
         }
@@ -74,12 +77,34 @@ namespace BibleStudyTool.Public.Endpoints.BibleReadingEndpoints
         public async Task<ActionResult<IEnumerable<BibleBookDto>>>
             GetBibleBooksAsync(string languageCode, string style)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var bibleBooks =
+                    await _bibleBookLanguageService.ListBibleBooks
+                        (languageCode, style);
+
+                return Ok(bibleBooks.Select(v => new BibleBookDto(v)));
+            }
+            catch (Exception)
+            {
+                return StatusCode
+                    (StatusCodes.Status500InternalServerError,
+                    "Failed to get bible versions in the given language.");
+            }
         }
 
         [HttpGet("/chapter")]
         public async Task<ActionResult<IEnumerable<ChapterVersesDto>>>
-            GetChapter(string languageCode, int bibleVersionId, int bibleVerseId)
+            GetChapter
+                (string languageCode, int bibleVersionId)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpGet("/verse")]
+        public async Task<ActionResult<IEnumerable<ChapterVersesDto>>>
+            GetVerse
+                (string languageCode, int bibleVersionId, int bibleVerseId)
         {
             throw new NotImplementedException();
         }
