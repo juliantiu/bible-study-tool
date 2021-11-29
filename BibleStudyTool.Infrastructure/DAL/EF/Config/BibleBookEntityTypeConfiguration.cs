@@ -15,7 +15,7 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Config
                    .HasColumnName("BibleBookDefaultName")
                    .IsRequired();
 
-            builder.Property(bibleBook => bibleBook.DefaultName)
+            builder.Property(bibleBook => bibleBook.DefaultAbbreviation)
                    .HasColumnName("BibleBookDefaultAbbreviation")
                    .IsRequired();
 

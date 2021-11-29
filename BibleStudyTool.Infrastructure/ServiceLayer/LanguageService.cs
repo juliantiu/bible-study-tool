@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Infrastructure.DAL.Npgsql;
 
-namespace BibleStudyTool.Infrastructure.ServiceLayer.Interfaces
+namespace BibleStudyTool.Infrastructure.ServiceLayer
 {
     public class LanguageService : ILanguageService
     {

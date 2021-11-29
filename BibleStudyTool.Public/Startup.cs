@@ -101,7 +101,7 @@ namespace BibleStudyTool.Public
                 typeof(BibleVersionLanguageService));
 
             services.AddScoped
-                (typeof(ILanguageService), typeof(LanguageQueries));
+                (typeof(ILanguageService), typeof(LanguageService));
 
             services.AddScoped
                 (typeof(IBibleBookLanguageService),
