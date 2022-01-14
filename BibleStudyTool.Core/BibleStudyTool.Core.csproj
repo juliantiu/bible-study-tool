@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\**" />
+    <EmbeddedResource Remove="Services\**" />
+    <None Remove="Services\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Entities\" />
     <None Remove="Entities\Tag\" />
     <None Remove="Entities\TagGroup\" />
@@ -26,7 +32,6 @@
     <None Remove="NonEntityConcreteTypes\" />
     <None Remove="Entities\Language\" />
     <None Remove="Entities\BibleBookAggregate\" />
-    <None Remove="Entities\BibleBookAggregate\BibleVerse\" />
     <None Remove="Entities\BibleVersion\" />
     <None Remove="Entities\JoinEntities\BibleVersionLanguage\" />
     <None Remove="Entities\JoinEntities\BibleVerseVersionLanguage\" />
@@ -37,21 +42,12 @@
     <None Remove="Interfaces\Abstracts\" />
     <None Remove="Entities\Note\Specifications\" />
     <None Remove="Entities\Note\Exceptions\" />
-    <None Remove="Entities\JoinEntities\BibleBookLanguage\Exceptions\" />
-    <None Remove="Entities\JoinEntities\BibleBookAbbreviationLanguage\Exceptions\" />
-    <None Remove="Entities\JoinEntities\BibleBookAbbreviationLanguage\Specifications\" />
-    <None Remove="Entities\JoinEntities\BibleBookLanguage\Specifications\" />
-    <None Remove="Entities\JoinEntities\BibleVerseBibleVersionLanguage\Exceptions\" />
-    <None Remove="Entities\BibleBookAggregate\BibleVerse\Specifications\" />
-    <None Remove="Entities\BibleBookAggregate\BibleVerse\Exceptions\" />
-    <None Remove="Entities\JoinEntities\BibleVerseBibleVersionLanguage\Specifications\" />
     <None Remove="Entities\Tag\Exceptions\" />
     <None Remove="Entities\Tag\Specifications\" />
     <None Remove="Entities\TagGroup\Exceptions\" />
     <None Remove="Entities\TagGroup\Specifications\" />
     <None Remove="Entities\JoinEntities\NoteReference\Specifications\" />
     <None Remove="Entities\JoinEntities\NoteReference\Exceptions\" />
-    <None Remove="Entities\Language\Exceptions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
@@ -62,35 +58,17 @@
     <Folder Include="Entities\JoinEntities\TagGroupTag\" />
     <Folder Include="Entities\JoinEntities\TagNote\" />
     <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
     <Folder Include="NonEntityTypes\" />
-    <Folder Include="Entities\Language\" />
-    <Folder Include="Entities\BibleBookAggregate\" />
-    <Folder Include="Entities\BibleBookAggregate\BibleVerse\" />
-    <Folder Include="Entities\BibleVersion\" />
-    <Folder Include="Entities\JoinEntities\BibleVersionLanguage\" />
-    <Folder Include="Entities\JoinEntities\BibleVerseBibleVersionLanguage\" />
-    <Folder Include="Entities\JoinEntities\BibleBookAbbreviationLanguage\" />
-    <Folder Include="Entities\JoinEntities\BibleBookLanguage\" />
     <Folder Include="Entities\JoinEntities\NoteReference\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Interfaces\Abstracts\" />
     <Folder Include="Entities\Note\Specifications\" />
     <Folder Include="Entities\Note\Exceptions\" />
-    <Folder Include="Entities\JoinEntities\BibleBookLanguage\Exceptions\" />
-    <Folder Include="Entities\JoinEntities\BibleBookAbbreviationLanguage\Exceptions\" />
-    <Folder Include="Entities\JoinEntities\BibleBookAbbreviationLanguage\Specifications\" />
-    <Folder Include="Entities\JoinEntities\BibleBookLanguage\Specifications\" />
-    <Folder Include="Entities\JoinEntities\BibleVerseBibleVersionLanguage\Exceptions\" />
-    <Folder Include="Entities\BibleBookAggregate\BibleVerse\Specifications\" />
-    <Folder Include="Entities\BibleBookAggregate\BibleVerse\Exceptions\" />
-    <Folder Include="Entities\JoinEntities\BibleVerseBibleVersionLanguage\Specifications\" />
     <Folder Include="Entities\Tag\Exceptions\" />
     <Folder Include="Entities\Tag\Specifications\" />
     <Folder Include="Entities\TagGroup\Exceptions\" />
     <Folder Include="Entities\TagGroup\Specifications\" />
     <Folder Include="Entities\JoinEntities\NoteReference\Specifications\" />
     <Folder Include="Entities\JoinEntities\NoteReference\Exceptions\" />
-    <Folder Include="Entities\Language\Exceptions\" />
   </ItemGroup>
 </Project>

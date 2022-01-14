@@ -14,7 +14,6 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
         public Note ReferencedNote { get; }
 
         public int? ReferencedBibleVerseId { get; private set; }
-        public BibleVerse ReferencedBibleVerse { get; }
 
         public NoteReference()
         {

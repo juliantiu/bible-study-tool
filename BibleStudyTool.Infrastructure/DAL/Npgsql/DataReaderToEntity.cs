@@ -20,13 +20,5 @@ namespace BibleStudyTool.Infrastructure.DAL.Npgsql
                 (DbUtilties.GetInt32OrDefault(reader, "TagGroupId"),
                 DbUtilties.GetStringOrDefault(reader, "TagGroupUid"));
         }
-
-        public static Language DataReaderToLanguage(NpgsqlDataReader reader)
-        {
-            return new Language
-                (DbUtilties.GetStringOrDefault(reader, "Code"),
-                DbUtilties.GetStringOrDefault(reader, "LanguageName"),
-                DbUtilties.GetStringOrDefault(reader, "Endonym"));
-        }
     }
 }

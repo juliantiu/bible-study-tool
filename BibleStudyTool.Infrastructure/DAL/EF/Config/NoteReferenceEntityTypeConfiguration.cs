@@ -22,12 +22,6 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Config
                    .HasForeignKey(noteReference => noteReference.ReferencedNoteId)
                    .IsRequired(false)
                    .OnDelete(DeleteBehavior.Cascade);
-
-            builder.HasOne<BibleVerse>(noteReference => noteReference.ReferencedBibleVerse)
-                   .WithMany(bibleVerse => bibleVerse.ReferencedNotes)
-                   .HasForeignKey(noteReference => noteReference.ReferencedBibleVerseId)
-                   .IsRequired(false)
-                   .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -36,12 +36,6 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
         {
         }
 
-        // BibleAggregate
-        public DbSet<Language> Languages { get; set; }
-        public DbSet<BibleVersion> BibleVersions { get; set; }
-        public DbSet<BibleBook> BibleBooks { get; set; }
-        public DbSet<BibleVerse> BibleVerses { get; set; }
-
         // BibleReaderAggregate
         public DbSet<Note> Notes { get; set; }
         public DbSet<Tag> Tags { get; set; }

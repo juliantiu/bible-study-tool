@@ -1,6 +1,5 @@
 ﻿using System;
 using BibleStudyTool.Core.Entities;
-using BibleStudyTool.Core.Entities.BibleBookAggregate.Exceptions;
 using BibleStudyTool.Core.Entities.Exceptions;
 using BibleStudyTool.Core.Exceptions;
 using BibleStudyTool.Core.Interfaces;
@@ -13,8 +12,6 @@ namespace BibleStudyTool.Core.NonEntityTypes
         {
             switch (typeof(T))
             {
-                case Type bibleVerseCrudActionException when bibleVerseCrudActionException == typeof(BibleVerseCrudActionException):
-                    return new BibleVerseCrudActionException(message);
                 case Type noteCrudActionExeption when noteCrudActionExeption == typeof(NoteCrudActionException):
                     return new NoteCrudActionException(message);
                 case Type tagCrudActionExeption when tagCrudActionExeption == typeof(TagCrudActionException):

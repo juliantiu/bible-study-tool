@@ -70,17 +70,6 @@ namespace BibleStudyTool.Public
 
             // Entity query services
             services.AddScoped
-                (typeof(LanguageQueries), _ => new LanguageQueries(cnxstr));
-
-            services.AddScoped
-                (typeof(BibleVersionLanguageQueries),
-                _ => new BibleVersionLanguageQueries(cnxstr));
-
-            services.AddScoped
-                (typeof(BibleBookLanguageQueries),
-                _ => new BibleBookLanguageQueries(cnxstr));
-
-            services.AddScoped
                 (typeof(NoteQueries), _ => new NoteQueries(cnxstr));
 
             services.AddScoped
@@ -96,17 +85,6 @@ namespace BibleStudyTool.Public
                 (typeof(TagNoteQueries), _ => new TagNoteQueries(cnxstr));
 
             // Entity services
-            services.AddScoped
-                (typeof(IBibleVersionLanguageService),
-                typeof(BibleVersionLanguageService));
-
-            services.AddScoped
-                (typeof(ILanguageService), typeof(LanguageService));
-
-            services.AddScoped
-                (typeof(IBibleBookLanguageService),
-                typeof(BibleBookLanguageService));
-
             services.AddScoped
                 (typeof(ITagService), typeof(TagService));
 
