@@ -96,9 +96,11 @@ namespace BibleStudyTool.Public.Endpoints.BibleReadingEndpoints
         [HttpGet("/chapter")]
         public async Task<ActionResult<IEnumerable<ChapterVersesDto>>>
             GetChapter
-                (string languageCode, int bibleVersionId)
+                (string languageCode, int bibleVersionId, int chapterNumber)
         {
-            throw new NotImplementedException();
+            var chapterText =
+                await _bibleVerseBibleVersionLanguage
+                    
         }
 
         [HttpGet("/verse")]
