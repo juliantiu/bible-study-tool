@@ -98,9 +98,7 @@ namespace BibleStudyTool.Public.Endpoints.BibleReadingEndpoints
             GetChapter
                 (string languageCode, int bibleVersionId, int chapterNumber)
         {
-            var chapterText =
-                await _bibleVerseBibleVersionLanguage
-                    
+            throw new NotImplementedException();           
         }
 
         [HttpGet("/verse")]
