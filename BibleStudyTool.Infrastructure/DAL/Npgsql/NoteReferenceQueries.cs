@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BibleStudyTool.Core.Entities.JoinEntities;
+using BibleStudyTool.Core.Entities;
 using Npgsql;
 
 namespace BibleStudyTool.Infrastructure.DAL.Npgsql
@@ -32,8 +32,7 @@ ORDER BY ""NoteId"";
                     while (reader.Read())
                     {
                         noteReferences.Add(new NoteReference(DbUtilties.GetInt32OrDefault(reader, "NoteId"),
-                                                             DbUtilties.GetInt32OrDefault(reader, "ReferencedNoteId"),
-                                                             DbUtilties.GetInt32OrDefault(reader, "ReferencedBibleVerseId")));
+                                                             DbUtilties.GetInt32OrDefault(reader, "ReferencedNoteId")));
                     }
                 }
                 return noteReferences;
@@ -59,8 +58,7 @@ ORDER BY ""ReferencedNoteId""
                     while (reader.Read())
                     {
                         noteReferences.Add(new NoteReference(DbUtilties.GetInt32OrDefault(reader, "NoteId"),
-                                                             DbUtilties.GetInt32OrDefault(reader, "ReferencedNoteId"),
-                                                             DbUtilties.GetInt32OrDefault(reader, "ReferencedBibleVerseId")));
+                                                             DbUtilties.GetInt32OrDefault(reader, "ReferencedNoteId")));
                     }
                 }
                 return noteReferences;
@@ -68,7 +66,7 @@ ORDER BY ""ReferencedNoteId""
         }
 
         public async Task DeleteNoteReferences
-            (int noteId, IEnumerable<int> noteReferenceIds, IEnumerable<int> bibleVerseReferenceIds)
+            (int noteId, IEnumerable<int> noteReferenceIds)
         {
             using (var sqlCnx = GetConnection())
             using (var sqlCmd = new NpgsqlCommand(string.Empty, sqlCnx))
@@ -76,11 +74,10 @@ ORDER BY ""ReferencedNoteId""
                 sqlCmd.CommandText = @"
 DELETE FROM ""NoteReferences""
 WHERE ""NoteId"" = @NoteId
-AND (""ReferencedNoteId"" = ANY(@ReferencedNoteId) OR ""ReferencedBibleVerseId"" = ANY(@ReferencedBibleVerseId))
+AND (""ReferencedNoteId"" = ANY(@ReferencedNoteId))
 ";
                 DbUtilties.AddInt32Parameter(sqlCmd, "@NoteId", noteId);
                 DbUtilties.AddInt32ArrayParameter(sqlCmd, "@ReferencedNoteId", noteReferenceIds.ToArray());
-                DbUtilties.AddInt32ArrayParameter(sqlCmd, "@ReferencedBibleVerseId", bibleVerseReferenceIds.ToArray());
 
                 await sqlCmd.ExecuteNonQueryAsync();
             }

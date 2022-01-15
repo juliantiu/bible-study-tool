@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BibleStudyTool.Core.Entities.JoinEntities;
+using BibleStudyTool.Core.Entities;
 
 namespace BibleStudyTool.Infrastructure.ServiceLayer
 {
-    public interface ITagGroupTagService
+    public interface IGroupedTagService
     {
-        Task<TagGroupTag> CreateTagGroupTag(int tagGroupId, int tagId);
+        Task<GroupedTag> CreateTagGroupTag(int tagGroupId, int tagId);
         Task RemoveTagsFromTagGroup(int tagGroupId, IEnumerable<int> tagIds);
     }
 }

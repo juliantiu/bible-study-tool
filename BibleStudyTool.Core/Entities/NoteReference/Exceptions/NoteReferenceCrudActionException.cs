@@ -1,7 +1,7 @@
 ﻿using System;
 using BibleStudyTool.Core.Exceptions;
 
-namespace BibleStudyTool.Core.Entities.JoinEntities
+namespace BibleStudyTool.Core.Entities.Exceptions
 {
     public class NoteReferenceCrudActionException : EntityCrudActionException
     {

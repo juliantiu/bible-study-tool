@@ -11,11 +11,11 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 {
     public class TagNoteService : ITagNoteService
     {
-        private readonly IAsyncRepository<TagNote> _tagNoteRepository;
+        private readonly IAsyncRepository<NoteTag> _tagNoteRepository;
         private readonly TagQueries _tagQueries;
         private readonly TagNoteQueries _tagNoteQueries;
 
-        public TagNoteService(IAsyncRepository<TagNote> tagNoteRepository,
+        public TagNoteService(IAsyncRepository<NoteTag> tagNoteRepository,
                               TagNoteQueries tagNoteQueries,
                               TagQueries tagQueries)
         {
@@ -26,7 +26,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 
         public async Task BulkCreateTagNotesAsync(int noteId, IEnumerable<int> tagIds)
         {
-            var tagNotes = tagIds.Select(tagId => new TagNote(tagId, noteId)).ToArray();
+            var tagNotes = tagIds.Select(tagId => new NoteTag(tagId, noteId)).ToArray();
             await _tagNoteRepository.BulkCreateAsync<TagNoteCrudActionException>(tagNotes);
         }
 

@@ -13,12 +13,12 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
     public class TagGroupService : ITagGroupService
     {
         private readonly IAsyncRepository<TagGroup> _tagGroupRepository;
-        private readonly ITagGroupTagService _tagGroupTagService;
+        private readonly IGroupedTagService _tagGroupTagService;
         private readonly TagGroupQueries _tagGroupQueries;
         private readonly TagQueries _tagQueries;
 
         public TagGroupService(IAsyncRepository<TagGroup> tagGroupRepository,
-                               ITagGroupTagService tagGroupTagService,
+                               IGroupedTagService tagGroupTagService,
                                TagGroupQueries tagGroupQueries,
                                TagQueries tagQueries)
         {
@@ -41,9 +41,9 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             var tagGroup = new TagGroup(uid);
             var newTagGroup =
                 await _tagGroupRepository
-                    .CreateAsync<TagGroupCrudActionException>
+                    .CreateAsync<EntityCrudActionException>
                         (tagGroup);
-            var tagGroupId = newTagGroup.TagGroupId;
+            var tagGroupId = newTagGroup.Id;
 
             // Associate the input tag IDs with the newly created tag group
             var tagGroupTags = await associateTagsWithTagGroup
@@ -151,10 +151,10 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         // *********************************************************************
         // *********************************************************************
 
-        private async Task<IEnumerable<TagGroupTag>> associateTagsWithTagGroup
+        private async Task<IEnumerable<GroupedTag>> associateTagsWithTagGroup
             (int tagGroupId, IEnumerable<int> tagIds)
         {
-            var tagGroupTags = new List<TagGroupTag>();
+            var tagGroupTags = new List<GroupedTag>();
             foreach (var tagId in tagIds)
             {
                 try
@@ -179,7 +179,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             IList<int> tagsToBeDeleted = new List<int>();
             foreach (var tag in tags)
             {
-                var tagGroupTag_tagId = tag.TagId;
+                var tagGroupTag_tagId = tag.Id;
                 if (tagIds.Contains(tagGroupTag_tagId) == false)
                 {
                     tagsToBeDeleted.Add(tagGroupTag_tagId);
@@ -194,7 +194,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             IList<int> tagsToBeAdded = new List<int>();
             foreach (var tagId in tagIds)
             {
-                if (tags.Any(tgt => tgt.TagId == tagId) == false)
+                if (tags.Any(tgt => tgt.Id == tagId) == false)
                 {
                     tagsToBeAdded.Add(tagId);
                 }

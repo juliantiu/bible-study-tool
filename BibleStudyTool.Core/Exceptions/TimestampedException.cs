@@ -3,23 +3,23 @@ namespace BibleStudyTool.Core.Exceptions
 {
     public class TimestampedException : Exception
     {
-        public DateTime Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
 
         public TimestampedException()
         {
-            Timestamp = DateTime.UtcNow;
+            Timestamp = DateTimeOffset.UtcNow;
         }
 
         public TimestampedException(string message)
             : base(message)
         {
-            Timestamp = DateTime.UtcNow;
+            Timestamp = DateTimeOffset.UtcNow;
         }
 
         public TimestampedException(string message, Exception inner)
             : base(message, inner)
         {
-            Timestamp = DateTime.UtcNow;
+            Timestamp = DateTimeOffset.UtcNow;
         }
     }
 }

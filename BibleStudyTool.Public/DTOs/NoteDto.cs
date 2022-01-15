@@ -30,20 +30,20 @@ namespace BibleStudyTool.Public.DTOs
 
         public NoteDto(Note noteRef)
         {
-            NoteId = noteRef.NoteId;
+            NoteId = noteRef.Id;
             Uid = noteRef.Uid;
             Summary = noteRef.Summary;
             Text = noteRef.Text;
-            Tags = noteRef.TagNotes.Select(tagNote => tagNote.TagId);
+            Tags = noteRef.NoteTags.Select(tagNote => tagNote.Id);
         }
 
         public NoteDto(Note noteRef, NoteReferencesContainer noteReferenceContainer)
         {
-            NoteId = noteRef.NoteId;
+            NoteId = noteRef.Id;
             Uid = noteRef.Uid;
             Summary = noteRef.Summary;
             Text = noteRef.Text;
-            Tags = noteRef.TagNotes.Select(tagNote => tagNote.TagId);
+            Tags = noteRef.NoteTags.Select(tagNote => tagNote.Id);
             References = noteReferenceContainer;
         }
     }

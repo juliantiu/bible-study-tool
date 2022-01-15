@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using BibleStudyTool.Core.Entities.JoinEntities;
+using BibleStudyTool.Core.Entities;
+using BibleStudyTool.Core.Entities.Exceptions;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Infrastructure.DAL.Npgsql;
 
@@ -18,19 +19,21 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             _noteReferenceQueries = noteReferenceQueries;
         }
 
-        public async Task AssignReferencesAsync(int noteId, IEnumerable<int> referencedNotes, IEnumerable<int> referencedBibleVerses)
+        public async Task AssignReferencesAsync(int noteId, IEnumerable<int> referencedNotes)
         {
             var noteReferences = new List<NoteReference>();
+
             foreach (var referencedNote in referencedNotes)
-                noteReferences.Add(new NoteReference(noteId, referencedNote, null));
-            foreach (var referencedBibleVerse in referencedBibleVerses)
-                noteReferences.Add(new NoteReference(noteId, null, referencedBibleVerse));
+            {
+                noteReferences.Add(new NoteReference(noteId, referencedNote));
+            }
+
             await _noteReferenceRepository.BulkCreateAsync<NoteReferenceCrudActionException>(noteReferences.ToArray());
         }
 
-        public async Task RemoveReferencesAsync(int noteId, IEnumerable<int> referencedNotes, IEnumerable<int> referencedBibleVerses)
+        public async Task RemoveReferencesAsync(int noteId, IEnumerable<int> referencedNotes)
         {
-            await _noteReferenceQueries.DeleteNoteReferences(noteId, referencedNotes, referencedBibleVerses);
+            await _noteReferenceQueries.DeleteNoteReferences(noteId, referencedNotes);
         }
 
         public Task<IEnumerable<NoteReference>> GetNotesReferencesAsync(int[] noteIds)

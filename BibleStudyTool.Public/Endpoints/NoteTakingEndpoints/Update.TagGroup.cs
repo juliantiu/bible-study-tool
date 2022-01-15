@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
+using BibleStudyTool.Core.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
                 string userId = _userManager.GetUserId(User);
                 return Ok(await _tagGroupService.UpdateTagGroupAsync(userId, request.TagGroupId, request.tagIds));
             }
-            catch (TagGroupCrudActionException ex)
+            catch (EntityCrudActionException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                     new EntityCrudActionExceptionResponse() { Timestamp = ex.Timestamp, Message = ex.Message });

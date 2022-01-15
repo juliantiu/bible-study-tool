@@ -6,19 +6,19 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace BibleStudyTool.Infrastructure.DAL.EF.Config
 {
-    public class TagNoteEntityTypeConfiguration : IEntityTypeConfiguration<TagNote>
+    public class NoteTagEntityTypeConfiguration : IEntityTypeConfiguration<NoteTag>
     {
-        public void Configure(EntityTypeBuilder<TagNote> builder)
+        public void Configure(EntityTypeBuilder<NoteTag> builder)
         {
-            builder.HasKey(tagNote => new { tagNote.TagId, tagNote.NoteId });
+            builder.HasKey(tagNote => new { tagNote.Id, tagNote.NoteId });
 
             builder.HasOne<Tag>(tagNote => tagNote.Tag)
-                   .WithMany(tag => tag.TagNotes)
-                   .HasForeignKey(tagNote => tagNote.TagId)
+                   .WithMany(tag => tag.NoteTags)
+                   .HasForeignKey(tagNote => tagNote.Id)
                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne<Note>(tagNote => tagNote.Note)
-                   .WithMany(note => note.TagNotes)
+                   .WithMany(note => note.NoteTags)
                    .HasForeignKey(tagNote => tagNote.NoteId)
                    .OnDelete(DeleteBehavior.Cascade);
         }

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,9 +23,6 @@
     <None Remove="Entities\BibleAggregate\BibleBook\BibleBookAbbreviation\" />
     <None Remove="Entities\BibleAggregate\BibleBook\BibleVerse\" />
     <None Remove="Entities\JoinEntities\" />
-    <None Remove="Entities\JoinEntities\TagGroupTag\" />
-    <None Remove="Entities\JoinEntities\TagNote\" />
-    <None Remove="Entities\JoinEntities\VerseNote\" />
     <None Remove="Entities\BibleAggregate\LanguageAggregate\BibleVersion\" />
     <None Remove="Entities\BibleAggregate\LanguageAggregate\BibleVersion\BibleBookAggregate\" />
     <None Remove="Interfaces\" />
@@ -33,11 +31,6 @@
     <None Remove="Entities\Language\" />
     <None Remove="Entities\BibleBookAggregate\" />
     <None Remove="Entities\BibleVersion\" />
-    <None Remove="Entities\JoinEntities\BibleVersionLanguage\" />
-    <None Remove="Entities\JoinEntities\BibleVerseVersionLanguage\" />
-    <None Remove="Entities\JoinEntities\BibleBookAbbreviationLanguage\" />
-    <None Remove="Entities\JoinEntities\BibleBookLanguage\" />
-    <None Remove="Entities\JoinEntities\NoteReference\" />
     <None Remove="Exceptions\" />
     <None Remove="Interfaces\Abstracts\" />
     <None Remove="Entities\Note\Specifications\" />
@@ -46,29 +39,20 @@
     <None Remove="Entities\Tag\Specifications\" />
     <None Remove="Entities\TagGroup\Exceptions\" />
     <None Remove="Entities\TagGroup\Specifications\" />
-    <None Remove="Entities\JoinEntities\NoteReference\Specifications\" />
-    <None Remove="Entities\JoinEntities\NoteReference\Exceptions\" />
+    <None Remove="Entities\NoteReference\Specifications\" />
+    <None Remove="Entities\NoteReference\Exceptions\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Entities\" />
     <Folder Include="Entities\Tag\" />
     <Folder Include="Entities\TagGroup\" />
     <Folder Include="Entities\Note\" />
-    <Folder Include="Entities\JoinEntities\" />
-    <Folder Include="Entities\JoinEntities\TagGroupTag\" />
-    <Folder Include="Entities\JoinEntities\TagNote\" />
     <Folder Include="Interfaces\" />
     <Folder Include="NonEntityTypes\" />
-    <Folder Include="Entities\JoinEntities\NoteReference\" />
+    <Folder Include="Entities\NoteReference\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Interfaces\Abstracts\" />
-    <Folder Include="Entities\Note\Specifications\" />
     <Folder Include="Entities\Note\Exceptions\" />
     <Folder Include="Entities\Tag\Exceptions\" />
-    <Folder Include="Entities\Tag\Specifications\" />
     <Folder Include="Entities\TagGroup\Exceptions\" />
-    <Folder Include="Entities\TagGroup\Specifications\" />
-    <Folder Include="Entities\JoinEntities\NoteReference\Specifications\" />
-    <Folder Include="Entities\JoinEntities\NoteReference\Exceptions\" />
   </ItemGroup>
 </Project>

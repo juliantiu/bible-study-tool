@@ -9,18 +9,15 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Config
     {
         public void Configure(EntityTypeBuilder<Note> builder)
         {
-            builder.HasKey(note => note.NoteId);
+            builder.HasKey(note => note.Id);
 
             builder.Property(note => note.Uid)
-                   .HasColumnName("NoteUid")
                    .IsRequired();
             
 			builder.Property(note => note.Summary)
-                   .HasColumnName("NoteSummary")
                    .IsRequired();
 
-            builder.Property(note => note.Text)
-                   .HasColumnName("NoteText");
+            builder.Property(note => note.Text);
         }
     }
 }

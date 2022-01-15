@@ -9,19 +9,16 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Config
     {
         public void Configure(EntityTypeBuilder<Tag> builder)
         {
-            builder.HasKey(tag => tag.TagId);
+            builder.HasKey(tag => tag.Id);
 
             builder.Property(tag => tag.Uid)
-                   .HasColumnName("TagUid")
                    .IsRequired();
 
             builder.Property(tag => tag.Label)
-                   .HasColumnName("TagLabel")
                    .IsRequired();
 
             // Supports: RGB(255,255,255) , CMYK(100%,100%,100%,100%) , RGBA(255,255,255,0.000) , #FFFFFF , HSLA(359,100%,100%) , HSLA(359,100%,100%,0.000) 
-            builder.Property(tag => tag.Color)
-                   .HasColumnName("TagColor");
+            builder.Property(tag => tag.Color);
         }
     }
 }

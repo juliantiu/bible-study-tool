@@ -61,10 +61,10 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             var createdTags = await createNewTags(newTags);
 
             // Associate existing tags and new tags with note
-            await associateTagsWithNoteAsync(createdNote.NoteId, existingTags, createdTags);
+            await associateTagsWithNoteAsync(createdNote.Id, existingTags, createdTags);
 
             // Add the note references
-            await addNoteReferences(createdNote.NoteId, noteReferences, bibleVerseReferences);
+            await addNoteReferences(createdNote.Id, noteReferences);
 
             // Get all the note's tags and references
             var noteWithTagsAndReferences = await getNoteWithTagsAndReferencesAsync(createdNote);
@@ -104,7 +104,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             // Get all notes for a chapter
             var notes = new List<NoteWithTagsAndReferences>();
             var notesForChapter = await _noteQueries.GetChapterNotesQueryAsync(uid, bibleBookId, chapterNumber);
-            var noteIds = notesForChapter.Select(n => n.NoteId).ToArray();
+            var noteIds = notesForChapter.Select(n => n.Id).ToArray();
 
             // Get all tags for all of the notes acquired from above
             var noteTagsMapping = await _tagNoteService.GetTagsForNotesAsync(noteIds);
@@ -115,7 +115,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             // Map all tags and references to each note
             foreach (var note in notesForChapter)
             {
-                var noteId = note.NoteId;
+                var noteId = note.Id;
                 IList<Tag> tags = new List<Tag>();
                 if (noteTagsMapping.TryGetValue(noteId, out var outTags))
                 {
@@ -131,7 +131,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 var noteWithTagsAndReferences = new NoteWithTagsAndReferences(note);
                 noteWithTagsAndReferences.Tags = tags;
                 noteWithTagsAndReferences.ReferencedNotes = references[0];
-                noteWithTagsAndReferences.ReferencedBibleVerses = references[1];
+                noteWithTagsAndReferences.NoteVerseReferences = references[1];
                 notes.Add(noteWithTagsAndReferences);
             }
 
@@ -229,7 +229,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 {
                     foreach (var tagId in tagIds)
                     {
-                        if (existingNoteTags[noteId].Any(t => t.TagId == tagId))
+                        if (existingNoteTags[noteId].Any(t => t.Id == tagId))
                         {
                             allTagNotes.Remove(tagId);
                         }
@@ -238,7 +238,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 
                 foreach (var newlyCreatedTag in createdTags)
                 {
-                    allTagNotes.Add(newlyCreatedTag.TagId);
+                    allTagNotes.Add(newlyCreatedTag.Id);
                 }
 
                 await _tagNoteService.BulkCreateTagNotesAsync(noteId, allTagNotes);
@@ -257,11 +257,11 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         /// <param name="noteReferences"></param>
         /// <param name="bibleVerseReferences"></param>
         /// <returns></returns>
-        private async Task addNoteReferences(int noteId, IEnumerable<int> noteReferences, IEnumerable<int> bibleVerseReferences)
+        private async Task addNoteReferences(int noteId, IEnumerable<int> noteReferences)
         {
             try
             {
-                await _noteReferenceService.AssignReferencesAsync(noteId, noteReferences, bibleVerseReferences);
+                await _noteReferenceService.AssignReferencesAsync(noteId, noteReferences);
             }
             catch
             {
@@ -333,17 +333,11 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         private void assignReferenceToNote
             (Dictionary<int, IList<IList<int>>> allReferences, int noteId, NoteReference reference)
         {
-            if ((reference.ReferencedBibleVerseId > 0)
-                && (reference.ReferencedBibleVerseId is int rbvid)
-                && (!allReferences[noteId][1].Contains(rbvid)))
-            {
-                allReferences[noteId][1].Add(reference.ReferencedBibleVerseId ?? 0);
-            }
-            else if ((reference.ReferencedNoteId > 0)
+            if ((reference.ReferencedNoteId > 0)
                      && (reference.ReferencedNoteId is int rnid)
                      && (!allReferences[noteId][0].Contains(rnid)))
             {
-                allReferences[noteId][0].Add(reference.ReferencedNoteId ?? 0);
+                allReferences[noteId][0].Add(reference.ReferencedNoteId);
             }
         }
 
@@ -397,12 +391,14 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         private async Task<NoteWithTagsAndReferences> getNoteWithTagsAndReferencesAsync(Note note)
         {
             // Get all the user's tags
-            var noteTags = await getNoteTagsAsync(note.NoteId);
+            var noteTags = await getNoteTagsAsync(note.Id);
 
             // Get all the note's references
-            var references = await getNoteReferences(note.NoteId);
+            var references = await getNoteReferences(note.Id);
 
-            return new NoteWithTagsAndReferences(note, noteTags, references);
+            // @todo :: also get note's verse references
+
+            return new NoteWithTagsAndReferences(note, noteTags, references, null);
         }
 
         /// <summary>
@@ -420,7 +416,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 
             foreach (var tag in newTags)
             {
-                tagsToBeAdded.Add(tag.TagId);
+                tagsToBeAdded.Add(tag.Id);
             }
 
             try
@@ -431,14 +427,14 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 {
                     foreach (var tag in tags[noteId])
                     {
-                        if (tagsToBeAdded.Contains(tag.TagId) == false)
+                        if (tagsToBeAdded.Contains(tag.Id) == false)
                         {
-                            tagsToBeAdded.Remove(tag.TagId);
+                            tagsToBeAdded.Remove(tag.Id);
                         }
                     }
                     foreach(var tagId in tagIds)
                     {
-                        if (tags[noteId].Any(t => t.TagId == tagId) == false)
+                        if (tags[noteId].Any(t => t.Id == tagId) == false)
                         {
                             tagsToBeDeleted.Add(tagId);
                         }
@@ -523,7 +519,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 
                 try
                 {
-                    await _noteReferenceService.RemoveReferencesAsync(noteId, noteReferencesToBeDeleted, bibleVerseReferencesToBeDeleted);
+                    await _noteReferenceService.RemoveReferencesAsync(noteId, noteReferencesToBeDeleted);
                 }
                 catch
                 {
@@ -532,7 +528,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 
                 try
                 {
-                    await _noteReferenceService.AssignReferencesAsync(noteId, noteReferencesToBeAdded, bibleVerseReferencesToBeAdded);
+                    await _noteReferenceService.AssignReferencesAsync(noteId, noteReferencesToBeAdded);
                 }
                 catch
                 {

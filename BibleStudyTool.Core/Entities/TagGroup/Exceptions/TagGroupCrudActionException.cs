@@ -2,7 +2,7 @@
 using BibleStudyTool.Core.Exceptions;
 using BibleStudyTool.Core.NonEntityTypes;
 
-namespace BibleStudyTool.Core.Entities
+namespace BibleStudyTool.Core.Entities.Exceptions
 {
     public class TagGroupCrudActionException : EntityCrudActionException
     {

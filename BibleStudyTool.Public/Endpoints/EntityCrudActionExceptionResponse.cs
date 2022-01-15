@@ -3,7 +3,7 @@ namespace BibleStudyTool.Public.Endpoints
 {
     public struct EntityCrudActionExceptionResponse
     {
-        public DateTime Timestamp { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
         public string Message { get; set; }
     }
 }

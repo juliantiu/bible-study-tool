@@ -24,14 +24,9 @@
     <None Remove="ServiceLayer\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DAL\" />
     <Folder Include="Identity\" />
     <Folder Include="DAL\Npgsql\" />
-    <Folder Include="DAL\EF\" />
     <Folder Include="DAL\EF\Migrations\" />
-    <Folder Include="DAL\EF\Config\" />
-    <Folder Include="ServiceLayer\" />
-    <Folder Include="ServiceLayer\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.12" />

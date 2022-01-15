@@ -9,10 +9,9 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Config
     {
         public void Configure(EntityTypeBuilder<TagGroup> builder)
         {
-            builder.HasKey(tagGroup => tagGroup.TagGroupId);
+            builder.HasKey(tagGroup => tagGroup.Id);
 
             builder.Property(tagGroup => tagGroup.Uid)
-                   .HasColumnName("TagGroupUid")
                    .IsRequired();
         }
     }

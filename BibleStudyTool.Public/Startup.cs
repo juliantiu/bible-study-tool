@@ -89,7 +89,7 @@ namespace BibleStudyTool.Public
                 (typeof(ITagService), typeof(TagService));
 
             services.AddScoped
-                (typeof(ITagGroupTagService), typeof(TagGroupTagService));
+                (typeof(IGroupedTagService), typeof(GroupedTagService));
 
             services.AddScoped
                 (typeof(ITagGroupService), typeof(TagGroupService));

@@ -15,7 +15,7 @@ namespace BibleStudyTool.Core.Entities
         public TagGroupWithTags(TagGroup tagGroup, IEnumerable<Tag> tagGroupTags)
         {
             Uid = tagGroup.Uid;
-            TagGroupId = tagGroup.TagGroupId;
+            Id = tagGroup.Id;
             TagGroupTags = tagGroupTags.ToList();
         }
     }

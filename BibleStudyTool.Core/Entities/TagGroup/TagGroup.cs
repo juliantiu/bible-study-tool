@@ -8,7 +8,7 @@ namespace BibleStudyTool.Core.Entities
     public class TagGroup : TagGroupBase
     {
 
-        public IEnumerable<TagGroupTag> TagGroupTags { get; private set; }
+        public IEnumerable<GroupedTag> GroupedTags { get; private set; }
 
         public TagGroup() { }
 
@@ -19,13 +19,18 @@ namespace BibleStudyTool.Core.Entities
 
         public TagGroup(int tagGroupId, string uid)
         {
-            TagGroupId = tagGroupId;
+            Id = tagGroupId;
             Uid = uid;
         }
 
-        public void AssignTags(IEnumerable<TagGroupTag> tagGroupTags)
+        public void AssignTags(IEnumerable<GroupedTag> groupedTags)
         {
-            TagGroupTags = tagGroupTags;
+            GroupedTags = groupedTags;
+        }
+
+        public void SetTagGroupCretor(string uid)
+        {
+            Uid = uid;
         }
     }
 }

@@ -42,9 +42,10 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
         public DbSet<TagGroup> TagGroups { get; set; }
 
         // Join Entities
-        public DbSet<TagGroupTag> TagGroupTags { get; set; }
-        public DbSet<TagNote> TagNotes { get; set; }
+        public DbSet<GroupedTag> GroupedTags { get; set; }
+        public DbSet<NoteTag> NoteTags { get; set; }
         public DbSet<NoteReference> NoteReferences { get; set; }
+        public DbSet<NoteVerseReference> NoteVerseReferences { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

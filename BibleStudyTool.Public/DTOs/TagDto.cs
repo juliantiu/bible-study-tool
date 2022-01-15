@@ -14,7 +14,7 @@ namespace BibleStudyTool.Public.DTOs
 
         public TagDto(Tag tag)
         {
-            TagId = tag.TagId;
+            TagId = tag.Id;
             Color = tag.Color;
             Label = tag.Label;
             Uid = tag.Uid;

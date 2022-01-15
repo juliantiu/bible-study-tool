@@ -1,9 +1,9 @@
 ﻿using System;
 using BibleStudyTool.Core.Interfaces;
 
-namespace BibleStudyTool.Core.Entities.JoinEntities
+namespace BibleStudyTool.Core.Entities
 {
-    public class TagGroupTag : BaseEntity
+    public class GroupedTag : BaseEntity
     {
         public int TagGroupId { get; private set; }
         public TagGroup TagGroup { get; }
@@ -11,11 +11,11 @@ namespace BibleStudyTool.Core.Entities.JoinEntities
         public int TagId { get; private set; }
         public Tag Tag { get;}
 
-        public TagGroupTag()
+        public GroupedTag()
         {
         }
 
-        public TagGroupTag(int tagGroupId, int tagId)
+        public GroupedTag(int tagGroupId, int tagId)
         {
             TagGroupId = tagGroupId;
             TagId = tagId;
