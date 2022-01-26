@@ -6,9 +6,9 @@ using BibleStudyTool.Core.Entities.JoinEntities;
 
 namespace BibleStudyTool.Infrastructure.ServiceLayer
 {
-    public interface ITagNoteService
+    public interface INoteTagService
     {
-        Task BulkCreateTagNotesAsync(int noteId, IEnumerable<int> tagIds);
+        Task BulkCreateNoteTagsAsync(int noteId, IEnumerable<int> tagIds);
         Task<IDictionary<int, IList<Tag>>> GetTagsForNotesAsync(int[] noteIds);
         Task RemoveTagsFromNote(int noteId, IEnumerable<int> tagIdsToDelete);
     }

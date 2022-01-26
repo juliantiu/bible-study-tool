@@ -25,7 +25,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Identity\" />
-    <Folder Include="DAL\Npgsql\" />
     <Folder Include="DAL\EF\Migrations\" />
   </ItemGroup>
   <ItemGroup>

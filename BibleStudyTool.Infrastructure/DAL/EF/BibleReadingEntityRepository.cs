@@ -55,23 +55,6 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
             }
         }
 
-        public async Task<IReadOnlyList<T>> GetBySpecification<Y>(ISpecification<T> specification)
-            where Y : EntityCrudActionException
-        {
-            try
-            {
-                IQueryable<T> entityTableQuery = _dbContext.Set<T>().AsQueryable();
-                var entityTableQueryWithSpecifications = ApplySpecifications(entityTableQuery, specification.SpecificationsClauses);
-                return await entityTableQueryWithSpecifications.ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                throw
-                    _entityCrudActionExceptionFactory
-                        .CreateEntityCrudActionException<Y>($"GetBySpecification error :: {ex.Message}");
-            }
-        }
-
         public async Task<IReadOnlyList<T>> GetByRawQuery<Y>(string query, string[] parameters)
             where Y : EntityCrudActionException
         {
@@ -261,23 +244,6 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
                 }
             }
         }
-
-        #region HELPER FUNCTIONS
-
-        public IQueryable<T> ApplySpecifications(IQueryable<T> entityTableQuery, IList<SpecificationClause> specificationClauses)
-        {
-            var query = entityTableQuery.AsQueryable();
-            foreach (var queryClause in specificationClauses)
-            {
-                if (queryClause is WhereClause<T> whereClause)
-                    query = query.Where(whereClause.Expression).AsQueryable();
-                if (queryClause is IncludeClause includeClause)
-                    query = query.Include(includeClause.PropertyName);
-            }
-            return query;
-        }
-
-        #endregion
     }
 }
 

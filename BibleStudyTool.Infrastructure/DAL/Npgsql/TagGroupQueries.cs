@@ -53,7 +53,7 @@ ORDER BY ""Tags"".TagLabel ASC;
                             (tagGroupLookup.TryGetValue
                                 (tagGroupId, out var tagGroup))
                         {
-                            tagGroup.TagGroupTags.Add(newTag);
+                            tagGroup.Tags.Add(newTag);
                         }
                         else
                         {

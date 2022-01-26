@@ -39,20 +39,23 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         {
             // Create the new tag group
             var tagGroup = new TagGroup(uid);
+
             var newTagGroup =
                 await _tagGroupRepository
                     .CreateAsync<EntityCrudActionException>
                         (tagGroup);
+
             var tagGroupId = newTagGroup.Id;
 
             // Associate the input tag IDs with the newly created tag group
-            var tagGroupTags = await associateTagsWithTagGroup
+            var groupedTags = await associateTagsWithTagGroup
                 (tagGroupId, tagIds);
-            newTagGroup.AssignTags(tagGroupTags);
 
-            // Get tags with the tag IDS associated to the tag group
+            newTagGroup.AssignTags(groupedTags);
+
+            // Get tags with the tag IDs associated to the tag group
             var tags = await _tagQueries.GetTagsInTagGroupAsync(tagGroupId);
-
+                
             return new TagGroupWithTags(newTagGroup, tags);
         }
 
@@ -154,13 +157,13 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         private async Task<IEnumerable<GroupedTag>> associateTagsWithTagGroup
             (int tagGroupId, IEnumerable<int> tagIds)
         {
-            var tagGroupTags = new List<GroupedTag>();
+            var groupedTags = new List<GroupedTag>();
             foreach (var tagId in tagIds)
             {
                 try
                 {
-                    tagGroupTags.Add
-                        (await _tagGroupTagService.CreateTagGroupTag
+                    groupedTags.Add
+                        (await _tagGroupTagService.CreateGroupedTags
                             (tagGroupId, tagId));
                 }
                 catch
@@ -170,7 +173,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                         $" {tagGroupId}; tag ID: {tagId}."); // TODO: log
                 }
             }
-            return tagGroupTags;
+            return groupedTags;
         }
 
         private IEnumerable<int> determineTagsToBeDeleted

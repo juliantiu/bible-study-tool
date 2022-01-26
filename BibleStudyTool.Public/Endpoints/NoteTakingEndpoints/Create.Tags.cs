@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
+using BibleStudyTool.Core.Exceptions;
 using BibleStudyTool.Public.DTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -23,7 +24,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
                 var newTags = await _tagService.CreateTagsAsync(tags);
                 return Ok(new CreateTagsResponse(newTags));
             }
-            catch (TagCrudActionException ex)
+            catch (EntityCrudActionException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                   new EntityCrudActionExceptionResponse() { Timestamp = ex.Timestamp, Message = ex.Message });

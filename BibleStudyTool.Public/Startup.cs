@@ -76,13 +76,17 @@ namespace BibleStudyTool.Public
                 (typeof(NoteReferenceQueries),
                 _ => new NoteReferenceQueries(cnxstr));
 
+            services.AddScoped
+                (typeof(NoteVerseReferenceQueries),
+                _ => new NoteVerseReferenceQueries(cnxstr));
+
             services.AddScoped(typeof(TagQueries), _ => new TagQueries(cnxstr));
 
             services.AddScoped
                 (typeof(TagGroupQueries), _ => new TagGroupQueries(cnxstr));
 
             services.AddScoped
-                (typeof(TagNoteQueries), _ => new TagNoteQueries(cnxstr));
+                (typeof(NoteTagQueries), _ => new NoteTagQueries(cnxstr));
 
             // Entity services
             services.AddScoped
@@ -95,13 +99,16 @@ namespace BibleStudyTool.Public
                 (typeof(ITagGroupService), typeof(TagGroupService));
 
             services.AddScoped
-                (typeof(ITagNoteService), typeof(TagNoteService));
+                (typeof(INoteTagService), typeof(NoteTagService));
 
             services.AddScoped
                 (typeof(INoteService), typeof(NoteService));
 
             services.AddScoped
                 (typeof(INoteReferenceService), typeof(NoteReferenceService));
+
+            services.AddScoped
+                (typeof(INoteVerseReferenceService), typeof(NoteVerseReferenceService));
 
             /* Authentication & JWT configuration
              * Resources:

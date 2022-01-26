@@ -9,25 +9,25 @@ using BibleStudyTool.Infrastructure.DAL.Npgsql;
 
 namespace BibleStudyTool.Infrastructure.ServiceLayer
 {
-    public class TagNoteService : ITagNoteService
+    public class NoteTagService : INoteTagService
     {
-        private readonly IAsyncRepository<NoteTag> _tagNoteRepository;
+        private readonly IAsyncRepository<NoteTag> _noteTagRepository;
         private readonly TagQueries _tagQueries;
-        private readonly TagNoteQueries _tagNoteQueries;
+        private readonly NoteTagQueries _noteTagQueries;
 
-        public TagNoteService(IAsyncRepository<NoteTag> tagNoteRepository,
-                              TagNoteQueries tagNoteQueries,
+        public NoteTagService(IAsyncRepository<NoteTag> noteTagRepository,
+                              NoteTagQueries noteTagQueries,
                               TagQueries tagQueries)
         {
-            _tagNoteRepository = tagNoteRepository;
-            _tagNoteQueries = tagNoteQueries;
+            _noteTagRepository = noteTagRepository;
+            _noteTagQueries = noteTagQueries;
             _tagQueries = tagQueries;
         }
 
-        public async Task BulkCreateTagNotesAsync(int noteId, IEnumerable<int> tagIds)
+        public async Task BulkCreateNoteTagsAsync(int noteId, IEnumerable<int> tagIds)
         {
             var tagNotes = tagIds.Select(tagId => new NoteTag(tagId, noteId)).ToArray();
-            await _tagNoteRepository.BulkCreateAsync<TagNoteCrudActionException>(tagNotes);
+            await _noteTagRepository.BulkCreateAsync<TagNoteCrudActionException>(tagNotes);
         }
 
         public async Task<IDictionary<int, IList<Tag>>> GetTagsForNotesAsync(int[] noteIds)
@@ -37,7 +37,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 
         public async Task RemoveTagsFromNote(int noteId, IEnumerable<int> tagIdsToDelete)
         {
-            await _tagNoteQueries.DeleteTagNotes(noteId, tagIdsToDelete);
+            await _noteTagQueries.DeleteTagNotes(noteId, tagIdsToDelete);
         }
     }
 }

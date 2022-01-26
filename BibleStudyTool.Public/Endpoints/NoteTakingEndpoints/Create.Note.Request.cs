@@ -6,7 +6,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
 {
     public class CreateNoteRequest
     {
-        public IEnumerable<int> BibleVerseReferences { get; set; }
+        public IEnumerable<NoteVerseReferenceDto> NoteVerseReferences { get; set; }
         public IEnumerable<int> ExistingTags { get; set; }
         public IEnumerable<int> NoteReferences { get; set; }
         public IEnumerable<TagDto> NewTags { get; set; }

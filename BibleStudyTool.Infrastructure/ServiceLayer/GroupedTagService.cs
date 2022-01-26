@@ -16,7 +16,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             _tagGroupTagRepository = tagGroupTagRepository;
         }
 
-        public async Task<GroupedTag> CreateTagGroupTag(int tagGroupId, int tagId)
+        public async Task<GroupedTag> CreateGroupedTags(int tagGroupId, int tagId)
         {
             var tagGroupTag = new GroupedTag(tagGroupId, tagId);
             return await _tagGroupTagRepository.CreateAsync<EntityCrudActionException>(tagGroupTag);

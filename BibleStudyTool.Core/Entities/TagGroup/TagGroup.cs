@@ -28,7 +28,7 @@ namespace BibleStudyTool.Core.Entities
             GroupedTags = groupedTags;
         }
 
-        public void SetTagGroupCretor(string uid)
+        public void SetTagGroupCreator(string uid)
         {
             Uid = uid;
         }

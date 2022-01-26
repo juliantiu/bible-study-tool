@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.Exceptions;
+using BibleStudyTool.Core.Exceptions;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Infrastructure.DAL.Npgsql;
 
@@ -28,7 +29,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 noteReferences.Add(new NoteReference(noteId, referencedNote));
             }
 
-            await _noteReferenceRepository.BulkCreateAsync<NoteReferenceCrudActionException>(noteReferences.ToArray());
+            await _noteReferenceRepository.BulkCreateAsync<EntityCrudActionException>(noteReferences.ToArray());
         }
 
         public async Task RemoveReferencesAsync(int noteId, IEnumerable<int> referencedNotes)

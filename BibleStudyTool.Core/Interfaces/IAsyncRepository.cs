@@ -10,8 +10,6 @@ namespace BibleStudyTool.Core.Interfaces
     {
         Task<IReadOnlyList<T>> GetAllAsync<Y>() where Y : EntityCrudActionException;
         Task<T> GetByIdAsync<Y>(object[] keyValues) where Y : EntityCrudActionException;
-        Task<IReadOnlyList<T>> GetByRawQuery<Y>(string query, string[] parameters) where Y : EntityCrudActionException;
-        Task<IReadOnlyList<T>> GetBySpecification<Y>(ISpecification<T> specification) where Y : EntityCrudActionException;
         Task<T> CreateAsync<Y>(T entity) where Y : EntityCrudActionException;
         Task BulkCreateAsync<Y>(T[] entities) where Y : EntityCrudActionException;
         Task UpdateAsync<Y>(T entity) where Y : EntityCrudActionException;

@@ -17,14 +17,21 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
         [Authorize]
         public async Task<ActionResult<CreateNoteResponse>> CreateNoteAsync(CreateNoteRequest request)
         {
-            string userId = _userManager.GetUserId(User);
             try
             {
+                string userId = _userManager.GetUserId(User);
+                
                 var newTags = (request.NewTags != null) && (request.NewTags.Count() > 0)
                             ? request.NewTags.Select(t => new Tag(t.Uid, t.Label, t.Color))
                             : new List<Tag>();
+
+                var noteVerseReferences =
+                    request.NoteVerseReferences
+                        .Select(nvrdto => new NoteVerseReference
+                            (0, nvrdto.BibleBook, nvrdto.BookChapter, nvrdto.ChapterVerseNumber));
+                
                 var newNote = await _noteService.CreateAsync
-                    (userId, request.Summary, request.Text, request.BibleVerseReferences, request.NoteReferences, request.ExistingTags, newTags);
+                    (userId, request.Summary, request.Text, noteVerseReferences, request.NoteReferences, request.ExistingTags, newTags);
 
                 return Ok(new CreateNoteResponse(newNote));
             }

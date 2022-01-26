@@ -39,7 +39,6 @@
   <ItemGroup>
     <Folder Include="Endpoints\BibleReaderEndpoints\" />
     <Folder Include="Endpoints\" />
-    <Folder Include="DTOs\" />
     <Folder Include="Endpoints\NoteTakingEndpoints\" />
   </ItemGroup>
 </Project>

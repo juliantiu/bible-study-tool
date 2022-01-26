@@ -32,10 +32,10 @@ SELECT
 	""TagColor"",
 	""TagLabel"",
 	""TagUid""
-FROM ""TagGroupTags""
+FROM ""GroupedTags""
 JOIN ""Tags""
-ON ""Tags"".""TagId"" = ""TagGroupTags"".""TagId""
-AND ""TagGroupTags"".""TagGroupId"" = @TagGroupId
+ON ""Tags"".""TagId"" = ""GroupedTags"".""TagId""
+AND ""GroupedTags"".""TagGroupId"" = @TagGroupId
 ORDER BY ""Tags"".""TagId"" ASC
 ";
                 DbUtilties.AddInt32Parameter

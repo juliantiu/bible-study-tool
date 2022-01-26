@@ -6,9 +6,9 @@ using Npgsql;
 
 namespace BibleStudyTool.Infrastructure.DAL.Npgsql
 {
-    public class TagNoteQueries : EntityQueries
+    public class NoteTagQueries : EntityQueries
     {
-        public TagNoteQueries(string connectionString) : base(connectionString)
+        public NoteTagQueries(string connectionString) : base(connectionString)
         {
         }
 
