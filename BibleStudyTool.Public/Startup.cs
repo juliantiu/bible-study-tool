@@ -64,10 +64,6 @@ namespace BibleStudyTool.Public
                 (typeof(IAsyncRepository<>),
                 typeof(BibleReadingEntityRepository<>));
 
-            services.AddScoped
-                (typeof(IEntityCrudActionExceptionFactory),
-                typeof(EntityCrudActionExceptionFactory));
-
             // Entity query services
             services.AddScoped
                 (typeof(NoteQueries), _ => new NoteQueries(cnxstr));

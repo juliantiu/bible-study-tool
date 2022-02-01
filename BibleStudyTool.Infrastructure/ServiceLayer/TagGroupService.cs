@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
-using BibleStudyTool.Core.Entities.JoinEntities;
 using BibleStudyTool.Core.Exceptions;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Infrastructure.DAL.Npgsql;
@@ -41,9 +40,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             var tagGroup = new TagGroup(uid);
 
             var newTagGroup =
-                await _tagGroupRepository
-                    .CreateAsync<EntityCrudActionException>
-                        (tagGroup);
+                await _tagGroupRepository.CreateAsync(tagGroup);
 
             var tagGroupId = newTagGroup.Id;
 
@@ -68,8 +65,9 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         public async Task DeleteTagGroupAsync(string uid, int tagGroupId)
         {
             TagGroup tagGroup =
-                await _tagGroupRepository.GetByIdAsync<TagCrudActionException>
-                    (new object[1] { tagGroupId });
+                await _tagGroupRepository
+                    .GetByIdAsync
+                        (new object[1] { tagGroupId });
             if (tagGroup == null)
             {
                 throw new Exception
@@ -81,8 +79,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 ("The logged in user does not own the" +
                 " tag group to be deleted.");
             }
-            await _tagGroupRepository.DeleteAsync<TagCrudActionException>
-                (tagGroup);
+            await _tagGroupRepository.DeleteAsync(tagGroup);
         }
 
         /// <summary>
@@ -97,8 +94,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         {
             TagGroup tagGroup =
                 await _tagGroupRepository
-                    .GetByIdAsync<TagCrudActionException>
-                        (new object[1] { tagGroupId });
+                    .GetByIdAsync(new object[1] { tagGroupId });
             if (tagGroup == null)
             {
                 throw new Exception

@@ -24,7 +24,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 
         public async Task AssignReferencesAsync(int noteId, IEnumerable<NoteVerseReference> referencedVerses)
         {
-            await _noteVerseReferenceRepository.BulkCreateAsync<EntityCrudActionException>(referencedVerses.ToArray());
+            await _noteVerseReferenceRepository.BulkCreateAsync(referencedVerses.ToArray());
         }
 
         public Task<IEnumerable<NoteVerseReference>> GetNotesVerseReferencesAsync(int[] noteIds)

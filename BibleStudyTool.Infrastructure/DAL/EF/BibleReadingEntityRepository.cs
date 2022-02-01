@@ -12,21 +12,17 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
     public class BibleReadingEntityRepository<T> : IAsyncRepository<T> where T : BaseEntity
     {
         private readonly BibleReadingDbContext _dbContext;
-        private readonly IEntityCrudActionExceptionFactory _entityCrudActionExceptionFactory;
 
         /* QUESTION:
          * todo
          * How does dbContext get injected here if Startup.cs in the Public project does not depend on this class?
          */
-        public BibleReadingEntityRepository(BibleReadingDbContext dbContext,
-                                            IEntityCrudActionExceptionFactory entityCrudActionExceptionFactory)
+        public BibleReadingEntityRepository(BibleReadingDbContext dbContext)
         {
             _dbContext = dbContext;
-            _entityCrudActionExceptionFactory = entityCrudActionExceptionFactory;
         }
 
-        public async Task<T> GetByIdAsync<Y>(object[] keyValues)
-            where Y : EntityCrudActionException
+        public async Task<T> GetByIdAsync(object[] keyValues)
         {
             try
             {
@@ -35,13 +31,11 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
             catch (Exception ex)
             {
                 throw
-                    _entityCrudActionExceptionFactory
-                        .CreateEntityCrudActionException<Y>($"GetByIdAsync error :: {ex.Message}");
+                    new EntityCrudActionException($"GetByIdAsync error :: {ex.Message}");
             }
         }
 
-        public async Task<IReadOnlyList<T>> GetAllAsync<Y>()
-            where Y : EntityCrudActionException
+        public async Task<IReadOnlyList<T>> GetAllAsync()
         {
             try
             {
@@ -50,13 +44,11 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
             catch (Exception ex)
             {
                 throw
-                    _entityCrudActionExceptionFactory
-                        .CreateEntityCrudActionException<Y>($"GetAllAsync error :: {ex.Message}");
+                    new EntityCrudActionException($"GetAllAsync error :: {ex.Message}");
             }
         }
 
-        public async Task<IReadOnlyList<T>> GetByRawQuery<Y>(string query, string[] parameters)
-            where Y : EntityCrudActionException
+        public async Task<IReadOnlyList<T>> GetByRawQuery(string query, string[] parameters)
         {
             try
             {
@@ -76,13 +68,11 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
             catch (Exception ex)
             {
                 throw
-                    _entityCrudActionExceptionFactory
-                        .CreateEntityCrudActionException<Y>($"GetByRawQuery error :: {ex.Message}");
+                    new EntityCrudActionException($"GetByRawQuery error :: {ex.Message}");
             }
         }
 
-        public async Task<T> CreateAsync<Y>(T entity)
-            where Y : EntityCrudActionException 
+        public async Task<T> CreateAsync(T entity)
         {
             try
             {
@@ -97,12 +87,11 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
                                        || ex is InvalidOperationException)
             {
                 throw
-                    _entityCrudActionExceptionFactory
-                        .CreateEntityCrudActionException<Y>($"CreateAsync error :: {ex.InnerException.Message}");
+                    new EntityCrudActionException($"CreateAsync error :: {ex.InnerException.Message}");
             }
         }
 
-        public async Task BulkCreateAsync<Y>(T[] entities) where Y : EntityCrudActionException
+        public async Task BulkCreateAsync(T[] entities)
         {
             try
             {
@@ -116,13 +105,11 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
                                        || ex is InvalidOperationException)
             {
                 throw
-                    _entityCrudActionExceptionFactory
-                        .CreateEntityCrudActionException<Y>($"BulkDeleteAsync error :: {ex.InnerException.Message}");
+                    new EntityCrudActionException($"BulkDeleteAsync error :: {ex.InnerException.Message}");
             }
         }
 
-        public async Task DeleteAsync<Y>(T entity)
-            where Y : EntityCrudActionException
+        public async Task DeleteAsync(T entity)
         {
             try
             {
@@ -156,13 +143,11 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
                                        || ex is InvalidOperationException)
             {
                 throw
-                    _entityCrudActionExceptionFactory
-                        .CreateEntityCrudActionException<Y>($"DeleteAsync error :: {ex.Message}");
+                    new EntityCrudActionException($"DeleteAsync error :: {ex.Message}");
             }
         }
 
-        public async Task BulkDeleteAsync<Y>(object[][] entityIds)
-            where Y : EntityCrudActionException
+        public async Task BulkDeleteAsync(object[][] entityIds)
         {
             try
             {
@@ -183,13 +168,11 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
                                        || ex is InvalidOperationException)
             {
                 throw
-                    _entityCrudActionExceptionFactory
-                        .CreateEntityCrudActionException<Y>($"BulkDeleteAsync error :: {ex.Message}");
+                    new EntityCrudActionException($"BulkDeleteAsync error :: {ex.Message}");
             }
         }
 
-        public async Task UpdateAsync<Y>(T entity)
-            where Y : EntityCrudActionException
+        public async Task UpdateAsync(T entity)
         {
             try
             {
@@ -219,12 +202,11 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
                                        || ex is InvalidOperationException)
             {
                 throw
-                    _entityCrudActionExceptionFactory
-                        .CreateEntityCrudActionException<Y>($"UpdateAsync error :: {ex.Message}");
+                    new EntityCrudActionException($"UpdateAsync error :: {ex.Message}");
             }
         }
 
-        public async Task BulkUpdateAsync<Y>(T[] entities) where Y : EntityCrudActionException
+        public async Task BulkUpdateAsync(T[] entities)
         {
             {
                 try
@@ -239,8 +221,7 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
                                            || ex is InvalidOperationException)
                 {
                     throw
-                        _entityCrudActionExceptionFactory
-                            .CreateEntityCrudActionException<Y>($"BulkUpdateAsync error :: {ex.Message}");
+                        new EntityCrudActionException($"BulkUpdateAsync error :: {ex.Message}");
                 }
             }
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using BibleStudyTool.Core.Entities;
-using BibleStudyTool.Core.Entities.JoinEntities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

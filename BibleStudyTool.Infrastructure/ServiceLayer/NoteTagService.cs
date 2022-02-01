@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
-using BibleStudyTool.Core.Entities.JoinEntities;
 using BibleStudyTool.Core.Interfaces;
 using BibleStudyTool.Infrastructure.DAL.Npgsql;
 
@@ -27,7 +26,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         public async Task BulkCreateNoteTagsAsync(int noteId, IEnumerable<int> tagIds)
         {
             var tagNotes = tagIds.Select(tagId => new NoteTag(tagId, noteId)).ToArray();
-            await _noteTagRepository.BulkCreateAsync<TagNoteCrudActionException>(tagNotes);
+            await _noteTagRepository.BulkCreateAsync(tagNotes);
         }
 
         public async Task<IDictionary<int, IList<Tag>>> GetTagsForNotesAsync(int[] noteIds)

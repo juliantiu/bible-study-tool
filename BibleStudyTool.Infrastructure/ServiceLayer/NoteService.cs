@@ -57,7 +57,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         {
             // Create the new note
             var noteRef = new Note(uid, summary, text);
-            var createdNote = await _noteRepository.CreateAsync<NoteCrudActionException>(noteRef);
+            var createdNote = await _noteRepository.CreateAsync(noteRef);
 
             // Create the new tags
             var createdTags = await createNewTags(newTags);
@@ -94,7 +94,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             {
                 throw new UnauthorizedException("The logged in user does not own the note to be deleted.");
             }
-            await _noteRepository.DeleteAsync<NoteCrudActionException>(note);
+            await _noteRepository.DeleteAsync(note);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 
             // Update note details
             note.UpdateDetails(summary, text);
-            await _noteRepository.UpdateAsync<NoteCrudActionException>(note);
+            await _noteRepository.UpdateAsync(note);
 
             // Create the new tags
             var createdTags = await createNewTags(newTags);
@@ -301,7 +301,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         private async Task<Note> getNoteByIdAsync(int noteId)
         {
             var keyId = new object[] { noteId };
-            return await _noteRepository.GetByIdAsync<NoteCrudActionException>(keyId);
+            return await _noteRepository.GetByIdAsync(keyId);
         }
 
         /// <summary>

@@ -33,8 +33,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             (string uid, string label, string color)
         {
             var tagRef = new Tag(uid, label, color);
-            return await _tagRepository.CreateAsync<TagCrudActionException>
-                (tagRef);
+            return await _tagRepository.CreateAsync(tagRef);
         }
 
         /// <summary>
@@ -79,7 +78,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             (int tagId, string uid, string label, string color)
         {
             var tag = new Tag(tagId, uid, label, color);
-            await _tagRepository.UpdateAsync<TagCrudActionException>(tag);
+            await _tagRepository.UpdateAsync(tag);
             return tag;
         }
 
@@ -90,8 +89,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         /// <returns></returns>
         public async Task DeleteTagAsync(string uid, int tagId)
         {
-            Tag tag = await _tagRepository.GetByIdAsync<TagCrudActionException>
-                (new object[1] { tagId });
+            Tag tag = await _tagRepository.GetByIdAsync(new object[1] { tagId });
 
             if (tag == null)
             {
@@ -102,7 +100,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 throw new UnauthorizedException
                     ("The logged in user does not own the tag to be deleted.");
             }
-            await _tagRepository.DeleteAsync<TagCrudActionException>(tag);
+            await _tagRepository.DeleteAsync(tag);
         }
 
         /// <summary>

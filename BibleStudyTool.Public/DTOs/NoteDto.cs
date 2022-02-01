@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using BibleStudyTool.Core.Entities;
-using BibleStudyTool.Core.Entities.JoinEntities;
 
 namespace BibleStudyTool.Public.DTOs
 {

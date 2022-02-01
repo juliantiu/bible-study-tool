@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using BibleStudyTool.Core.Entities.JoinEntities;
 using BibleStudyTool.Core.Interfaces;
 
 namespace BibleStudyTool.Core.Entities

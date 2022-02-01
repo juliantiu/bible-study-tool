@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities.Exceptions;
+using BibleStudyTool.Core.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +21,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
                 return Ok();
 
             }
-            catch (NoteCrudActionException ex)
+            catch (EntityCrudActionException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                   new EntityCrudActionExceptionResponse() { Timestamp = ex.Timestamp, Message = ex.Message });

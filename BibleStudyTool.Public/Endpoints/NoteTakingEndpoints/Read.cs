@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Entities.Exceptions;
+using BibleStudyTool.Core.Exceptions;
 using BibleStudyTool.Infrastructure.Identity;
 using BibleStudyTool.Infrastructure.ServiceLayer;
 using BibleStudyTool.Public.DTOs;
@@ -45,7 +46,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
                 return Ok(await _noteService.GetAllChapterNotesAsync
                     (uid, bibleBookId, chapterNumber));
             }
-            catch (NoteCrudActionException ex)
+            catch (EntityCrudActionException ex)
             {
                 return StatusCode
                     (StatusCodes.Status500InternalServerError,
@@ -72,7 +73,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
                     ((await _tagService.GetAllUserTagsAsync(uid))
                                        .Select(t => new TagDto(t)));
             }
-            catch (NoteCrudActionException ex)
+            catch (EntityCrudActionException ex)
             {
                 return StatusCode
                     (StatusCodes.Status500InternalServerError,
@@ -99,7 +100,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
                 return Ok
                     (await _tagGroupService.GetAllUserTagGroupsAsync(uid));
             }
-            catch (NoteCrudActionException ex)
+            catch (EntityCrudActionException ex)
             {
                 return StatusCode
                     (StatusCodes.Status500InternalServerError,

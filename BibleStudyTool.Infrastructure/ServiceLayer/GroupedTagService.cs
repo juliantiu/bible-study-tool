@@ -19,7 +19,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         public async Task<GroupedTag> CreateGroupedTags(int tagGroupId, int tagId)
         {
             var tagGroupTag = new GroupedTag(tagGroupId, tagId);
-            return await _tagGroupTagRepository.CreateAsync<EntityCrudActionException>(tagGroupTag);
+            return await _tagGroupTagRepository.CreateAsync(tagGroupTag);
         }
 
         public async Task RemoveTagsFromTagGroup(int tagGroupId, IEnumerable<int> tagIds)
@@ -30,7 +30,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 tagGroupTagKeys.Add(new object[2] { tagGroupId, tagId });
             }
 
-            await _tagGroupTagRepository.BulkDeleteAsync<EntityCrudActionException>(tagGroupTagKeys.ToArray());
+            await _tagGroupTagRepository.BulkDeleteAsync(tagGroupTagKeys.ToArray());
         }
     }
 }

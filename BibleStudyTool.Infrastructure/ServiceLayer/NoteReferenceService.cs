@@ -29,7 +29,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 noteReferences.Add(new NoteReference(noteId, referencedNote));
             }
 
-            await _noteReferenceRepository.BulkCreateAsync<EntityCrudActionException>(noteReferences.ToArray());
+            await _noteReferenceRepository.BulkCreateAsync(noteReferences.ToArray());
         }
 
         public async Task RemoveReferencesAsync(int noteId, IEnumerable<int> referencedNotes)

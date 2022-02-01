@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
+using BibleStudyTool.Core.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
                 await _tagService.DeleteTagAsync(uid, tagId);
                 return Ok();
             }
-            catch (TagCrudActionException ex)
+            catch (EntityCrudActionException ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                   new EntityCrudActionExceptionResponse() { Timestamp = ex.Timestamp, Message = ex.Message });

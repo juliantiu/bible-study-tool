@@ -1,5 +1,4 @@
 ﻿using System;
-using BibleStudyTool.Core.Entities.JoinEntities;
 
 namespace BibleStudyTool.Public.DTOs
 {

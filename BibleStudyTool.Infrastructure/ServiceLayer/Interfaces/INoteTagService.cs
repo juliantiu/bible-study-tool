@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
-using BibleStudyTool.Core.Entities.JoinEntities;
 
 namespace BibleStudyTool.Infrastructure.ServiceLayer
 {
