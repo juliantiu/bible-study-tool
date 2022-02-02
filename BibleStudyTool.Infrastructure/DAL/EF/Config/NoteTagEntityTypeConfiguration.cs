@@ -9,11 +9,11 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Config
     {
         public void Configure(EntityTypeBuilder<NoteTag> builder)
         {
-            builder.HasKey(tagNote => new { tagNote.Id, tagNote.NoteId });
+            builder.HasKey(tagNote => new { tagNote.TagId, tagNote.NoteId });
 
             builder.HasOne<Tag>(tagNote => tagNote.Tag)
                    .WithMany(tag => tag.NoteTags)
-                   .HasForeignKey(tagNote => tagNote.Id)
+                   .HasForeignKey(tagNote => tagNote.TagId)
                    .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne<Note>(tagNote => tagNote.Note)

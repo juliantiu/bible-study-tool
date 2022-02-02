@@ -39,8 +39,6 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
         public DbSet<Note> Notes { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<TagGroup> TagGroups { get; set; }
-
-        // Join Entities
         public DbSet<GroupedTag> GroupedTags { get; set; }
         public DbSet<NoteTag> NoteTags { get; set; }
         public DbSet<NoteReference> NoteReferences { get; set; }

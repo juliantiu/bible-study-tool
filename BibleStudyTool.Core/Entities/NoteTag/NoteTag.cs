@@ -5,7 +5,7 @@ namespace BibleStudyTool.Core.Entities
 {
     public class NoteTag : BaseEntity
     {
-        public int Id { get; private set; }
+        public int TagId { get; private set; }
         public Tag Tag { get; private set; }
 
         public int NoteId { get; private set; }
@@ -17,7 +17,7 @@ namespace BibleStudyTool.Core.Entities
 
         public NoteTag(int tagId, int noteId)
         {
-            Id = tagId;
+            TagId = tagId;
             NoteId = noteId;
         }
 
@@ -40,19 +40,19 @@ namespace BibleStudyTool.Core.Entities
 
         public void AssociateTag(int tagId)
         {
-            Id = tagId;
+            TagId = tagId;
         }
 
         public void AssociateTag(int tagId, Tag tag)
         {
-            Id = tagId;
+            TagId = tagId;
             Tag = tag;
         }
 
         public void AssociateTag(Tag tag)
         {
             Tag = tag;
-            Id = tag.Id;
+            TagId = tag.Id;
         }
     }
 }

@@ -31,5 +31,16 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         {
             return _noteVerseReferenceQueries.GetNoteVerseReferences(noteIds);
         }
+
+        public Task<IEnumerable<NoteVerseReference>> GetParentNoteVerseReferencesAsync(int[] noteIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task RemoveReferencesAsync(int noteId, IEnumerable<NoteVerseReference> referencedVerses)
+        {
+            object[][] referencedVerseIds = referencedVerses.Select(rv => new object[] { rv.Id }).ToArray();
+            await _noteVerseReferenceRepository.BulkDeleteAsync(referencedVerseIds);
+        }
     }
 }

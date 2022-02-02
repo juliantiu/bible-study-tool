@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities;
 using BibleStudyTool.Core.Exceptions;
@@ -9,28 +10,25 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 {
     public class GroupedTagService : IGroupedTagService
     {
-        private readonly IAsyncRepository<GroupedTag> _tagGroupTagRepository;
+        private readonly IAsyncRepository<GroupedTag> _groupedTagRepository;
 
         public GroupedTagService(IAsyncRepository<GroupedTag> tagGroupTagRepository)
         {
-            _tagGroupTagRepository = tagGroupTagRepository;
+            _groupedTagRepository = tagGroupTagRepository;
         }
 
         public async Task<GroupedTag> CreateGroupedTags(int tagGroupId, int tagId)
         {
             var tagGroupTag = new GroupedTag(tagGroupId, tagId);
-            return await _tagGroupTagRepository.CreateAsync(tagGroupTag);
+            return await _groupedTagRepository.CreateAsync(tagGroupTag);
         }
 
-        public async Task RemoveTagsFromTagGroup(int tagGroupId, IEnumerable<int> tagIds)
+        public async Task RemoveGroupedTags(int tagGroupId, IEnumerable<int> tagIds)
         {
-            var tagGroupTagKeys = new List<object[]>();
-            foreach (var tagId in tagIds)
-            {
-                tagGroupTagKeys.Add(new object[2] { tagGroupId, tagId });
-            }
+            var groupedTagKeys =
+                tagIds.Select(tagId => new object[2] { tagGroupId, tagId});
 
-            await _tagGroupTagRepository.BulkDeleteAsync(tagGroupTagKeys.ToArray());
+            await _groupedTagRepository.BulkDeleteAsync(groupedTagKeys.ToArray());
         }
     }
 }

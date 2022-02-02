@@ -12,7 +12,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
     public class TagGroupService : ITagGroupService
     {
         private readonly IAsyncRepository<TagGroup> _tagGroupRepository;
-        private readonly IGroupedTagService _tagGroupTagService;
+        private readonly IGroupedTagService _groupedTagService;
         private readonly TagGroupQueries _tagGroupQueries;
         private readonly TagQueries _tagQueries;
 
@@ -22,7 +22,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                                TagQueries tagQueries)
         {
             _tagGroupRepository = tagGroupRepository;
-            _tagGroupTagService = tagGroupTagService;
+            _groupedTagService = tagGroupTagService;
             _tagGroupQueries = tagGroupQueries;
             _tagQueries = tagQueries;
         }
@@ -95,6 +95,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             TagGroup tagGroup =
                 await _tagGroupRepository
                     .GetByIdAsync(new object[1] { tagGroupId });
+
             if (tagGroup == null)
             {
                 throw new Exception
@@ -113,7 +114,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
 
             // Determine which tags need to be deleted
             var tagsToBeDeleted = determineTagsToBeDeleted
-                (tagsInTagGroup, tagIds);
+                (tagsInTagGroup, tagIds.ToHashSet());
 
             // Delete tags that need to be deleted
             await removeTagsFromTagGroupAsync(tagGroupId, tagsToBeDeleted);
@@ -159,7 +160,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 try
                 {
                     groupedTags.Add
-                        (await _tagGroupTagService.CreateGroupedTags
+                        (await _groupedTagService.CreateGroupedTags
                             (tagGroupId, tagId));
                 }
                 catch
@@ -173,27 +174,27 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         private IEnumerable<int> determineTagsToBeDeleted
-            (IEnumerable<Tag> tags, IEnumerable<int> tagIds)
+            (IEnumerable<Tag> tagsInTagGroup, HashSet<int> tagIds)
         {
-            IList<int> tagsToBeDeleted = new List<int>();
-            foreach (var tag in tags)
+            var tagsToBeDeleted = new List<int>();
+            foreach (var groupedTag in tagsInTagGroup)
             {
-                var tagGroupTag_tagId = tag.Id;
-                if (tagIds.Contains(tagGroupTag_tagId) == false)
+                var groupedTagId = groupedTag.Id;
+                if (tagIds.Contains(groupedTagId) == false)
                 {
-                    tagsToBeDeleted.Add(tagGroupTag_tagId);
+                    tagsToBeDeleted.Add(groupedTagId);
                 }
             }
             return tagsToBeDeleted;
         }
 
         private IEnumerable<int> determineTagsToBeAdded
-            (IEnumerable<Tag> tags, IEnumerable<int> tagIds)
+            (IEnumerable<Tag> tagsInTagGroup, IEnumerable<int> tagIds)
         {
-            IList<int> tagsToBeAdded = new List<int>();
+            var tagsToBeAdded = new List<int>();
             foreach (var tagId in tagIds)
             {
-                if (tags.Any(tgt => tgt.Id == tagId) == false)
+                if (tagsInTagGroup.Any(tgt => tgt.Id == tagId) == false)
                 {
                     tagsToBeAdded.Add(tagId);
                 }
@@ -206,7 +207,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         {
             try
             {
-                await _tagGroupTagService.RemoveTagsFromTagGroup
+                await _groupedTagService.RemoveGroupedTags
                     (tagGroupId, tagIds);
             }
             catch

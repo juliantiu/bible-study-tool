@@ -18,11 +18,22 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
             try
             {
                 var uid = _userManager.GetUserId(User);
-                var newTags = request.NewTags.Select(t => new Tag(uid, t.Label, t.Color));
+
+                var newTags =
+                    request.NewTags.Select
+                        (t => new Tag(uid, t.Label, t.Color));
+
+                var noteVerseReferences =
+                    request.NoteVerseReferences.Select
+                        (nvrdto => new NoteVerseReference
+                            (nvrdto.NoteId, nvrdto.BibleBook,
+                            nvrdto.BookChapter, nvrdto.ChapterVerseNumber));
+
                 var updatedNote = await _noteService.UpdateAsync
                     (request.NoteId, uid, request.Summary, request.Text,
-                    request.TagIds, request.BibleReferenceIds, request.NoteReferenceIds,
+                    request.TagIds, noteVerseReferences, request.NoteReferenceIds,
                     newTags);
+
                 return updatedNote;
             }
             catch (EntityCrudActionException ex)

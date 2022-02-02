@@ -41,7 +41,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
+        ///     Creates a new note.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="summary"></param>
@@ -50,7 +50,9 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         /// <param name="noteReferences"></param>
         /// <param name="existingTags"></param>
         /// <param name="newTags"></param>
-        /// <returns></returns>
+        /// <returns>
+        ///     The created note along with its tags and note/verse references.
+        /// </returns>
         public async Task<NoteWithTagsAndReferences> CreateAsync
             (string uid, string summary, string text, IEnumerable<NoteVerseReference> bibleVerseReferences,
              IEnumerable<int> noteReferences, IEnumerable<int> existingTags, IEnumerable<Tag> newTags)
@@ -78,11 +80,13 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
+        ///     Deletes a note.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="noteId"></param>
         /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        /// <exception cref="UnauthorizedException"></exception>
         public async Task DeleteAsync(string uid, int noteId)
         {
             var note = await getNoteByIdAsync(noteId);
@@ -98,12 +102,15 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
+        ///     Gets all of the notes associated with an entire bible chapter.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="bibleBookId"></param>
         /// <param name="chapterNumber"></param>
-        /// <returns></returns>
+        /// <returns>
+        ///     A list of notes associated with a bible chapter along with its
+        ///     tags and note/verse references.
+        /// </returns>
         public async Task<IEnumerable<NoteWithTagsAndReferences>> GetAllChapterNotesAsync(string uid, int bibleBookId, int chapterNumber)
         {
             // Get all notes for a chapter
@@ -115,7 +122,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             var noteTagsMapping = await _noteTagService.GetTagsForNotesAsync(noteIds);
 
             // Get all the note references of all the notes acquired from above
-            var noteToReferenceMapping = await getAllNoteReferencesAsync(noteIds);
+            var noteToReferenceMapping = await getAllNotesReferencesAsync(noteIds);
 
             // Map all tags and references to each note
             foreach (var note in notesForChapter)
@@ -127,16 +134,16 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                     tags = outTags;
                 }
 
-                IList<IList<int>> references = new List<IList<int>>() { new List<int>(), new List<int>() };
-                if (noteToReferenceMapping.TryGetValue(noteId, out var outReferences))
+                var noteReferences = new ValueTuple<IList<NoteReference>, IList<NoteReference>>();
+                if (noteToReferenceMapping.TryGetValue(noteId, out var outNoteReferences))
                 {
-                    references = outReferences;
+                    noteReferences = outNoteReferences;
                 }
 
                 var noteWithTagsAndReferences = new NoteWithTagsAndReferences(note);
                 noteWithTagsAndReferences.Tags = tags;
-                noteWithTagsAndReferences.ReferencedNotes = references[0];
-                noteWithTagsAndReferences.NoteVerseReferences = references[1];
+                noteWithTagsAndReferences.ReferencedByTheseNotes = noteReferences.Item1.Select(cnr => cnr.Id);
+                noteWithTagsAndReferences.NoteReferences = noteReferences.Item2.Select(pnr => pnr.Id);
                 notes.Add(noteWithTagsAndReferences);
             }
 
@@ -144,16 +151,23 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
+        ///     Updates a note.
         /// </summary>
         /// <param name="noteId"></param>
         /// <param name="uid"></param>
         /// <param name="summary"></param>
         /// <param name="text"></param>
-        /// <returns></returns>
+        /// <param name="tagIds"></param>
+        /// <param name="noteVerseReferences"></param>
+        /// <param name="noteReferenceIds"></param>
+        /// <param name="newTags"></param>
+        /// <returns>
+        ///     The updated note along with its note/verse references.
+        /// </returns>
+        /// <exception cref="UnauthorizedException"></exception>
         public async Task<NoteWithTagsAndReferences> UpdateAsync
             (int noteId, string uid, string summary, string text,
-            IEnumerable<int> tagIds, IEnumerable<int> bibleVerseIds,
+            IEnumerable<int> tagIds, IEnumerable<NoteVerseReference> noteVerseReferences,
             IEnumerable<int> noteReferenceIds, IEnumerable<Tag> newTags)
         {
             var note = await getNoteByIdAsync(noteId);
@@ -172,8 +186,11 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             // Associate and disassociate tags accordingly
             await updateTagsList(noteId, tagIds, createdTags);
 
-            // Associate and disassociate noteReferences accordingly
-            await updateReferenceList(noteId, bibleVerseIds, noteReferenceIds);
+            // Associate and disassociate note and note references accordingly
+            await updateNoteReferenceList(note.Id, noteReferenceIds.ToHashSet());
+
+            // Associate and disassociate note and note verse references accordingly
+            await updateNoteVerseReferenceList(note.Id, noteVerseReferences);
 
             var noteWithTagsAndReferences = await getNoteWithTagsAndReferencesAsync(note);
             return noteWithTagsAndReferences;
@@ -182,11 +199,14 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         #region************************************************** HELPER METHODS
         // *********************************************************************
         // *********************************************************************
+
         /// <summary>
-        /// 
+        ///     Creates new tags.
         /// </summary>
         /// <param name="newTags"></param>
-        /// <returns></returns>
+        /// <returns>
+        ///     The list of newly created tags.
+        /// </returns>
         private async Task<IEnumerable<Tag>> createNewTags(IEnumerable<Tag> newTags)
         {
             var createdTags = new List<Tag>();
@@ -208,7 +228,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
+        ///     Associates tags with notes in the DB.
         /// </summary>
         /// <param name="noteId"></param>
         /// <param name="tagIds"></param>
@@ -256,11 +276,10 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
+        ///     Adds note references to a note.
         /// </summary>
         /// <param name="noteId"></param>
         /// <param name="noteReferenceIds"></param>
-        /// <param name="bibleVerseReferences"></param>
         /// <returns></returns>
         private async Task addNoteReferencesAsync(int noteId, IEnumerable<int> noteReferenceIds)
         {
@@ -275,11 +294,10 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
+        ///     Adds verse references to a note.
         /// </summary>
         /// <param name="noteId"></param>
         /// <param name="bibleReferenceIds"></param>
-        /// <param name="bibleVerseReferences"></param>
         /// <returns></returns>
         private async Task addNoteVerseReferencesAsync(int noteId, IEnumerable<NoteVerseReference> bibleReferenceIds)
         {
@@ -294,10 +312,12 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
+        ///     Gets a note by its ID.
         /// </summary>
         /// <param name="noteId"></param>
-        /// <returns></returns>
+        /// <returns>
+        ///     The note specified by its ID.
+        /// </returns>
         private async Task<Note> getNoteByIdAsync(int noteId)
         {
             var keyId = new object[] { noteId };
@@ -305,71 +325,121 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
+        ///     Gets a note's references and the parent references.
         /// </summary>
         /// <param name="noteIds"></param>
-        /// <returns></returns>
-        private async Task<IDictionary<int, IList<IList<int>>>> getAllNoteReferencesAsync(int[] noteIds)
+        /// <returns>
+        ///     A dictionary mapping between a note and its corresponding
+        ///     not references and parent note references.
+        /// </returns>
+        private async Task<IDictionary<int, (IList<NoteReference> parentNoteReferences, IList<NoteReference> childrenNoteReferences)>> getAllNotesReferencesAsync(int[] noteIds)
         {
-            var allReferences = new Dictionary<int, IList<IList<int>>>();
-            //var parentNoteReferences = await _noteReferenceService.GetParentNoteReferencesAsync(noteIds);
-            //assignReferencesToNote(allReferences, parentNoteReferences);
+            var referenceMapping = new Dictionary<int, (IList<NoteReference>, IList<NoteReference>)>();
 
             try
             {
-                var noteReferences = await _noteReferenceService.GetNotesReferencesAsync(noteIds);
-                assignReferencesToNote(allReferences, noteReferences);
+                var parentNoteReferences =
+                    await _noteReferenceService
+                        .GetParentNoteReferencesAsync(noteIds);
+
+                foreach (var parentNoteReference in parentNoteReferences)
+                {
+                    if (referenceMapping.TryGetValue(parentNoteReference.NoteId, out var references))
+                    {
+                        (var pnr, var _) = references;
+                        pnr.Add(parentNoteReference);
+                    }
+                    else
+                    {
+                        (IList<NoteReference>, IList<NoteReference>) refernces =
+                            (new List<NoteReference>() { parentNoteReference }, null);
+
+                        referenceMapping.Add(parentNoteReference.NoteId, refernces);
+                    }
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Failed to get parent note references for notes."); // TODO: log
+            }
+
+            try
+            {
+                var noteReferences =
+                    await _noteReferenceService
+                        .GetNotesReferencesAsync(noteIds);
+
+                foreach (var noteReference in noteReferences)
+                {
+                    if (referenceMapping.TryGetValue(noteReference.NoteId, out var references))
+                    {
+                        (var _, var nr) = references;
+                        nr.Add(noteReference);
+                    }
+                    else
+                    {
+                        (IList<NoteReference>, IList<NoteReference>) refernces =
+                            (null, new List<NoteReference>() { noteReference });
+
+                        referenceMapping.Add(noteReference.NoteId, refernces);
+                    }
+                }
             }
             catch
             {
                 Console.WriteLine("Failed to get note references for notes."); // TODO: log
             }
 
-            return allReferences;
+            return referenceMapping;
         }
 
         /// <summary>
-        /// 
+        ///     Gets all provided notes' verse references.
         /// </summary>
-        /// <param name="allReferences"></param>
-        /// <param name="referenceSource"></param>
-        private void assignReferencesToNote
-            (Dictionary<int, IList<IList<int>>> allReferences, IEnumerable<NoteReference> referenceSource)
+        /// <param name="noteIds"></param>
+        /// <returns>
+        ///     A mapping between notes and their corresponding verse references.
+        /// </returns>
+        private async Task<IDictionary<int, IList<NoteVerseReference>>> getAllNotesVerseReferencesAsync(int[] noteIds)
         {
-            foreach (var reference in referenceSource)
+            var referenceMapping = new Dictionary<int, IList<NoteVerseReference>>();
+
+            try
             {
-                var noteId = reference.NoteId;
-                if (!(allReferences.ContainsKey(noteId)))
+                var noteVerseReferences =
+                    await _noteVerseReferenceService
+                        .GetNotesVerseReferencesAsync(noteIds);
+
+                foreach (var noteVerseReference in noteVerseReferences)
                 {
-                    allReferences[noteId] = new List<IList<int>>() { new List<int>(), new List<int>() };
+                    if (referenceMapping.TryGetValue(noteVerseReference.NoteId, out var verseReferences))
+                    {
+                        verseReferences.Add(noteVerseReference);
+                    }
+                    else
+                    {
+                        IList<NoteVerseReference> verseRefernces =
+                            new List<NoteVerseReference>() { noteVerseReference };
+
+                        referenceMapping.Add(noteVerseReference.NoteId, verseRefernces);
+                    }
                 }
-
-                assignReferenceToNote(allReferences, noteId, reference);
             }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="allReferences"></param>
-        /// <param name="noteId"></param>
-        /// <param name="reference"></param>
-        private void assignReferenceToNote
-            (Dictionary<int, IList<IList<int>>> allReferences, int noteId, NoteReference reference)
-        {
-            if ((reference.ReferencedNoteId > 0)
-                     && (reference.ReferencedNoteId is int rnid)
-                     && (!allReferences[noteId][0].Contains(rnid)))
+            catch
             {
-                allReferences[noteId][0].Add(reference.ReferencedNoteId);
+                Console.WriteLine("Failed to get note references for notes."); // TODO: log
             }
+
+            return referenceMapping;
         }
 
         /// <summary>
-        /// 
+        ///     Gets all the tags associated with a note.
         /// </summary>
         /// <param name="noteId"></param>
-        /// <returns></returns>
+        /// <returns>
+        ///     The list of tags associated with a note.
+        /// </returns>
         private async Task<IEnumerable<Tag>> getNoteTagsAsync(int noteId)
         {
             IList<Tag> noteTags = new List<Tag>();
@@ -389,64 +459,38 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="noteId"></param>
-        /// <returns></returns>
-        private async Task<IEnumerable<NoteReference>> getNoteReferences(int noteId)
-        {
-            IEnumerable<NoteReference> noteReferences = new List<NoteReference>();
-            try
-            {
-                noteReferences = await _noteReferenceService.GetNotesReferencesAsync(new int[1] { noteId });
-            }
-            catch
-            {
-                Console.WriteLine("Failed to get references for note.");
-            }
-            return noteReferences;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="noteId"></param>
-        /// <returns></returns>
-        private async Task<IEnumerable<NoteVerseReference>> getNoteVerseReferences(int noteId)
-        {
-            IEnumerable<NoteVerseReference> noteVerseReferences = new List<NoteVerseReference>();
-            try
-            {
-                noteVerseReferences = await _noteVerseReferenceService.GetNotesVerseReferencesAsync(new int[1] { noteId });
-            }
-            catch
-            {
-                Console.WriteLine("Failed to get verse references for note.");
-            }
-            return noteVerseReferences;
-        }
-
-        /// <summary>
-        /// 
+        ///     Gets a note along with its tags and note/verse references.
         /// </summary>
         /// <param name="note"></param>
-        /// <returns></returns>
+        /// <returns>
+        ///     The note along with its tags and note/verse references.
+        /// </returns>
         private async Task<NoteWithTagsAndReferences> getNoteWithTagsAndReferencesAsync(Note note)
         {
             // Get all the user's tags
             var noteTags = await getNoteTagsAsync(note.Id);
+            
+            // Create an instance of notewith tags and references
+            var noteDetails = new NoteWithTagsAndReferences(note, noteTags, null, null);
 
             // Get all the note's references
-            var noteReferences = await getNoteReferences(note.Id);
+            var noteReferences = await getAllNotesReferencesAsync(new int[1] { note.Id });
+            var noteReferencesForNote = noteReferences[note.Id];
+
+            noteDetails.ReferencedByTheseNotes = noteReferencesForNote.parentNoteReferences.Select(pnr => pnr.Id);
+            noteDetails.NoteReferences = noteReferencesForNote.childrenNoteReferences.Select(cnr => cnr.Id);
 
             // Get all the note's verse references
-            var noteVerseReferences = await getNoteVerseReferences(note.Id);
+            var noteVerseReferences = await getAllNotesVerseReferencesAsync(new int[1] { note.Id });
+            var noteVerseReferencesForNote = noteVerseReferences[note.Id];
 
-            return new NoteWithTagsAndReferences(note, noteTags, noteReferences, noteVerseReferences);
+            noteDetails.NoteVerseReferences = noteVerseReferencesForNote;
+
+            return noteDetails;
         }
 
         /// <summary>
-        /// 
+        ///     Updates a note's tag list.
         /// </summary>
         /// <param name="noteId"></param>
         /// <param name="tagIds"></param>
@@ -467,8 +511,10 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
             {
                 // Get the tags associated with the note
                 tags = await _noteTagService.GetTagsForNotesAsync(new int[1] { noteId });
+
                 if (tags != null && tags.ContainsKey(noteId))
                 {
+                    // Determine which tags need to be added
                     foreach (var tag in tags[noteId])
                     {
                         if (tagsToBeAdded.Contains(tag.Id) == false)
@@ -476,6 +522,8 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                             tagsToBeAdded.Remove(tag.Id);
                         }
                     }
+
+                    // Determine which tags need to be deleted
                     foreach(var tagId in tagIds)
                     {
                         if (tags[noteId].Any(t => t.Id == tagId) == false)
@@ -512,55 +560,47 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
+        ///     Updates the association between notes and
+        ///     note references.
         /// </summary>
         /// <param name="noteId"></param>
-        /// <param name="bibleVerseReferenceIds"></param>
         /// <param name="noteReferenceIds"></param>
         /// <returns></returns>
-        private async Task updateReferenceList
-            (int noteId, IEnumerable<int> bibleVerseReferenceIds, IEnumerable<int> noteReferenceIds)
+        private async Task updateNoteReferenceList
+            (int noteId, HashSet<int> noteReferenceIds)
         {
-            var allNoteReferences = await getAllNoteReferencesAsync(new int[1] { noteId });
-            IList<int> noteReferencesToBeDeleted = new List<int>();
-            IList<int> bibleVerseReferencesToBeDeleted = new List<int>();
-            IList<int> noteReferencesToBeAdded = new List<int>();
-            IList<int> bibleVerseReferencesToBeAdded = new List<int>();
+            // Get all note references that the given note references
+            (var _, var allNoteReferences) =
+                (await getAllNotesReferencesAsync(new int[1] { noteId }))
+                    [noteId];
 
-            if ((allNoteReferences != null) && (allNoteReferences.ContainsKey(noteId)))
+            if (allNoteReferences != null)
             {
-                foreach (var noteReference in allNoteReferences[noteId][0])
+                // Find out which note references need to be deleted
+                // (references from allNoteReferences that are not in noteReferenceIds)
+                var noteReferencesToBeDeleted = new List<int>();
+
+                foreach (var noteReference in allNoteReferences)
                 {
-                    if (noteReferenceIds.Contains(noteReference) == false)
+                    var noteRefId = noteReference.Id;
+                    if (noteReferenceIds.Contains(noteRefId) == false)
                     {
-                        noteReferencesToBeDeleted.Add(noteReference);
+                        noteReferencesToBeDeleted.Add(noteRefId);
                     }
                 }
 
+                // Find out which note references need to be deleted
+                // (references from noteReferenceIds that are not in allNoteReferences)
+                var noteReferencesToBeAdded = new List<int>();
                 foreach (var noteReferenceId in noteReferenceIds)
                 {
-                    if (allNoteReferences[noteId][0].Contains(noteReferenceId) == false)
+                    if (allNoteReferences.Any(nr => nr.Id == noteReferenceId) == false)
                     {
                         noteReferencesToBeAdded.Add(noteReferenceId);
                     }
                 }
 
-                foreach (var bibleVerseReference in allNoteReferences[noteId][1])
-                {
-                    if (noteReferenceIds.Contains(bibleVerseReference) == false)
-                    {
-                        bibleVerseReferencesToBeDeleted.Add(bibleVerseReference);
-                    }
-                }
-
-                foreach (var bibleVerseReferenceId in bibleVerseReferenceIds)
-                {
-                    if (allNoteReferences[noteId][1].Contains(bibleVerseReferenceId) == false)
-                    {
-                        bibleVerseReferencesToBeAdded.Add(bibleVerseReferenceId);
-                    }
-                }
-
+                // Remove the stale note reference from the DB
                 try
                 {
                     await _noteReferenceService.RemoveReferencesAsync(noteId, noteReferencesToBeDeleted);
@@ -570,6 +610,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                     Console.WriteLine("Failed to remove references from note."); //TODO: log
                 }
 
+                // Add the new note references in the DC
                 try
                 {
                     await _noteReferenceService.AssignReferencesAsync(noteId, noteReferencesToBeAdded);
@@ -577,6 +618,68 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 catch
                 {
                     Console.WriteLine("Failed to add references to note."); //TODO: log
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Updates the association between notes and
+        ///     note verse references.
+        /// </summary>
+        /// <param name="noteId"></param>
+        /// <param name="noteVerseReferences"></param>
+        /// <returns></returns>
+        private async Task updateNoteVerseReferenceList
+            (int noteId, IEnumerable<NoteVerseReference> noteVerseReferences)
+        {
+            // Get all note verse references that the given note references
+            var allNoteVerseReferences =
+                (await getAllNotesVerseReferencesAsync(new int[1] { noteId }))
+                    [noteId];
+
+            if (allNoteVerseReferences != null)
+            {
+                // Find out which note references need to be deleted
+                // (references from allNoteVerseReferences that are not in noteVerseReference)
+                var noteReferencesToBeDeleted = new List<NoteVerseReference>();
+
+                foreach (var noteVerseReference in allNoteVerseReferences)
+                {
+                    if (noteVerseReferences.Any(nvr => nvr.Id == noteVerseReference.Id) == false)
+                    {
+                        noteReferencesToBeDeleted.Add(noteVerseReference);
+                    }
+                }
+
+                // Find out which note references need to be deleted
+                // (references from noteVerseReferences that are not in allVerseNoteReferences)
+                var noteReferencesToBeAdded = new List<NoteVerseReference>();
+                foreach (var noteVerseReference in noteVerseReferences)
+                {
+                    if (allNoteVerseReferences.Any(nr => nr.Id == noteVerseReference.Id) == false)
+                    {
+                        noteReferencesToBeAdded.Add(noteVerseReference);
+                    }
+                }
+
+                // Remove the stale note verse reference from the DB
+                try
+                {
+                    await _noteVerseReferenceService.RemoveReferencesAsync(noteId, noteReferencesToBeDeleted);
+                }
+                catch
+                {
+                    Console.WriteLine("Failed to remove verse references from note."); //TODO: log
+                }
+
+                // Add the new note verse references in the DB
+                try
+                {
+                    await _noteVerseReferenceService.AssignReferencesAsync(noteId, noteReferencesToBeAdded);
+                }
+                catch
+                {
+                    Console.WriteLine("Failed to add verse references to note."); //TODO: log
                 }
             }
         }

@@ -13,8 +13,9 @@ namespace BibleStudyTool.Core.Entities
         public string Summary { get; set; }
         public string Text { get; set; }
 
-        public IEnumerable<int> ReferencedNotes { get; set; }
-        public IEnumerable<int> NoteVerseReferences { get; set; }
+        public IEnumerable<int> NoteReferences { get; set; }
+        public IEnumerable<int> ReferencedByTheseNotes { get; set; }
+        public IEnumerable<NoteVerseReference> NoteVerseReferences { get; set; }
         public IEnumerable<Tag> Tags { get; set; }
 
         public NoteWithTagsAndReferences() { }
@@ -40,8 +41,8 @@ namespace BibleStudyTool.Core.Entities
 
             Tags = tags;
 
-            ReferencedNotes = referencedNotes.Select(rn => rn.Id);
-            NoteVerseReferences = noteVerseReferences.Select(nvr => nvr.Id);
+            NoteReferences = referencedNotes?.Select(rn => rn.Id) ?? new int[0];
+            NoteVerseReferences = noteVerseReferences ?? new NoteVerseReference[0];
         }
     }
 }

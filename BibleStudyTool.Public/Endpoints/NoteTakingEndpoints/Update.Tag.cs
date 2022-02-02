@@ -12,7 +12,7 @@ namespace BibleStudyTool.Public.Endpoints.NoteTakingEndpoints
     {
         [HttpPut("tag")]
         [Authorize]
-        public async Task<ActionResult<TagDto>> UpdateNote(TagDto request)
+        public async Task<ActionResult<TagDto>> UpdateTag(TagDto request)
         {
             try
             {

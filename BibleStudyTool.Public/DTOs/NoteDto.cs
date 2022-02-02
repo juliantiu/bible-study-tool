@@ -33,7 +33,7 @@ namespace BibleStudyTool.Public.DTOs
             Uid = noteRef.Uid;
             Summary = noteRef.Summary;
             Text = noteRef.Text;
-            Tags = noteRef.NoteTags.Select(tagNote => tagNote.Id);
+            Tags = noteRef.NoteTags.Select(tagNote => tagNote.TagId);
         }
 
         public NoteDto(Note noteRef, NoteReferencesContainer noteReferenceContainer)
@@ -42,7 +42,7 @@ namespace BibleStudyTool.Public.DTOs
             Uid = noteRef.Uid;
             Summary = noteRef.Summary;
             Text = noteRef.Text;
-            Tags = noteRef.NoteTags.Select(tagNote => tagNote.Id);
+            Tags = noteRef.NoteTags.Select(tagNote => tagNote.TagId);
             References = noteReferenceContainer;
         }
     }
