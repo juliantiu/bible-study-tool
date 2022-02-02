@@ -83,7 +83,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        ///     Deletes the tag
+        ///     Deletes the tag.
         /// </summary>
         /// <param name="tagId"></param>
         /// <returns></returns>
@@ -100,6 +100,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 throw new UnauthorizedException
                     ("The logged in user does not own the tag to be deleted.");
             }
+
             await _tagRepository.DeleteAsync(tag);
         }
 

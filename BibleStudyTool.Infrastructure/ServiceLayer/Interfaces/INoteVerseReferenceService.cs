@@ -11,7 +11,6 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
     {
         Task AssignReferencesAsync(int noteId, IEnumerable<NoteVerseReference> referencedVerses);
         Task<IEnumerable<NoteVerseReference>> GetNotesVerseReferencesAsync(int[] noteIds);
-        Task<IEnumerable<NoteVerseReference>> GetParentNoteVerseReferencesAsync(int[] noteIds);
         Task RemoveReferencesAsync(int noteId, IEnumerable<NoteVerseReference> referencedVerses);
     }
 }

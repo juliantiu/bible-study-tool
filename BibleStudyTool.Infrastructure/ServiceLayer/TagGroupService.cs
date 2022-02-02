@@ -28,11 +28,13 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
+        ///     Creates a new tag group.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="tagIds"></param>
-        /// <returns></returns>
+        /// <returns>
+        ///     The newly created tag group along with its associated tags.
+        /// </returns>
         public async Task<TagGroupWithTags> CreateTagGroupAsync
             (string uid, IEnumerable<int> tagIds)
         {
@@ -57,7 +59,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
         }
 
         /// <summary>
-        /// 
+        ///     Deletes a tag grouping.
         /// </summary>
         /// <param name="uid"></param>
         /// <param name="tagGroupId"></param>
@@ -68,6 +70,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 await _tagGroupRepository
                     .GetByIdAsync
                         (new object[1] { tagGroupId });
+
             if (tagGroup == null)
             {
                 throw new Exception
@@ -79,6 +82,7 @@ namespace BibleStudyTool.Infrastructure.ServiceLayer
                 ("The logged in user does not own the" +
                 " tag group to be deleted.");
             }
+
             await _tagGroupRepository.DeleteAsync(tagGroup);
         }
 
