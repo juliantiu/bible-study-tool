@@ -1,0 +1,1 @@
+Server=localhost;Database=bible-study-tool; Username=postgres; Password=Asianboy74684!

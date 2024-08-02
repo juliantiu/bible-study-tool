@@ -47,7 +47,7 @@ namespace BibleStudyTool.Public
                         ("BibleStudyTool.Infrastructure")));
 
             // Microsoft Identity with EF core configuration
-            services.AddIdentity<BibleReader, IdentityRole>
+            services.AddIdentityApiEndpoints<BibleReader>
                 (options =>
                 {
                     options.SignIn.RequireConfirmedEmail = false;
