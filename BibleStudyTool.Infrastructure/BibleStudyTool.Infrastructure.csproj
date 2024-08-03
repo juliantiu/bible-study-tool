@@ -25,4 +25,8 @@
     <Folder Include="DAL\EF\Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BibleStudyTool.Core\BibleStudyTool.Core.csproj" />
+  </ItemGroup>
+
 </Project>

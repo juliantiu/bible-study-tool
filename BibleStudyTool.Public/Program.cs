@@ -1,5 +1,7 @@
 using BibleStudyTool.Infrastructure.DAL.EF;
 using BibleStudyTool.Infrastructure.Identity;
+using BibleStudyTool.Infrastructure.ServiceLayer;
+using BibleStudyTool.Infrastructure.ServiceLayer.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Adding verses related to Identity/EntityFramework setup
 builder.Services.AddDbContext<BibleReadingDbContext>(
     options => options.UseNpgsql
         (builder.Configuration.GetConnectionString
@@ -21,6 +24,10 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddIdentityApiEndpoints<BibleReader>()
     .AddEntityFrameworkStores<BibleReadingDbContext>();
+
+// Adding services related to entities
+builder.Services.AddScoped
+    (typeof(IBibleVerseService), typeof(BibleVerseService));
 
 var app = builder.Build();
 
