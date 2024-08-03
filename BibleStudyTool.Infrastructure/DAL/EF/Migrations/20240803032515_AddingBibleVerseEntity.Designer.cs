@@ -3,6 +3,7 @@ using System;
 using BibleStudyTool.Infrastructure.DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
 {
     [DbContext(typeof(BibleReadingDbContext))]
-    partial class BibleReadingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240803032515_AddingBibleVerseEntity")]
+    partial class AddingBibleVerseEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -14,8 +14,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using BibleStudyTool.Core.Entities.BibleVerse;
 using BibleStudyTool.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +32,15 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
 
         public BibleReadingDbContext()
         {
+        }
+
+        public DbSet<BibleVerse> BibleVerse { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.Entity<BibleReader>(b => b.ToTable("BibleReaders"));
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

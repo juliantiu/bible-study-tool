@@ -17,7 +17,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<BibleReadingDbContext>(
     options => options.UseNpgsql
         (builder.Configuration.GetConnectionString
-            ("TestDbLocal"))
+            ("TestDbLocal"),
+        db => db.MigrationsAssembly
+            ("BibleStudyTool.Infrastructure")
+        )
 );
 
 builder.Services.AddAuthorization();
