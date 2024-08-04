@@ -34,7 +34,7 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
         {
         }
 
-        public DbSet<BibleVerse> BibleVerse { get; set; }
+        public DbSet<BibleVerse> BibleVerses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

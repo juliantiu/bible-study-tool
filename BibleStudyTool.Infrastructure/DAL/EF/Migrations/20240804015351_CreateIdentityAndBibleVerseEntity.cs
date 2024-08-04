@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
 {
     /// <inheritdoc />
-    public partial class MyFirstMigration : Migration
+    public partial class CreateIdentityAndBibleVerseEntity : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -27,7 +27,7 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "AspNetUsers",
+                name: "BibleReaders",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -48,7 +48,26 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.PrimaryKey("PK_BibleReaders", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BibleVerses",
+                columns: table => new
+                {
+                    Language = table.Column<string>(type: "text", nullable: false),
+                    VersionAbbr = table.Column<string>(type: "text", nullable: false),
+                    BookId = table.Column<string>(type: "text", nullable: false),
+                    ChapterNumber = table.Column<int>(type: "integer", nullable: false),
+                    VerseNumber = table.Column<int>(type: "integer", nullable: false),
+                    Version = table.Column<string>(type: "text", nullable: false),
+                    BookAbbr = table.Column<string>(type: "text", nullable: false),
+                    BookName = table.Column<string>(type: "text", nullable: false),
+                    Text = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BibleVerses", x => new { x.Language, x.VersionAbbr, x.BookId, x.ChapterNumber, x.VerseNumber });
                 });
 
             migrationBuilder.CreateTable(
@@ -86,9 +105,9 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUserClaims_AspNetUsers_UserId",
+                        name: "FK_AspNetUserClaims_BibleReaders_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "BibleReaders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -106,9 +125,9 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
                     table.ForeignKey(
-                        name: "FK_AspNetUserLogins_AspNetUsers_UserId",
+                        name: "FK_AspNetUserLogins_BibleReaders_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "BibleReaders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -130,9 +149,9 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_UserId",
+                        name: "FK_AspNetUserRoles_BibleReaders_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "BibleReaders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -150,9 +169,9 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                     table.ForeignKey(
-                        name: "FK_AspNetUserTokens_AspNetUsers_UserId",
+                        name: "FK_AspNetUserTokens_BibleReaders_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "BibleReaders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -185,12 +204,12 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                table: "AspNetUsers",
+                table: "BibleReaders",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                table: "AspNetUsers",
+                table: "BibleReaders",
                 column: "NormalizedUserName",
                 unique: true);
         }
@@ -214,10 +233,13 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BibleVerses");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "BibleReaders");
         }
     }
 }

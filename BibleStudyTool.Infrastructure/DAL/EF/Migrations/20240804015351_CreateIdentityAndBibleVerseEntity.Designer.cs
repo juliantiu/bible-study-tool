@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
 {
     [DbContext(typeof(BibleReadingDbContext))]
-    [Migration("20240802033709_MyFirstMigration")]
-    partial class MyFirstMigration
+    [Migration("20240804015351_CreateIdentityAndBibleVerseEntity")]
+    partial class CreateIdentityAndBibleVerseEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,44 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("BibleStudyTool.Core.Entities.BibleVerse.BibleVerse", b =>
+                {
+                    b.Property<string>("Language")
+                        .HasColumnType("text");
+
+                    b.Property<string>("VersionAbbr")
+                        .HasColumnType("text");
+
+                    b.Property<string>("BookId")
+                        .HasColumnType("text");
+
+                    b.Property<int>("ChapterNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("VerseNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("BookAbbr")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("BookName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Language", "VersionAbbr", "BookId", "ChapterNumber", "VerseNumber");
+
+                    b.ToTable("BibleVerses");
+                });
 
             modelBuilder.Entity("BibleStudyTool.Infrastructure.Identity.BibleReader", b =>
                 {
@@ -86,7 +124,7 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("BibleReaders", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

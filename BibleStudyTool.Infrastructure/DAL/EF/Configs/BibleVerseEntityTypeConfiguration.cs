@@ -17,22 +17,24 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Configs
             builder.HasKey 
                 (bv => new
                     { 
-                        bv.VerseReferenceKey,
                         bv.Language,
-                        bv.Version 
+                        bv.VersionAbbr,
+                        bv.BookId,
+                        bv.ChapterNumber,
+                        bv.VerseNumber
                     }
                 );
 
             builder.Property
-                (bv => bv.BookKey)
+                (bv => bv.Version)
                 .IsRequired();
 
             builder.Property
-                (bv => bv.ChapterNumber)
+                (bv => bv.BookAbbr)
                 .IsRequired();
 
             builder.Property
-                (bv => bv.VerseNumber)
+                (bv => bv.BookName)
                 .IsRequired();
 
             builder.Property

@@ -24,32 +24,40 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
 
             modelBuilder.Entity("BibleStudyTool.Core.Entities.BibleVerse.BibleVerse", b =>
                 {
-                    b.Property<string>("VerseReferenceKey")
-                        .HasColumnType("text");
-
                     b.Property<string>("Language")
                         .HasColumnType("text");
 
-                    b.Property<string>("Version")
+                    b.Property<string>("VersionAbbr")
                         .HasColumnType("text");
 
-                    b.Property<string>("BookKey")
-                        .IsRequired()
+                    b.Property<string>("BookId")
                         .HasColumnType("text");
 
                     b.Property<int>("ChapterNumber")
                         .HasColumnType("integer");
 
+                    b.Property<int>("VerseNumber")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("BookAbbr")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("BookName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Text")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("VerseNumber")
-                        .HasColumnType("integer");
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.HasKey("VerseReferenceKey", "Language", "Version");
+                    b.HasKey("Language", "VersionAbbr", "BookId", "ChapterNumber", "VerseNumber");
 
-                    b.ToTable("BibleVerse");
+                    b.ToTable("BibleVerses");
                 });
 
             modelBuilder.Entity("BibleStudyTool.Infrastructure.Identity.BibleReader", b =>
