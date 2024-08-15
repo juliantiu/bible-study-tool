@@ -10,33 +10,33 @@ namespace BibleStudyTool.Core.Entities.BibleVerse
     public class BibleVerse : BaseEntity
     {
         public string Language { get; private set; }
-        public string VersionAbbr { get; private set; }
+        public string VersionAbbreviation { get; private set; }
         public string Version { get; private set; }
         public string BookId { get; private set; }
-        public string BookAbbr { get; private set; }
+        public string BookAbbreviation { get; private set; }
         public string BookName { get; private set; }
-        public string Text { get; private set; }
+        public string VerseText { get; private set; }
         public int ChapterNumber { get; private set; }
         public int VerseNumber { get; private set; }
 
         public BibleVerse
             (string language,
-            string versionAbbr,
+            string versionAbbreviation,
             string version,
             string bookId,
-            string bookAbbr,
+            string bookAbbreviation,
             string bookName,
-            string text,
+            string verseText,
             int chapterNumber,
             int verseNumber)
         {
             Language = language;
-            VersionAbbr = versionAbbr;
+            VersionAbbreviation = versionAbbreviation;
             Version = version;
             BookId = bookId;
-            BookAbbr = bookAbbr;
+            BookAbbreviation = bookAbbreviation;
             BookName = bookName;
-            Text = text;
+            VerseText = verseText;
             ChapterNumber = chapterNumber;
             VerseNumber = verseNumber;
         }

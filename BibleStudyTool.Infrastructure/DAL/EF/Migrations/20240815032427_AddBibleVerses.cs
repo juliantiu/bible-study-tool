@@ -5,7 +5,7 @@
 namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
 {
     /// <inheritdoc />
-    public partial class AddBibleVerseEntity : Migration
+    public partial class AddBibleVerses : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,29 +16,29 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Migrations
 
             migrationBuilder.RenameTable(
                 name: "BibleVerse",
-                newName: "BibleVerses");
+                newName: "bible_verses");
 
             migrationBuilder.AddPrimaryKey(
-                name: "PK_BibleVerses",
-                table: "BibleVerses",
-                columns: new[] { "Language", "VersionAbbr", "BookId", "ChapterNumber", "VerseNumber" });
+                name: "PK_bible_verses",
+                table: "bible_verses",
+                columns: new[] { "language", "version_abbreviation", "book_id", "chapter_number", "verse_number" });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropPrimaryKey(
-                name: "PK_BibleVerses",
-                table: "BibleVerses");
+                name: "PK_bible_verses",
+                table: "bible_verses");
 
             migrationBuilder.RenameTable(
-                name: "BibleVerses",
+                name: "bible_verses",
                 newName: "BibleVerse");
 
             migrationBuilder.AddPrimaryKey(
                 name: "PK_BibleVerse",
                 table: "BibleVerse",
-                columns: new[] { "Language", "VersionAbbr", "BookId", "ChapterNumber", "VerseNumber" });
+                columns: new[] { "language", "version_abbreviation", "book_id", "chapter_number", "verse_number" });
         }
     }
 }

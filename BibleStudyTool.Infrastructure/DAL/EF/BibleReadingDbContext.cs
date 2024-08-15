@@ -19,6 +19,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BibleStudyTool.Core.Entities.BibleVerse;
 using BibleStudyTool.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,12 +35,23 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
         {
         }
 
-        public DbSet<BibleVerse> BibleVerses { get; set; }
+        public DbSet<BibleVerse> BibleVerse { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<BibleReader>(b => b.ToTable("BibleReaders"));
+
+            builder.Entity<IdentityRole>(b => b.ToTable("asp_net_roles"));
+            builder.Entity<IdentityRoleClaim<string>>(b => b.ToTable("asp_net_role_claims"));
+            builder.Entity<IdentityUserClaim<string>>(b => b.ToTable("asp_net_user_claims"));
+            builder.Entity<IdentityUserLogin<string>>(b => b.ToTable("asp_net_user_logins"));
+            builder.Entity<IdentityUserRole<string>>(b => b.ToTable("asp_net_user_roles"));
+            builder.Entity<IdentityUserToken<string>>(b => b.ToTable("asp_net_user_tokens"));
+
+            builder.Entity<BibleReader>(b => b.ToTable("bible_readers"));
+            
+            builder.Entity<BibleVerse>(b => b.ToTable("bible_verses"));
+            
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

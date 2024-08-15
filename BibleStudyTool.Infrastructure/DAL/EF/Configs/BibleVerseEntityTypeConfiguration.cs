@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BibleStudyTool.Infrastructure.DAL.EF.Configs
 {
-    public class BibleVerseEntityTypeConfiguration : IEntityTypeConfiguration<BibleVerse>
+    internal class BibleVerseEntityTypeConfiguration : IEntityTypeConfiguration<BibleVerse>
     {
         public void Configure(EntityTypeBuilder<BibleVerse> builder)
         {
@@ -18,7 +18,7 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Configs
                 (bv => new
                     { 
                         bv.Language,
-                        bv.VersionAbbr,
+                        bv.VersionAbbreviation,
                         bv.BookId,
                         bv.ChapterNumber,
                         bv.VerseNumber
@@ -26,19 +26,52 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Configs
                 );
 
             builder.Property
+                (bv => bv.Language)
+                .HasColumnType("character (3)")
+                .HasColumnName("language");
+
+            builder.Property
+                (bv => bv.VersionAbbreviation)
+                .HasColumnType("character varying (256)")
+                .HasColumnName("version_abbreviation");
+
+            builder.Property
+                (bv => bv.BookId)
+                .HasColumnType("character varying (256)")
+                .HasColumnName("book_id");
+
+            builder.Property
+                (bv => bv.ChapterNumber)
+                .HasColumnType("smallint")
+                .HasColumnName("chapter_number");
+
+            builder.Property
+                (bv => bv.VerseNumber)
+                .HasColumnType("smallint")
+                .HasColumnName("verse_number");
+
+            builder.Property
                 (bv => bv.Version)
+                .HasColumnType("character varying (256)")
+                .HasColumnName("version")
                 .IsRequired();
 
             builder.Property
-                (bv => bv.BookAbbr)
+                (bv => bv.BookAbbreviation)
+                .HasColumnType("character varying (256)")
+                .HasColumnName("book_abbreviation")
                 .IsRequired();
 
             builder.Property
                 (bv => bv.BookName)
+                .HasColumnType("character varying (256)")
+                .HasColumnName("book_name")
                 .IsRequired();
 
             builder.Property
-                (bv => bv.Text)
+                (bv => bv.VerseText)
+                .HasColumnType("text")
+                .HasColumnName("verse_text")
                 .IsRequired();
         }
     }
