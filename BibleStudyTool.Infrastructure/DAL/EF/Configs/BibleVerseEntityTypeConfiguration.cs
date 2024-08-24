@@ -19,7 +19,7 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Configs
                     { 
                         bv.Language,
                         bv.VersionAbbreviation,
-                        bv.BookId,
+                        bv.BookKey,
                         bv.ChapterNumber,
                         bv.VerseNumber
                     }
@@ -36,7 +36,7 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Configs
                 .HasColumnName("version_abbreviation");
 
             builder.Property
-                (bv => bv.BookId)
+                (bv => bv.BookKey)
                 .HasColumnType("character varying (256)")
                 .HasColumnName("book_id");
 
@@ -49,24 +49,6 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Configs
                 (bv => bv.VerseNumber)
                 .HasColumnType("smallint")
                 .HasColumnName("verse_number");
-
-            builder.Property
-                (bv => bv.Version)
-                .HasColumnType("character varying (256)")
-                .HasColumnName("version")
-                .IsRequired();
-
-            builder.Property
-                (bv => bv.BookAbbreviation)
-                .HasColumnType("character varying (256)")
-                .HasColumnName("book_abbreviation")
-                .IsRequired();
-
-            builder.Property
-                (bv => bv.BookName)
-                .HasColumnType("character varying (256)")
-                .HasColumnName("book_name")
-                .IsRequired();
 
             builder.Property
                 (bv => bv.VerseText)
