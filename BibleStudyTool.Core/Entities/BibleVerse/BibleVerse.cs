@@ -19,14 +19,14 @@ namespace BibleStudyTool.Core.Entities.BibleVerse
         public BibleVerse
             (string language,
             string versionAbbreviation,
-            string bookId,
+            string bookKey,
             string verseText,
             int chapterNumber,
             int verseNumber)
         {
             Language = language;
             VersionAbbreviation = versionAbbreviation;
-            BookKey = bookId;
+            BookKey = bookKey;
             VerseText = verseText;
             ChapterNumber = chapterNumber;
             VerseNumber = verseNumber;

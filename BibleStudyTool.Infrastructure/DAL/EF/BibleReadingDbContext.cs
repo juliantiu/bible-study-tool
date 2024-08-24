@@ -35,7 +35,7 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
         {
         }
 
-        public DbSet<BibleVerse> BibleVerse { get; set; }
+        /*public DbSet<BibleVerse> BibleVerse { get; set; }*/
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -50,7 +50,7 @@ namespace BibleStudyTool.Infrastructure.DAL.EF
 
             builder.Entity<BibleReader>(b => b.ToTable("bible_readers"));
             
-            builder.Entity<BibleVerse>(b => b.ToTable("bible_verses"));
+            /*builder.Entity<BibleVerse>(b => b.ToTable("bible_verses"));*/
             
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }

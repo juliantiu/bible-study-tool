@@ -38,7 +38,7 @@ namespace BibleStudyTool.Infrastructure.DAL.EF.Configs
             builder.Property
                 (bv => bv.BookKey)
                 .HasColumnType("character varying (256)")
-                .HasColumnName("book_id");
+                .HasColumnName("book_key");
 
             builder.Property
                 (bv => bv.ChapterNumber)
